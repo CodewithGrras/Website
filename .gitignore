@@ -1,0 +1,42 @@
+# Ignore WordPress core files
+/wp-admin/
+/wp-includes/
+
+# Ignore the default content directories you don’t need
+wp-content/plugins/*
+!wp-content/plugins/your-plugin-folder/
+
+wp-content/themes/*
+!wp-content/themes/your-theme-folder/
+
+# Ignore uploads and cache
+wp-content/uploads/
+wp-content/cache/
+
+# Ignore common system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ignore IDE and editor config
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore OS or backup files
+*.log
+*.sql
+*.tar.gz
+*.zip
+*.bak
+*.tmp
+
+# Ignore Composer and Node modules (if applicable)
+vendor/
+node_modules/
+.env
+
+# Optional: Ignore WordPress config if you're storing it outside Git
+wp-config.php
+.htaccess
