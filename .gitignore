@@ -1,18 +1,3 @@
-# Ignore WordPress core files
-/wp-admin/
-/wp-includes/
-
-# Ignore the default content directories you don’t need
-wp-content/plugins/*
-!wp-content/plugins/your-plugin-folder/
-
-wp-content/themes/*
-!wp-content/themes/your-theme-folder/
-
-# Ignore uploads and cache
-wp-content/uploads/
-wp-content/cache/
-
 # Ignore common system files
 .DS_Store
 Thumbs.db
