@@ -1,3 +1,7 @@
+# Ignore WordPress core files
+wp-content/uploads/
+wp-content/cache/
+
 # Ignore common system files
 .DS_Store
 Thumbs.db
