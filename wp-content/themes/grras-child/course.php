@@ -6,61 +6,7 @@
 get_header();
 
 ?>
-<style>
-    .stars i {
-  display: inline-block;
-  width: 1em;
-  position: relative;
-  color: #ccc;
-}
 
-.stars .fa-star {
-  color: #f1c40f;
-}
-
-.stars .fa-star-empty::before {
-  content: "\f005"; /* fa-star */
-  font-family: "Font Awesome 6 Free";
-  font-weight: 400;
-}
-
-.stars .fa-star-half-alt::before {
-  content: "\f089"; /* standard half */
-  font-family: "Font Awesome 6 Free";
-  font-weight: 900;
-  color: #f1c40f;
-}
-
-.stars .fa[class*="fa-star-"]::before {
-  content: "\f005"; /* full star icon */
-  font-family: "Font Awesome 6 Free";
-  font-weight: 900;
-  color: #f1c40f;
-}
-
-.fa-star-ten-alt::after   { width: 10%; }
-.fa-star-twenty-alt::after{ width: 20%; }
-.fa-star-thirty-alt::after{ width: 30%; }
-.fa-star-forty-alt::after { width: 40%; }
-.fa-star-fifty-alt::after { width: 50%; }
-.fa-star-sixty-alt::after { width: 60%; }
-.fa-star-seventy-alt::after{ width: 70%; }
-.fa-star-eighty-alt::after{ width: 80%; }
-.fa-star-ninety-alt::after{ width: 90%; }
-
-.stars .fa[class*="fa-star-"]:after {
-  content: "\f005";
-  font-family: "Font Awesome 6 Free";
-  font-weight: 900;
-  color: #f1c40f;
-  position: absolute;
-  left: 0;
-  top: 0;
-  overflow: hidden;
-  display: block;
-  white-space: nowrap;
-}
-</style>
 
 
 <!-- Featured Courses -->
@@ -85,7 +31,13 @@ get_header();
 
 
 <!-- Browse by -->
-<?php
+<div class="browseby wow fadeInUp">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="text-center"><?php echo get_field('certifications_title') ?>s</h2>
+            </div>
+            <?php
 // Custom query to get 'career_success_story' posts with 'story_types' term 'rating-page'
 $args = array(
     'post_type' => 'courses',
@@ -102,38 +54,35 @@ $args = array(
 
 // Create a new query
 $custom_query = new WP_Query($args);
-if ($custom_query->have_posts()) {
 ?>
-    <div class="browseby wow fadeInUp">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2 class="text-center"><?php echo get_field('certifications_title') ?>s</h2>
-                </div>
-                <?php
-                    // Loop through the posts
-                    $i = 0;
-                    while ($custom_query->have_posts()) {
-                        $i++;
-                        $custom_query->the_post();
-                ?>
-            
-                        <div class="col-lg-3 col-sm-6 col-6 g-2">
-                            <a href="#" class="brwsbox <?php echo get_field('color') ?>">
-                                <img src="<?php the_post_thumbnail_url() ?>" class="img-fluid" alt="">
-                                <h4><?php the_title() ?></h4>
-                            </a>
-                        </div>
-                <?php
-                    }
-                // Reset post data
-                wp_reset_postdata();
-                ?>
-            </div>
+ <?php
+            if ($custom_query->have_posts()) {
+                // Loop through the posts
+                $i = 0;
+                while ($custom_query->have_posts()) {
+                    $i++;
+                    $custom_query->the_post();
+            ?>
+           
+                    <div class="col-lg-3 col-sm-6 col-6 g-2">
+                        <a href="#" class="brwsbox <?php echo get_field('color') ?>">
+                            <img src="<?php the_post_thumbnail_url() ?>" class="img-fluid" alt="">
+                            <h4><?php the_title() ?></h4>
+                        </a>
+                    </div>
+             <?php
+                }
+            } else {
+                echo 'No success stories found.';
+            }
+            // Reset post data
+            wp_reset_postdata();
+?>
         </div>
     </div>
+</div>
 <?php
-}
+
 include "components/course-workshops.php"; ?>
 
 <!-- Traditional Education -->
@@ -202,39 +151,17 @@ include "components/course-workshops.php"; ?>
 
                 <?php while (have_rows('trusted_by_learners')): the_row();
                     $image = get_sub_field('image'); // Adjust this to match your subfield name
-                    $ratingCount = intval(get_sub_field('star_rating'));
                 ?>
 
                     <li>
-                        <div class="d-flex align-items-center">
-                            <!-- Logo + Name -->
-                            <div class="d-flex align-items-center gap-2">
-                                <div class="platform-logo">
-                                    <img src="<?php echo $image; ?>" class="svg-logo" height="30px" />
-                                </div>
-                            </div>
-
-                            <!-- Divider between name and reviews -->
-                            <div class="inner-divider"></div>
-
-                            <!-- Review Label + Stars -->
-                            <?php if($ratingCount > 0): ?>
-                            <div class="text-start">
-                                <div class="review-label">Reviews</div>
-                                <div class="star">
-                                    <?php for($i=1; $i <= $ratingCount; $i++) { ?>
-                                        <span class="star star-enabled">★</span>
-                                    <?php } ?>
-                                </div>
-                            </div>
-                            <?php endif; ?>
-                        </div>
-                    </li>
+                        <a href="<?php echo get_sub_field('link') ?>">
+                        <img src="<?php echo $image ?>" class="img-fluid" alt="">
+                            </a>
+                        </li>
                 <?php endwhile; ?>
 
             <?php endif; ?>
         </ul>
-        
 
       <?php include "components/course-stories.php"; ?>
     </div>

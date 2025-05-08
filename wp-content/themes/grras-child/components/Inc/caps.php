@@ -6,20 +6,37 @@
  * For branch_admin users: Show posts from all users they created
  * For self_post_can_seen users: Show only their own posts
  */
- function getBranchAdminUser(){
-     $current_user_id = get_current_user_id();
+//  function getBranchAdminUser(){
+//      $current_user_id = get_current_user_id();
         
-        // Get all users created by this branch admin
-        $created_users = get_users(array(
-            'meta_key' => 'created_by',
-            'meta_value' => $current_user_id,
-            'fields' => 'ID'
-        ));
-        return $created_users;
- }
+//         // Get all users created by this branch admin
+//         $created_users = get_users(array(
+//             'meta_key' => 'created_by',
+//             'meta_value' => $current_user_id,
+//             'fields' => 'ID'
+//         ));
+//         return $created_users;
+//  }
+function getBranchAdminUser() {
+    $current_user_id = get_current_user_id();
+
+    // Get users created by current user
+    $created_users = get_users(array(
+        'meta_key' => 'created_by',
+        'meta_value' => $current_user_id,
+        'fields' => 'ID'
+    ));
+
+    // Add the branch admin's own ID
+    $user_ids = $created_users;
+    $user_ids[] = $current_user_id;
+
+    return $user_ids;
+}
+
 function restrict_posts_by_sub_admin($query) {
     global $pagenow;
-    
+
     // Only apply on admin post listings
     if (!is_admin() || $pagenow !== 'edit.php' || !$query->is_main_query()) {
         return $query;
@@ -33,13 +50,11 @@ function restrict_posts_by_sub_admin($query) {
     
     // For branch admins
     if (current_user_can('branch_admin')) {
-        
         $created_users = getBranchAdminUser();
         // If branch admin has created users, show their posts and the admin's own posts
         if (!empty($created_users)) {
             // Add the branch admin's ID to the list
             $created_users[] = $current_user_id;
-            
             // Set the query to include posts from all these users
             $query->set('author__in', $created_users);
         } else {
@@ -47,7 +62,6 @@ function restrict_posts_by_sub_admin($query) {
             $query->set('author', $current_user_id);
         }
     }
-    
     return $query;
 }
 add_filter('pre_get_posts', 'restrict_posts_by_sub_admin');
@@ -244,3 +258,4 @@ function show_debug_message_on_dashboard() {
 }
 add_action( 'admin_notices', 'show_debug_message_on_dashboard' );
 */
+

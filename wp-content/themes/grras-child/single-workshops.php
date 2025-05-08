@@ -1,6 +1,29 @@
 <?php
 get_header();
 $banner = get_field('banner');
+
+         $start_time_status = get_field('workshop_start_time'); // Make sure this is the correct field name
+                                $end_time_status = get_field('workshop_end_time'); // Make sure this is the correct field name
+                                $workshopstatus = '';
+
+                                if ($start_time_status && $end_time_status) {
+                                    $current_time_status = current_time('Y-m-d H:i:s');
+                                    $start_date_time_status = DateTime::createFromFormat('Y-m-d H:i:s', $start_time_status);
+                                    $end_date_time_status = DateTime::createFromFormat('Y-m-d H:i:s', $end_time_status);
+
+                                    if ($start_date_time_status && $end_date_time_status) {
+                                        if ($current_time_status >= $start_time_status && $current_time_status <= $end_time_status) {
+                                            $workshopstatus = 'live';
+                                        } elseif ($current_time_status < $start_time_status) {
+                                            $workshopstatus = 'upcoming';
+                                        } else {
+                                            $workshopstatus = 'past';
+                                        }
+                                    }
+                                }
+                                
+                                
+                                
 ?>
 <style>
 .workbanner {
@@ -112,6 +135,7 @@ if ($start_date && $end_date) {
                             
                         }
                                 ?>
+ 
                
                 <div class="row">
                   <div class="col-6">
@@ -373,7 +397,36 @@ endif;
 
 <?php 
 include 'components/faq.php';
+// Check and retrieve query parameters
+$post_id     = isset($_GET['post_id']) ? sanitize_text_field($_GET['post_id']) : '';
+$post_name   = isset($_GET['post_name']) ? sanitize_text_field($_GET['post_name']) : '';
+$author_name = isset($_GET['author_name']) ? sanitize_text_field($_GET['author_name']) : '';
+
+if ($post_id || $post_name || $author_name) {
+    include 'components/feedback_poup.php';
+}
 ?>
+                               <script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Wait for Gravity Form to fully load (especially with AJAX enabled)
+    function fillHiddenFields() {
+  
+        const workshopUserIdField  = document.querySelector('input[name="input_15"]');
+
+        if (workshopUserIdField) {
+           
+            workshopUserIdField.value  = "<?php echo esc_js($workshopstatus); ?>";
+  
+        } else {
+            // Retry if not found yet
+            setTimeout(fillHiddenFields, 100);
+        }
+    }
+
+    fillHiddenFields();
+});
+</script>
+
 </div>
 <?php
 get_footer();

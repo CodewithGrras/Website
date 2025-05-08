@@ -37,11 +37,12 @@ $terms = get_terms(array(
   <div class="header wow fadeInUp d-none d-sm-block">
     <nav class="navbar navbar-expand-lg">
       <div class="container">
-        <a class="navbar-brand logo" href="<?php echo get_site_url(); ?>"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/logo.png" class="img-fluid" alt=""></a>
+        <a class="navbar-brand logo" href="/"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/logo.png" class="img-fluid" alt=""></a>
         <form class="d-flex" role="search">
           <div class="megamenu">
-            <a class="btn btn-primary" data-bs-toggle="collapse" data-bs-backdrop="true" href="#collapseCourseMenu" role="button" aria-expanded="false" aria-controls="collapseCourseMenu"> Courses </a>
-            <div class="collapse menuopen" id="collapseCourseMenu" sytle="position: fixed; top: 0px;">
+            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"> Courses </a>
+            <div class="collapse menuopen" id="collapseExample" sytle="    position: fixed;
+    top: 0px;">
               <div class="card">
                 <div class="row">
                   <div class="col-lg-3">
