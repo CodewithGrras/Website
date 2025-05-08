@@ -12,6 +12,7 @@ include 'blog-search.php';
 include 'red-hate.php';
 include 'caps.php';
 include 'greavity-form.php';
+include 'attendence.php';
 // include 'users-management.php';
 // print_r(wp_get_current_user());
 function create_review_post_type()

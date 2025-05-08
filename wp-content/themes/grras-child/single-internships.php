@@ -428,90 +428,90 @@ createCarouselItems($split3, 'across-slid1');
 	              <div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-tab" tabindex="0">
 	                <div class="owl-carousel video-review">
 	                    <?php
-						$choose_video_review = get_field('choose_video_review');
-						if ($choose_video_review):
-							foreach ($choose_video_review as $choose):
-								$permalink = get_permalink($choose->ID);
-								$image = wp_get_attachment_image_src(get_post_thumbnail_id($choose->ID), 'single-post-thumbnail');
-								$title = get_the_title($choose->ID);
-								$content = wp_trim_words(get_the_content($choose->ID), 20);
-						?>
-						<div class="item">
-							<div class="carbox">
-								<div class="bigimg">
-									<?php if (!empty($image[0])): ?>
-										<img src="<?php echo htmlspecialchars($image[0]); ?>" class="img-fluid" alt="">
-									<?php endif; ?>
-								</div>
-								<a href="#" class="play" data-bs-toggle="modal" data-bs-target="#exampleModal">
-									<img src="<?php echo get_stylesheet_directory_uri() ?>/images/caree-play1.png" alt="">
-								</a>
-								<div class="company">
-									<img src="<?php echo get_stylesheet_directory_uri() ?>/images/gpc.png" class="img-fluid" alt="">
-								</div>
-								<div class="coname">
-									<h4><?php echo htmlspecialchars($title); ?></h4>
-									<p><?php echo htmlspecialchars(get_field('post_designation', $choose->ID)); ?></p>
-								</div>
-							</div>
-						</div>
-						<?php 
-							endforeach;
-						else:
-						?>
-							<p>No projects found.</p>
-						<?php
-						endif;
-						?>
+$choose_video_review = get_field('choose_video_review');
+if ($choose_video_review):
+    foreach ($choose_video_review as $choose):
+        $permalink = get_permalink($choose->ID);
+        $image = wp_get_attachment_image_src(get_post_thumbnail_id($choose->ID), 'single-post-thumbnail');
+        $title = get_the_title($choose->ID);
+        $content = wp_trim_words(get_the_content($choose->ID), 20);
+?>
+    <div class="item">
+        <div class="carbox">
+            <div class="bigimg">
+                <?php if (!empty($image[0])): ?>
+                    <img src="<?php echo htmlspecialchars($image[0]); ?>" class="img-fluid" alt="">
+                <?php endif; ?>
+            </div>
+            <a href="#" class="play" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <img src="<?php echo get_stylesheet_directory_uri() ?>/images/caree-play1.png" alt="">
+            </a>
+            <div class="company">
+                <img src="<?php echo get_stylesheet_directory_uri() ?>/images/gpc.png" class="img-fluid" alt="">
+            </div>
+            <div class="coname">
+                <h4><?php echo htmlspecialchars($title); ?></h4>
+                <p><?php echo htmlspecialchars(get_field('post_designation', $choose->ID)); ?></p>
+            </div>
+        </div>
+    </div>
+<?php 
+    endforeach;
+else:
+?>
+    <p>No projects found.</p>
+<?php
+endif;
+?>
 
 	                </div>
 	              </div>
 	              <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab" tabindex="0">
 	                <div class="owl-carousel video-review">
 	                    <?php
-						$choose_reviews= get_field('choose_reviews');
-						if($choose_reviews):
+$choose_reviews= get_field('choose_reviews');
+if($choose_reviews):
 
-							foreach ($choose_reviews as $choose):
-								$permalink = get_permalink($choose->ID);
-								$image = wp_get_attachment_image_src(get_post_thumbnail_id($choose->ID), 'single-post-thumbnail');
-								$title = get_the_title($choose->ID);
-								$content = wp_trim_words(get_the_content($choose->ID), 20);
-						?>
-						<div class="item">
-							<div class="orangebox">
-								<div class="content">
-									<div class="row">
-									<div class="col-4"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/orange-quote.jpg" class="img-fluid" alt=""></div>
-									<div class="col-8 text-right">
-										<div class="star">
-												<span class="star star-enabled">★</span>
-												<span class="star star-enabled">★</span>
-												<span class="star star-enabled">★</span>
-												<span class="star star-enabled">★</span>
-												<span class="star star-enabled">★</span>
-											</div>
-									</div>
-									</div>
-									<p>“ <?php echo wp_trim_words($choose->post_content,30); ?></p>
-								</div>
-								<div class="blackbg">
-									<?php if (!empty($image[0])): ?>
-										<img src="<?php echo htmlspecialchars($image[0]); ?>" class="img-fluid" alt="">
-									<?php endif; ?>
-									<h5><?php echo htmlspecialchars($title); ?></h5>
-								</div>
-							</div>
-	                  	</div>
+    foreach ($choose_reviews as $choose):
+        $permalink = get_permalink($choose->ID);
+        $image = wp_get_attachment_image_src(get_post_thumbnail_id($choose->ID), 'single-post-thumbnail');
+        $title = get_the_title($choose->ID);
+        $content = wp_trim_words(get_the_content($choose->ID), 20);
+?>
+<div class="item">
+	                    <div class="orangebox">
+	                      <div class="content">
+	                        <div class="row">
+	                          <div class="col-4"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/orange-quote.jpg" class="img-fluid" alt=""></div>
+	                          <div class="col-8 text-right">
+	                              <div class="star">
+                                        <span class="star star-enabled">★</span>
+                                        <span class="star star-enabled">★</span>
+                                        <span class="star star-enabled">★</span>
+                                        <span class="star star-enabled">★</span>
+                                        <span class="star star-enabled">★</span>
+                                    </div>
+	                          </div>
+	                        </div>
+	                        <p>“ <?php echo wp_trim_words($choose->post_content,30); ?></p>
+	                      </div>
+	                      <div class="blackbg">
+	                         <?php if (!empty($image[0])): ?>
+                    <img src="<?php echo htmlspecialchars($image[0]); ?>" class="img-fluid" alt="">
+                <?php endif; ?>
+	                        <h5><?php echo htmlspecialchars($title); ?></h5>
+	                      </div>
+	                    </div>
+	                  </div>
 
-						<?php 
-							endforeach;
-						else:
-						?>
-							<p>No projects found.</p>
-						<?php
-						endif;
-						?>
+<?php 
+    endforeach;
+else:
+?>
+    <p>No projects found.</p>
+<?php
+endif;
+?>
 
 	                  
 	                </div>
@@ -519,34 +519,34 @@ createCarouselItems($split3, 'across-slid1');
 	              <div class="tab-pane fade" id="college" role="tabpanel" aria-labelledby="college-tab" tabindex="0">
 	                <div class="owl-carousel video-review">
 	                     <?php
-						$choose_placments = get_field('choose_placments');
-						if ($choose_placments):
-							foreach ($choose_placments as $choose):
-						
-								// $permalink = get_permalink($choose->ID);
-								$image = wp_get_attachment_image_src(get_post_thumbnail_id($choose->ID), 'single-post-thumbnail');
-						
-						?>
-						<div class="item">
-							<div class="reviewbox">
-								<img src="<?php echo $image[0] ?>" alt="" style="width: 63px; height: 63px">
-								</br>
-								<div class="content">
-									<h4><?php echo $choose->post_title; ?></h4>
-									<p><?php echo get_field('designation',$choose->ID) ?> @ <?php echo get_field('course_undertaken',$choose->ID) ?></p>
-								</div>
-								<p><small><?php echo $choose->post_content ?></small></p>
-							</div>
-	                  	</div>
+$choose_placments = get_field('choose_placments');
+if ($choose_placments):
+    foreach ($choose_placments as $choose):
+   
+        // $permalink = get_permalink($choose->ID);
+        $image = wp_get_attachment_image_src(get_post_thumbnail_id($choose->ID), 'single-post-thumbnail');
+ 
+?>
+ <div class="item">
+	                    <div class="reviewbox">
+		                  <img src="<?php echo $image[0] ?>" alt="" style="width: 63px; height: 63px">
+		                  </br>
+		                  <div class="content">
+		                    <h4><?php echo $choose->post_title; ?></h4>
+		                    <p><?php echo get_field('designation',$choose->ID) ?> @ <?php echo get_field('course_undertaken',$choose->ID) ?></p>
+		                  </div>
+		                  <p><small><?php echo $choose->post_content ?></small></p>
+		                </div>
+	                  </div>
 	               
-	                  	<?php 
-							endforeach;
-						else:
-						?>
-							<p>No projects found.</p>
-						<?php
-						endif;
-						?>
+	                  <?php 
+    endforeach;
+else:
+?>
+    <p>No projects found.</p>
+<?php
+endif;
+?>
 	                </div>
 	              </div>
 	            </div>

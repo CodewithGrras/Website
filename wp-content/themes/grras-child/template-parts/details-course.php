@@ -34,7 +34,7 @@
 
                   <div class="content line">
                     <h5>Skills</h5>
-                    <ul class="skills-list">
+                    <ul>
                        <?php
   
   $post_id = get_the_ID(); // This gets the current post ID.
@@ -62,7 +62,8 @@
         endif;
         $tag_permalink = get_term_link( $tag );
         ?>
-        <li><?php echo  wp_trim_words($tag->name, 2, '...');  ?></li>
+        <li>
+        <?php echo  wp_trim_words($tag->name, 2, '...');  ?></li>
       <?php
       endif;
       $counter++;
