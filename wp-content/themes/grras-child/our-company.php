@@ -8,7 +8,7 @@
 <body>
 
 
-    <!-- ourstory section -->
+    <!-- ourstory -->
     <div class="ourstory">
       <div class="container">
         <div class="row">

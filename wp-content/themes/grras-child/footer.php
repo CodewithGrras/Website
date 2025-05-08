@@ -713,18 +713,6 @@ function addClasses() {
             }
         }
       });
-
-      $('.innovation-slider-area').owlCarousel({
-        autoplay: true,
-        margin: 20,
-        nav: false,
-        dots: true,
-        loop: true,
-        items:1,
-        smartSpeed: 450,
-        navText : false,        
-      });
-
       $('.our_placement').owlCarousel({
         items: 4,
         margin: 0,
@@ -1077,7 +1065,7 @@ function addClasses() {
 
 
 
-    $('.homeslid').owlCarousel({
+         $('.homeslid').owlCarousel({
         items: 1,
         loop: true,
         margin: 0,
@@ -1109,235 +1097,207 @@ function addClasses() {
                 items:1,
             }
         }
-    });
+      });
 
-    $('.student-carousel').owlCarousel({
-    items: 1,
-    autoplay: true,
-    margin: 0,
-    nav: false,
-    dots: false,
-    loop: true,
-    smartSpeed: 650,
-    navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
-    responsiveClass:true,
-    responsive:{
-        0:{
-            items:1,
-        },
-        500:{
-            items:1,
-        },
-        768:{
-            items:1,
-        },
-        1100:{
-            items:1,
-        },
-        1400:{
-            items:1,
+      $('.student-carousel').owlCarousel({
+        items: 1,
+        autoplay: true,
+        margin: 0,
+        nav: false,
+        dots: false,
+        loop: true,
+        smartSpeed: 650,
+        navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+        responsiveClass:true,
+        responsive:{
+            0:{
+                items:1,
+            },
+            500:{
+                items:1,
+            },
+            768:{
+                items:1,
+            },
+            1100:{
+                items:1,
+            },
+            1400:{
+                items:1,
+            }
         }
-    }
-    });
+      });
 
 
-    $('.intslid').owlCarousel({
-    items: 1,
-    loop: true,
-    margin: 0,
-    autoplay: true,
-    slideTransition: 'linear',
-    autoplaySpeed: 5000,
-    autoplayHoverPause: false,
-    autoplayTimeout:4e3,
-    animateOut: 'fadeOut',
-    animateIn: 'fadeIn',
-    // animateOut: 'slideOutUp',
-    // animateIn: 'slideInUp',
-    navText : false,
-    responsiveClass:true,
-    responsive:{
-        0:{
-            items:1,
-        },
-        500:{
-            items:1,
-        },
-        768:{
-            items:1,
-        },
-        1100:{
-            items:1,
-        },
-        1400:{
-            items:1,
+      $('.intslid').owlCarousel({
+        items: 1,
+        loop: true,
+        margin: 0,
+        autoplay: true,
+        slideTransition: 'linear',
+        autoplaySpeed: 5000,
+        autoplayHoverPause: false,
+        autoplayTimeout:4e3,
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn',
+        // animateOut: 'slideOutUp',
+        // animateIn: 'slideInUp',
+        navText : false,
+        responsiveClass:true,
+        responsive:{
+            0:{
+                items:1,
+            },
+            500:{
+                items:1,
+            },
+            768:{
+                items:1,
+            },
+            1100:{
+                items:1,
+            },
+            1400:{
+                items:1,
+            }
         }
-    }
-    });
+      });
 
-    $('.project-works').owlCarousel({
-    items: 4,
-    autoplay: true,
-    margin: 20,
-    nav: true,
-    dots: true,
-    loop: true,
-    smartSpeed: 450,
-    navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
-    responsiveClass:true,
-    responsive:{
-        0:{
-            items:1.5,
-            margin: 5,
-        },
-        500:{
-            items:2,
-        },
-        768:{
-            items:3,
-        },
-        1100:{
-            items:3,
-        },
-        1400:{
-            items:3,
+      $('.project-works').owlCarousel({
+        items: 4,
+        autoplay: true,
+        margin: 20,
+        nav: true,
+        dots: true,
+        loop: true,
+        smartSpeed: 450,
+        navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+        responsiveClass:true,
+        responsive:{
+            0:{
+                items:1.5,
+                margin: 5,
+            },
+            500:{
+                items:2,
+            },
+            768:{
+                items:3,
+            },
+            1100:{
+                items:3,
+            },
+            1400:{
+                items:3,
+            }
         }
-    }
-    });
+      });
 
-    $('.red-logo').owlCarousel({
-    items: 6,
-    autoplay: true,
-    margin: 0,
-    nav: true,
-    dots: false,
-    loop: true,
-    smartSpeed: 450,
-    navText : false,
-    responsiveClass:true,
-    slideTransition: 'linear',
-    autoplaySpeed: 5000,
-    autoplayHoverPause: false,
-    responsive:{
-        0:{
-            items:4,
-        },
-        500:{
-            items:4,
-        },
-        768:{
-            items:5,
-        },
-        1100:{
-            items:6,
-        },
-        1400:{
-            items:6,
+      $('.red-logo').owlCarousel({
+        items: 6,
+        autoplay: true,
+        margin: 0,
+        nav: true,
+        dots: false,
+        loop: true,
+        smartSpeed: 450,
+        navText : false,
+        responsiveClass:true,
+        slideTransition: 'linear',
+        autoplaySpeed: 5000,
+        autoplayHoverPause: false,
+        responsive:{
+            0:{
+                items:4,
+            },
+            500:{
+                items:4,
+            },
+            768:{
+                items:5,
+            },
+            1100:{
+                items:6,
+            },
+            1400:{
+                items:6,
+            }
         }
-    }
-    });
+      });
 
 
-    $('.across-slid1').owlCarousel({
-    items: 4,
-    autoplay: true,
-    margin: 0,
-    nav: true,
-    dots: false,
-    loop: true,
-    smartSpeed: 450,
-    navText : false,
-    responsiveClass:true,
-    slideTransition: 'linear',
-    autoplaySpeed: 5000,
-    autoplayHoverPause: false,
-    responsive:{
-        0:{
-            items:4,
-        },
-        500:{
-            items:4,
-        },
-        768:{
-            items:8,
-        },
-        1100:{
-            items:13,
-        },
-        1400:{
-            items:13,
+      $('.across-slid1').owlCarousel({
+        items: 4,
+        autoplay: true,
+        margin: 0,
+        nav: true,
+        dots: false,
+        loop: true,
+        smartSpeed: 450,
+        navText : false,
+        responsiveClass:true,
+        slideTransition: 'linear',
+        autoplaySpeed: 5000,
+        autoplayHoverPause: false,
+        responsive:{
+            0:{
+                items:4,
+            },
+            500:{
+                items:4,
+            },
+            768:{
+                items:8,
+            },
+            1100:{
+                items:13,
+            },
+            1400:{
+                items:13,
+            }
         }
-    }
-    });
+      });
 
-    $('.across-slid2').owlCarousel({
-    items: 4,
-    autoplay: true,
-    margin: 0,
-    nav: true,
-    dots: false,
-    loop: true,
-    rtl: true,
-    smartSpeed: 450,
-    navText : false,
-    responsiveClass:true,
-    slideTransition: 'linear',
-    autoplaySpeed: 5000,
-    autoplayHoverPause: false,
-    responsive:{
-        0:{
-            items:4,
-        },
-        500:{
-            items:4,
-        },
-        768:{
-            items:8,
-        },
-        1100:{
-            items:13,
-        },
-        1400:{
-            items:13,
+      $('.across-slid2').owlCarousel({
+        items: 4,
+        autoplay: true,
+        margin: 0,
+        nav: true,
+        dots: false,
+        loop: true,
+        rtl: true,
+        smartSpeed: 450,
+        navText : false,
+        responsiveClass:true,
+        slideTransition: 'linear',
+        autoplaySpeed: 5000,
+        autoplayHoverPause: false,
+        responsive:{
+            0:{
+                items:4,
+            },
+            500:{
+                items:4,
+            },
+            768:{
+                items:8,
+            },
+            1100:{
+                items:13,
+            },
+            1400:{
+                items:13,
+            }
         }
-    }
-    });
+      });
 
 
-    $('.video-review').owlCarousel({
-    items: 3,
-    autoplay: true,
-    margin: 20,
-    nav: false,
-    dots: false,
-    loop: true,
-    smartSpeed: 450,
-    navText : false,
-    responsiveClass:true,
-    responsive:{
-        0:{
-            items:1,
-        },
-        500:{
-            items:2,
-        },
-        768:{
-            items:2,
-        },
-        1100:{
-            items:3,
-        },
-        1400:{
-            items:3,
-        }
-    }
-    });
-
-    $('.video-review-2').owlCarousel({
+      $('.video-review').owlCarousel({
+        items: 3,
         autoplay: true,
         margin: 20,
         nav: false,
-        dots: true,
+        dots: false,
         loop: true,
         smartSpeed: 450,
         navText : false,
@@ -1356,7 +1316,7 @@ function addClasses() {
                 items:3,
             },
             1400:{
-                items:4,
+                items:3,
             }
         }
       });
@@ -1373,99 +1333,67 @@ function addClasses() {
     });
 
     $("#toggle").click(function() {
-        var elem = $("#toggle").text();
-        if (elem == "Read More") {
-            //Stuff to do when btn is in the read more state
-            $("#toggle").text("Read Less");
-            $("#text").slideDown();
-        } else {
-            //Stuff to do when btn is in the read less state
-            $("#toggle").text("Read More");
-            $("#text").slideUp();
-        }
-    });
-
-    $(document).ready( function() {   
-        $('.grid').isotope({
-        itemSelector: '.grid-item',
-        });
-
-        // filter items on button click
-        $('.filter-button-group').on( 'click', 'li', function() {
-            var filterValue = $(this).attr('data-filter');
-            $('.grid').isotope({ filter: filterValue });
-            $('.filter-button-group li').removeClass('active');
-            $(this).addClass('active');
-        });
-
-        $('.navtab a').on('click', function() {
-        var scrollAnchor = $(this).attr('data-scroll'),
-            scrollPoint = $('div[data-anchor="' + scrollAnchor + '"], footer[data-anchor="' + scrollAnchor + '"]')?.offset()?.top-1;
-            // scrollPoint = $().offset().top - 28;    
-        $('body,html').animate({
-                scrollTop: scrollPoint
-            }, 500);
-
-            return false;
-
-        })
-
-        $(window).scroll(function() {
-            var windscroll = $(window).scrollTop();
-            if (windscroll >= 0) {
-                // $('navtab').addClass('fixed');
-                $('.scroller').each(function(i) {
-                    if ($(this).position().top <= windscroll + 500) {
-                        $('.navtab a.active').removeClass('active');
-                        $('.navtab a').eq(i).addClass('active');
-                    }
-                });
-
+          
+            var elem = $("#toggle").text();
+            if (elem == "Read More") {
+              //Stuff to do when btn is in the read more state
+              $("#toggle").text("Read Less");
+              $("#text").slideDown();
             } else {
-
-                // $('navtab').removeClass('fixed');
-                $('.navtab a.active').removeClass('active');
-                $('.navtab a:first').addClass('active');
+              //Stuff to do when btn is in the read less state
+              $("#toggle").text("Read More");
+              $("#text").slideUp();
             }
+          });
 
-        }).scroll();
-        });
+          $(document).ready( function() {   
 
-        $(document).on('click', function (e) {
-            const $collapse = $('#collapseCourseMenu');
-            const $toggleBtn = $('[data-bs-target="#collapseCourseMenu"]');
+$('.grid').isotope({
+  itemSelector: '.grid-item',
+});
 
-            if (
-                $collapse.hasClass('show') &&
-                !$collapse.is(e.target) &&
-                $collapse.has(e.target).length === 0 &&
-                !$toggleBtn.is(e.target) &&
-                $toggleBtn.has(e.target).length === 0
-            ) {
-                $collapse.collapse('hide');
-            }
-        });
+// filter items on button click
+$('.filter-button-group').on( 'click', 'li', function() {
+  var filterValue = $(this).attr('data-filter');
+  $('.grid').isotope({ filter: filterValue });
+  $('.filter-button-group li').removeClass('active');
+  $(this).addClass('active');
+});
+  $('.navtab a').on('click', function() {
+      var scrollAnchor = $(this).attr('data-scroll'),
+          scrollPoint = $('div[data-anchor="' + scrollAnchor + '"], footer[data-anchor="' + scrollAnchor + '"]')?.offset()?.top-1;
+          // scrollPoint = $().offset().top - 28;    
+      $('body,html').animate({
+            scrollTop: scrollPoint
+        }, 500);
 
-        $('.youtubeModal').on('hidden.bs.modal', function () {
-            var modalEle = $(this);
-            var originalSrc = modalEle.find(".youtubeIframe").attr('src');
-            modalEle.find(".youtubeIframe").attr('src', ''); // stop video
-            setTimeout(function () {
-                modalEle.find(".youtubeIframe").attr('src', originalSrc); // restore
-            }, 300); // delay allows modal animation to finish
-            var dataCarousel = $(this).attr('data-owl-carousel');
-            if(dataCarousel) {
-                $(`${dataCarousel}`).trigger('play.owl.autoplay', [5000]);
-            }
-        });
+        return false;
 
-        $('.youtubeModal').on('shown.bs.modal', function () {
-            var dataCarousel = $(this).attr('data-owl-carousel');
-            if(dataCarousel) {
-                $(`${dataCarousel}`).trigger('stop.owl.autoplay');
-            }
-        });
-    });
+      })
+
+      $(window).scroll(function() {
+          var windscroll = $(window).scrollTop();
+          if (windscroll >= 0) {
+              // $('navtab').addClass('fixed');
+              $('.scroller').each(function(i) {
+                  if ($(this).position().top <= windscroll + 500) {
+                      $('.navtab a.active').removeClass('active');
+                      $('.navtab a').eq(i).addClass('active');
+                  }
+              });
+
+          } else {
+
+              // $('navtab').removeClass('fixed');
+              $('.navtab a.active').removeClass('active');
+              $('.navtab a:first').addClass('active');
+          }
+
+      }).scroll();
+})
+});
+    
+   
 
     </script>
 
@@ -1583,6 +1511,5 @@ document.addEventListener("DOMContentLoaded", (event) => {
     <script src="<?php echo get_stylesheet_directory_uri() ?>/https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="<?php echo get_stylesheet_directory_uri() ?>/https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     -->
-
   </body>
 </html>

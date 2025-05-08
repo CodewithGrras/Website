@@ -666,5 +666,45 @@ add_filter('gform_confirmation_22', function($confirmation, $form, $entry) {
     return $confirmation;
 }, 10, 3);
 
-
-
+add_filter('gform_confirmation_7', function($confirmation, $form, $entry) {
+    $event = rgar($entry, '15'); // hidden field id
+    if ($event == 'past') {
+        $post_id = get_the_ID(); // Make sure you have the correct $post_id
+        
+        $past_workshops_resources = get_field('past_workshops_resources', $post_id);
+        if ($past_workshops_resources) {
+            $download_script = "<script>";
+            
+            foreach ($past_workshops_resources as $item) {
+                if (!empty($item['resources'])) {
+                    $file_url = $item['resources'];
+                    // Add each file to download queue
+                    $download_script .= "
+                    (function(url) {
+                        var link = document.createElement('a');
+                        link.href = url;
+                        link.download = url.split('/').pop();
+                        link.style.display = 'none';
+                        document.body.appendChild(link);
+                        link.click();
+                        setTimeout(function() {
+                            document.body.removeChild(link);
+                        }, 100);
+                    })('" . esc_js($file_url) . "');";
+                }
+            }
+            
+            $download_script .= "</script>";
+            
+            // Add the download script to confirmation message
+            if (is_string($confirmation)) {
+                $confirmation .= $download_script;
+            } else {
+                // If confirmation is an array (e.g., with a redirect)
+                // We need to modify approach to use a message confirmation instead
+                $confirmation = "<p>Thank you for your submission.</p>" . $download_script;
+            }
+        }
+    }
+    return $confirmation; 
+}, 10, 3);

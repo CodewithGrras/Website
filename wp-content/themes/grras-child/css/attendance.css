@@ -1,0 +1,66 @@
+ /* User Attendance Admin Styles */
+.attendance-card {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    margin: 20px 0;
+    padding: 20px;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+}
+
+.form-group {
+    padding: 0 10px;
+    margin-bottom: 15px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.form-group.full-width {
+    flex: 0 0 100%;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="datetime-local"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+}
+
+.form-actions {
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.active-session {
+    color: #46b450;
+    font-weight: 600;
+}
+
+#import-results {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f8f8;
+    border-left: 4px solid #46b450;
+}
+
+#import-results.error {
+    border-left-color: #dc3232;
+}
+
+#import-results ul {
+    margin-left: 20px;
+    list-style-type: disc;
+}
