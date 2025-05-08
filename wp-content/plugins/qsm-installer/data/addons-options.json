@@ -1,0 +1,107 @@
+{
+  "advanced-assessment": {
+    "path": "qsm-advanced-assessment/qsm-advance-assessment.php",
+    "option": "qsm_addon_advance_assessment_settings"
+  },
+  "advanced-leaderboard": {
+    "path": "qsm-advanced-leaderboard/mlw_advanced_leaderboard.php"
+  },
+  "mailpoet-integration": {
+    "path": "qsm-mailpoet-integration/qsm-mailpoet.php",
+    "settings_tab": "MailPoet"
+  },
+  "mailchimp-integration": {
+    "option": "qsm_addon_mailchimp_settings",
+    "settings_tab": "MailChimp"
+  },
+  "user-dashboard": {
+    "option": "mlw_qmn_dashboard_option",
+    "settings_tab": "User Dashboard Settings"
+  },
+  "export-results": {
+    "option": "qsm_addon_export_license_key",
+    "path": "qsm-export-results/qmn_export_results.php"
+  },
+  "extra-template-variables": {
+    "option": "qsm_addon_extra_variables_settings",
+    "path": "qsm-extra-variables/qsm-extra-variables.php",
+    "settings_tab": "Extra Variables"
+  },
+  "zapier-integration": {
+    "option": "qsm_addon_zapier_settings",
+    "settings_tab": "Zapier"
+  },
+  "campaign-monitor-integration": {
+    "path": "qsm-campaign-monitor/qsm-campaign-monitor.php"
+  },
+  "results-analysis": {
+    "option": "qsm_addon_analysis_settings",
+    "path": "qsm-analysis/qsm-analysis.php"
+  },
+  "easy-digital-downloads-integration": {
+    "option": "qsm_addon_edd_integration_settings",
+    "path": "qsm-edd-integration/qsm-edd-integration.php",
+    "settings_tab": "EDD Integration"
+  },
+  "summary-emails": {
+    "path": "qsm-summary/qsm-summary.php"
+  },
+  "export-import": {
+    "option": "qsm_addon_export_import_settings",
+    "settings_tab": "Export And Import"
+  },
+  "google-analytics-tracking": {
+    "option": "qsm_addon_google_analytics_settings",
+    "path": "qsm-google-analytics/qsm-google-analytics.php",
+    "settings_tab": "Google Analytics"
+  },
+  "flashcards": {
+    "option": "qsm_addon_flashcard_settings"
+  },
+  "save-and-resume": {
+    "option": "qsm_addon_save_resume_settings",
+    "path": "qsm-save-resume/qsm-save-resume.php",
+    "settings_tab": "Save And Resume"
+  },
+  "paypal-and-stripe-payment-integration": {
+    "option": "qsm_addon_payment_settings",
+    "path": "qsm-payment-integration/qsm-payment-integration.php",
+    "settings_tab": "Payment Integration"
+  },
+  "sync-with-google-sheets": {
+    "option": "qsm_addon_gs_connector_settings",
+    "path": "qsm-google-sheets/qsm-google-sheet.php"
+  },
+  "wordpress-quiz-timer-advanced": {
+    "path": "qsm-advanced-timer/qsm-advanced-timer.php"
+  },
+  "activecampaign-integration": {
+    "option": "qsm_addon_activecampaign_settings",
+    "settings_tab": "ActiveCampaign"
+  },
+  "advanced-question-types": {
+    "option": "qsm_addon_advance_question_settings",
+    "path": "qsm-advance-question/qsm-advance-question.php",
+    "settings_tab": "Advance Question Type"
+  },
+  "woocommerce-integration": {
+    "option": "qsm_addon_woocommerce_settings",
+    "path": "qsm-woocommerce-integration/qsm_woocommerce_addon.php",
+    "settings_tab": "QSM Addon Woocommerce"
+  },
+  "quiz-proctor": {
+    "option": "mlw_qmn_proctoring_quiz_option",
+    "path": "qsm-proctoring-quiz/qsm-proctoring-quiz.php",
+    "settings_tab": "Proctoring Quiz Settings"
+  },
+  "mailerlite-integration": {
+    "option": "qsm_addon_mailerlite_settings",
+    "settings_tab": "MailerLite"
+  },
+  "quiz-navigator": {
+    "option": "qsm_quiz_navigator_settings"
+  },
+  "get-response-integration": {
+    "settings_tab": "Get Response"
+  }
+}

@@ -19,7 +19,7 @@ function grras_child_enqueue_scripts() {
             'grras-style',
         ],
         '1.0.0'
-    );
+    ); 
 }
 add_action( 'wp_enqueue_scripts', 'grras_child_enqueue_scripts', 20 );
 

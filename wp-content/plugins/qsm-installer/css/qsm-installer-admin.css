@@ -1,0 +1,325 @@
+#qsm-add-installer .qsm-quiz-page-addon.qsm-addon-page-list {
+	width: 100%;
+}
+
+.qsm-card-group {
+	display: grid;
+	gap: 1em;
+    margin-top: 24px;
+	grid-template-columns: repeat(auto-fill,minmax(340px,1fr));
+	transition: all .5s;
+}
+
+.qsm-card-single {
+	background-color: #fff;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+	border: 1px solid #dcdcde;
+    border-radius: 3px;
+}
+
+.qsm-card-single .qsm-installer-image img {
+	display: block;
+    margin: 0;
+    width: 100%;
+	/* border-radius: 12px;
+    padding: 9px; */
+}
+
+.qsm-installer-top {
+	display: flex;
+	/* justify-content: space-between;
+	gap: 1.5em; */
+	min-height: 140px;
+	padding: 1.5em;
+	flex-direction: column;
+}
+
+.qsm-installer-heading h3 {
+	margin-top: 0;
+}
+
+.qsm-installer-button button {
+	float: right;
+}
+
+.qsm-installer-container .qsm-plugin-button-wrap {
+	background: #f9f9f9;
+    display: flex;
+    justify-content: space-between;
+    padding: 1em 2em 0.9em 2em;
+    min-height: 35px;
+    border-top: 1px solid #e0e0e0;
+    align-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.qsm-installer-heading a {
+	text-decoration: underline;
+	text-decoration-color: #000;
+}
+
+.qsm-installer-top .qsm-installer-right .qsm-installer-paragraph h2 {
+	margin-top: 9px;
+}
+
+.qsm-installer-container .qsm-plugin-button-wrap button.button span.dashicons-update {
+	display: inline-block;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	vertical-align: top;
+	color: #d63638;
+	animation: rotation 2s infinite linear;
+}
+
+.qsm-ajax-response {
+	letter-spacing: 0.3px;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	background: #fffbeb;
+	font-size: 12px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: flex-start;
+	background: #eff6ff;
+	border: 1px solid #d1e5ff;
+	border-radius: 4px;
+	padding: 10px;
+	margin: 5px 0;
+	color: #1e40af;
+	font-weight: 500;
+	align-items: center;
+	width: 94%;
+}
+
+.addon-installer-tab-wrapper a:focus {
+	box-shadow: none;
+}
+
+.addon-installer-sub-tab-menu ul.subsubsub {
+	padding: 0;
+}
+
+.qsm-license-td {
+	display: flex;
+}
+
+.qsm-license-td .license-input-div {
+	padding-left: 10px;
+	width: 100%;
+}
+
+.qsm-license-td .license-input-div p.license-info {
+	font-weight: 500;
+}
+
+.qsm-license-td .license-input-div p.license-info {
+	display: flex;
+    align-items: center;
+    min-width: 250px;
+}
+
+.qsm-license-td .license-input-div p.license-info span {
+	margin:  0 5px;
+}
+
+.qsm-license-td .license-input #license_key {
+	width: 450px;
+}
+
+.qsm-license-td .license-input-div a {
+	margin: 0px 0px 0 5px;
+}
+
+.qsm-license-td .license-input{
+	display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.qsm-license-td .license-input p {
+	margin: 0 3px 0 0;
+    /* font-size: 12px; */
+}
+
+.other-license-info {
+	display: flex;
+    align-items: center;
+}
+
+.qsm-license-td .other-license-info .dashicons-yes-alt, .qsm-license-td .other-license-info .dashicons-warning {
+    width: 17px;
+    height: 17px;
+    font-size: 17px;
+    line-height: 1.4;
+    margin-right: 3px;
+	margin-top: -4px;
+}
+
+.qsm-license-td .other-license-info .dashicons-yes-alt {
+	color: #00a32a;
+}
+
+.qsm-license-td .other-license-info .dashicons-warning {
+	color: #dba617;
+}
+
+.license-deactivate-div button.deactivate-license, .license-deactivate-div button.deactivate-license:hover {
+	border: none;
+	color: #d63638;
+    font-weight: 500;
+	cursor: pointer;
+	background-color: transparent;
+	padding-top: 1px;
+}
+
+.qsm-installer-action{
+	display: flex;
+    gap: 0.5em;
+    min-height: 30px;
+    justify-content: flex-end;
+    width: 100%;
+	margin-left: auto;
+}
+
+.qsm-installer-action button.button {
+	display: flex;
+	align-items: center;
+}
+
+.qsm-activate-button, .qsm-deactivate-button {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+	display: flex;
+	justify-content: stretch;
+	align-items: center;
+}
+
+.qsm-activate-button button.button, .qsm-deactivate-button button.button {
+	display: none;
+}
+
+.qsm-activate-button:before,
+.qsm-deactivate-button:before,
+.qsm-activate-button:after,
+.qsm-deactivate-button:after {
+	content: "";
+	position: absolute;
+	border-radius: 17px;
+}
+
+.qsm-activate-button:before,
+.qsm-deactivate-button:before {
+	background-color: #ccc;
+    width: 45px;
+    height: 17px;
+	cursor: pointer;
+}
+
+.qsm-activate-button:after,
+.qsm-deactivate-button:after {
+	background-color: #fff;
+    top: 10.5px;
+    left: 3px;
+    width: 13px;
+    height: 13px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.qsm-deactivate-button:before {
+	background-color: #2196F3;
+}
+
+.qsm-deactivate-button:after {
+	transform: translateX(26px);
+}
+
+.qsm-plugin-status {
+	position: relative;
+	pointer-events: none;
+}
+
+.qsm-deactivate-button .qsm-plugin-status {
+	right: 60px;
+}
+
+
+.qsm-activate-button .qsm-plugin-status {
+	right: 75px;
+}
+
+/* #toplevel_page_qsm_dashboard li a[href*="qmn_addons"] {
+    display: none;
+} */
+.qsm-change-license, .cancel-license-btn {
+	cursor: pointer;
+}
+
+.cancel-license-btn {
+	font-weight: 500;
+	color: #d63638;
+	margin-left: 10px;
+}
+
+.qsm-change-license {
+	color: #0085BA;
+    font-weight: 500;
+    padding-top: 2px;
+    margin-left: 20px;
+}
+
+.qsm-table-license-status {
+	display: flex;
+	align-items: start;
+}
+
+.widefat td.qsm-table-license-status p {
+	margin: 0;
+}
+
+.qsm-popup-upgrade-warning.qsm-installer-warning img {
+	width: 18px;
+    margin-right: 6px;
+}
+
+.qsm-popup-upgrade-warning.qsm-installer-warning span {
+    margin-right: 6px;
+	font-weight: normal;
+}
+
+.qsm-popup-upgrade-warning.qsm-installer-warning b {
+	vertical-align: -webkit-baseline-middle;
+}
+
+table.qsm-installer-table .qsm-table-license-status span.dashicons-yes-alt {
+	margin-right: 7px;
+    margin-top: 1px;
+    background-color: #00a32a;
+    color: #FFFFFF;
+    border: 0 solid #00a32a;
+    border-radius: 50%;
+}
+
+.qsm-table-license-status a.qsm-installer-change-license{
+	margin-left: 20px;
+	font-weight: 600;
+}
+
+.qsm-table-license-status .qsm-installer-license-details {
+	display: flex;
+}
+
+.qsm-table-license-status .qsm-installer-license-response {
+    line-height: 2;
+    font-weight: 500;
+}
+
+.qsm-installer-view-details-license, .qsm-installer-try-again-license {
+	margin-left: 20px;
+}

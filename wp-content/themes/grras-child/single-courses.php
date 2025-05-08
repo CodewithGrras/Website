@@ -390,10 +390,16 @@
                     <div class="accordion" id="accordionExample4">
                         <?php foreach ($multiple as $i => $item): ?>
                             <div class="accordion-item">
-                                <h4 class="accordion-header" id="heading-<?php echo $slug . '-' . $i; ?>">
+                                <h4 class="accordion-header d-flex" id="heading-<?php echo $slug . '-' . $i; ?>">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<?php echo $slug . '-' . $i; ?>" aria-expanded="false" aria-controls="collapse-<?php echo $slug . '-' . $i; ?>">
                                         <?php echo $item["title"]; ?>
                                     </button>
+                                    <div class="d-flex align-items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#f7941e" viewBox="0 0 16 16">
+                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.271 5.055a.5.5 0 0 0-.771.423v5.044a.5.5 0 0 0 .771.423l4.276-2.522a.5.5 0 0 0 0-.846L6.271 5.055z"/>
+                                        </svg>
+                                        <span class="text-warning fw-medium small ms-5"><?php echo '08:00'; ?></span>
+                                    </div>
                                 </h4>
                                 <div id="collapse-<?php echo $slug . '-' . $i; ?>" class="accordion-collapse collapse" aria-labelledby="heading-<?php echo $slug . '-' . $i; ?>" data-bs-parent="#accordionExample4">
                                     <div class="accordion-body">
@@ -832,6 +838,78 @@ endif;
         </div>
     </div>
 </section>
+
+<section class="support scroller" id="careerservice" data-anchor="careerservice">
+  <div class="tabbed-content">
+    <div class="container">
+      <h2><?php echo get_field('career_support_title'); ?></h2>
+      <div class="row">
+        <div class="col-lg-5 d-none d-lg-block">
+          <?php
+            $side_img = get_field('career_support_image');
+            if ($side_img):
+          ?>
+            <img src="<?php echo esc_url($side_img); ?>" class="img-fluid" alt="">
+          <?php endif; ?>
+        </div>
+        <div class="col-lg-7">
+          <nav class="tabs">
+            <ul>
+              <?php
+              if (have_rows('career_support')):
+                $i = 0;
+                while (have_rows('career_support')): the_row();
+                  $title = get_sub_field('title');
+                  $slug = 'tab-' . create_slug($title); // Use a function that makes a clean slug
+                  $active = ($i === 0) ? 'active' : '';
+              ?>
+                <li><a href="#<?php echo $slug; ?>" class="<?php echo $active; ?>"><?php echo esc_html($title); ?></a></li>
+              <?php
+                  $i++;
+                endwhile;
+              endif;
+              ?>
+              <div class="clearfix"></div>
+            </ul>
+          </nav>
+
+          <?php
+          if (have_rows('career_support')):
+            $i = 0;
+            while (have_rows('career_support')): the_row();
+              $title = get_sub_field('title');
+              $description = get_sub_field('description');
+              $img = get_sub_field('image');
+              $slug = 'tab-' . create_slug($title);
+              $active = ($i === 0) ? 'active' : '';
+          ?>
+            <section id="<?php echo $slug; ?>" class="item <?php echo $active; ?>">
+              <div class="item-content">
+                <div class="posts">
+                  <?php if (!empty($img)): ?>
+                    <img src="<?php echo esc_url($img); ?>" alt="" class="img-fluid mb-3" />
+                  <?php endif; ?>
+                  <h5><?php echo esc_html($title); ?></h5>
+                  <p><?php echo esc_html($description); ?></p>
+
+                  <div class="mt-3">
+                    <a href="#" class="btn btn-primary">Course</a>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+            </section>
+          <?php
+              $i++;
+            endwhile;
+          endif;
+          ?>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <script>
     const content_detailsData = [
