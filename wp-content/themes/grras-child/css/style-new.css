@@ -4949,3 +4949,11 @@
    height: 51px;
    background-image: url(../grras-child/images/Vector.png);
 }
+.text-theme-orange {
+   color: #ef721f;
+   font-size: 15px;
+}
+
+.f-14 {
+   font-size: 14px;
+}

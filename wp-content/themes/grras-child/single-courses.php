@@ -414,7 +414,7 @@
                                                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.271 5.055a.5.5 0 0 0-.771.423v5.044a.5.5 0 0 0 .771.423l4.276-2.522a.5.5 0 0 0 0-.846L6.271 5.055z"/>
                                                         </svg>
                                                     </button>
-                                                    <span class="text-warning fw-medium small" id="duration-<?php echo $youtube_id; ?>">Loading...</span>
+                                                    <span class="text-warning fw-medium small f-14" id="duration-<?php echo $youtube_id; ?>">Loading...</span>
                                                 </div>
                                                 <?php endif; ?>
                                             </h4>
