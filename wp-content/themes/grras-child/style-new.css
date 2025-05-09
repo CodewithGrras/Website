@@ -1423,10 +1423,6 @@ h2{ font-size: 32px; color: #151924; font-weight: 700; margin: 0; padding: 0; }
         transition: all .2s ease; }
 .successstory .owl-nav .owl-prev:hover, .successstory .owl-nav .owl-next:hover{ opacity: .8; }
 
-
-
-
-.successstory .review { text-align: center; padding: 60px 0 20px; margin-bottom: 50px; list-style: none; position: relative; }
 .successstory .review:before { position: absolute; bottom: 0; left: 50px; content: ''; background: url(../images/trust-left.png) no-repeat; width: 122px; height: 191px; }
 .successstory .review:after { position: absolute; bottom: 0; right: 50px; content: ''; background: url(../images/trust-right.png) no-repeat; width: 122px; height: 191px; }
 .successstory .review li{ display: inline-block; padding: 0 50px; position: relative; }
@@ -2546,7 +2542,16 @@ background: linear-gradient(45deg,  rgba(11,252,144,1) 0%,rgba(57,110,252,1) 33%
 .support{ padding: 80px 0; }
 .support h2{ margin-bottom: 25px; }
 .support .img-fluid{ border-radius: 5px; }
-.support .tabs ul { border: 1px #bfbfbf solid; border-radius: 5px; border-left: none; margin: 0; padding: 0; }
+.support .tabs ul {
+   border: 1px #bfbfbf solid;
+   border-radius: 5px;
+   border-left: none;
+   margin: 0;
+   padding: 0;
+}
+.text-theme-orange {
+   color: #ee6a23;
+}
 .support .tabs ul li{ margin: 0; padding: 0; width: 33.33%; text-align: center; float: left; }
 .support .tabs ul li a{ margin: 0; font-size: 16px; border: none; color: #333; border-left: 1px #bfbfbf solid; padding: 10px; text-decoration: none; }
 .support .tabs ul li:first-child a{ border-radius: 4px 0 0 4px; }

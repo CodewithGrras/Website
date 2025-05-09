@@ -357,95 +357,141 @@
   <div class="fullstack wow fadeInUp scroller" id="curriculum" data-anchor="curriculum">
     <div class="container">
         <div class="row" style="position: relative!important;">
-            <div class="col-lg-8 " style="position: relative;">
-                <style>
-                    .hidden-item {
-    display: none;
-}
-
-                </style>
+            <div class="col-lg-8" style="position: relative;">
                 <h2><?php echo get_field("course_curriculum_heading"); ?></h2>
                 <div class="subtext"><?php echo get_field("course_curriculum_description"); ?></div>
-            <div class="accordion" id="accordionExample2">
-    <?php
-    $count = 0;
-    if (have_rows('course_learning')):
-        while (have_rows('course_learning')): the_row();
-            $count++;
-            $title = get_sub_field('title');
-            $slug = create_slug($title) .'-'. $count;
-            $is_multiple = get_sub_field('is_multiple') == 'True';
-            $multiple = get_sub_field('multiple');
-    ?>
-    <div class="accordion-item<?php echo ($count > 14) ? ' hidden-item' : ''; ?>">
-        <h4 class="accordion-header" id="heading-<?php echo $slug; ?>">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<?php echo $slug; ?>" aria-expanded="false" aria-controls="collapse-<?php echo $slug; ?>">
-                <?php echo $title; ?>
-            </button>
-        </h4>
-        <div id="collapse-<?php echo $slug; ?>" class="accordion-collapse collapse" aria-labelledby="heading-<?php echo $slug; ?>" data-bs-parent="#accordionExample2">
-            <div class="accordion-body">
-                <?php echo wpautop(get_sub_field('content')); ?>
-                <?php if ($is_multiple): ?>
-                    <div class="accordion" id="accordionExample4">
-                        <?php foreach ($multiple as $i => $item): ?>
-                            <div class="accordion-item">
-                                <h4 class="accordion-header d-flex" id="heading-<?php echo $slug . '-' . $i; ?>">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<?php echo $slug . '-' . $i; ?>" aria-expanded="false" aria-controls="collapse-<?php echo $slug . '-' . $i; ?>">
-                                        <?php echo $item["title"]; ?>
-                                    </button>
-                                    <div class="d-flex align-items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#f7941e" viewBox="0 0 16 16">
-                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.271 5.055a.5.5 0 0 0-.771.423v5.044a.5.5 0 0 0 .771.423l4.276-2.522a.5.5 0 0 0 0-.846L6.271 5.055z"/>
-                                        </svg>
-                                        <span class="text-warning fw-medium small ms-5"><?php echo '08:00'; ?></span>
+                <div class="accordion" id="accordionExample2">
+                    <?php
+                    $count = 0;
+                    if (have_rows('course_learning')):
+                        while (have_rows('course_learning')): the_row();
+                            $count++;
+                            $title = get_sub_field('title');
+                            $slug = create_slug($title) . '-' . $count;
+                            $is_multiple = get_sub_field('is_multiple') == 'True';
+                            $multiple = get_sub_field('multiple');
+                            $has_video = false;
+
+                            // Check if any item has a YouTube video link
+                            if ($is_multiple) {
+                                foreach ($multiple as $item) {
+                                    if (!empty($item['youtube_video_link'])) {
+                                        $has_video = true;
+                                        break;
+                                    }
+                                }
+                            }
+                    ?>
+                    <div class="accordion-item<?php echo ($count > 14) ? ' hidden-item' : ''; ?>">
+                        <h4 class="accordion-header d-flex justify-content-between align-items-center" id="heading-<?php echo $slug; ?>">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<?php echo $slug; ?>" aria-expanded="false" aria-controls="collapse-<?php echo $slug; ?>">
+                                <?php echo $title; ?>
+                            </button>
+                            <?php if ($has_video): ?>
+                                <span class="small text-theme-orange me-3">Preview</span>
+                            <?php endif; ?>
+                        </h4>
+                        <div id="collapse-<?php echo $slug; ?>" class="accordion-collapse collapse" aria-labelledby="heading-<?php echo $slug; ?>" data-bs-parent="#accordionExample2">
+                            <div class="accordion-body">
+                                <?php echo wpautop(get_sub_field('content')); ?>
+                                <?php if ($is_multiple): ?>
+                                    <div class="accordion" id="accordionExample4">
+                                        <?php foreach ($multiple as $i => $item):
+                                            $item_slug = $slug . '-' . $i;
+                                            $youtube_link = $item['youtube_video_link'];
+                                            preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/', $youtube_link, $matches);
+                                            $youtube_id = $matches[1] ?? '';
+                                        ?>
+                                        <div class="accordion-item">
+                                            <h4 class="accordion-header d-flex justify-content-between align-items-center" id="heading-<?php echo $item_slug; ?>">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<?php echo $item_slug; ?>" aria-expanded="false" aria-controls="collapse-<?php echo $item_slug; ?>">
+                                                    <?php echo $item["title"]; ?>
+                                                </button>
+                                                <?php if (!empty($youtube_id)): ?>
+                                                <div class="d-flex align-items-center">
+                                                    <button class="btn btn-link p-0 me-2 play-video-btn" data-video-id="<?php echo $youtube_id; ?>">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#f7941e" viewBox="0 0 16 16">
+                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.271 5.055a.5.5 0 0 0-.771.423v5.044a.5.5 0 0 0 .771.423l4.276-2.522a.5.5 0 0 0 0-.846L6.271 5.055z"/>
+                                                        </svg>
+                                                    </button>
+                                                    <span class="text-warning fw-medium small" id="duration-<?php echo $youtube_id; ?>">Loading...</span>
+                                                </div>
+                                                <?php endif; ?>
+                                            </h4>
+                                            <div id="collapse-<?php echo $item_slug; ?>" class="accordion-collapse collapse" aria-labelledby="heading-<?php echo $item_slug; ?>" data-bs-parent="#accordionExample4">
+                                                <div class="accordion-body">
+                                                    <?php echo $item['content']; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php endforeach; ?>
                                     </div>
-                                </h4>
-                                <div id="collapse-<?php echo $slug . '-' . $i; ?>" class="accordion-collapse collapse" aria-labelledby="heading-<?php echo $slug . '-' . $i; ?>" data-bs-parent="#accordionExample4">
-                                    <div class="accordion-body">
-                                        <?php echo $item['content']; ?>
-                                    </div>
-                                </div>
+                                <?php endif; ?>
                             </div>
-                        <?php endforeach; ?>
+                        </div>
                     </div>
-                <?php endif; ?>
+                    <?php endwhile; endif; ?>
+                </div>
+
+                <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const API_KEY = 'AIzaSyDp6GjV0wmZ2IXdTADrQ2m3ix7eIZ8PrY8';
+                    const playButtons = document.querySelectorAll('.play-video-btn');
+
+                    playButtons.forEach(btn => {
+                        const videoId = btn.getAttribute('data-video-id');
+                        if (videoId) {
+                            fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoId}&key=${API_KEY}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    const isoDuration = data.items[0].contentDetails.duration;
+                                    const duration = iso8601DurationToTime(isoDuration);
+                                    document.getElementById(`duration-${videoId}`).textContent = duration;
+                                })
+                                .catch(() => {
+                                    document.getElementById(`duration-${videoId}`).textContent = 'N/A';
+                                });
+                        }
+                    });
+
+                    function iso8601DurationToTime(duration) {
+                        const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+                        const hours = (parseInt(match[1]) || 0);
+                        const minutes = (parseInt(match[2]) || 0);
+                        const seconds = (parseInt(match[3]) || 0);
+                        return [hours, minutes, seconds]
+                            .map(v => v < 10 ? "0" + v : v)
+                            .filter((v, i) => i > 0 || v !== "00")
+                            .join(':');
+                    }
+
+                    // Play video on click
+                    playButtons.forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const videoId = this.getAttribute('data-video-id');
+                            const modalBody = document.getElementById('videoModalBody');
+                            modalBody.innerHTML = `<iframe class="youtubeIframe" width="100%" height="400" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allowfullscreen></iframe>`;
+                            const modal = new bootstrap.Modal(document.getElementById('videoModal'));
+                            modal.show();
+                        });
+                    });
+                });
+                </script>
+
+                <div class="youtubeModal modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="videoModalLabel">Video Preview</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body" id="videoModalBody">
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <?php
-        endwhile;
-    endif;
-    ?>
-</div>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-    const viewMoreBtn = document.getElementById('view-more-btn');
-    const hiddenItems = document.querySelectorAll('.hidden-item');
 
-    viewMoreBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        hiddenItems.forEach(function(item) {
-            item.style.display = 'block';
-        });
-        if(viewMoreBtn.textContent == 'Show Less'){
-        viewMoreBtn.textContent = 'Show More';
-        hiddenItems.forEach(function(item) {
-            item.style.display = 'none';
-        });
-        }else{
-        viewMoreBtn.textContent = 'Show Less'; 
-        }
-    });
-});
-
-</script>
-<?php if($count > 13): ?>
-<div class="my-3 text-center"><a href="javascript:void(0)" id="view-more-btn" class="link-primary">View More</a></div>
-<?php endif; ?>
-
-                <!--<a href="#" class="btn btn-secondary">Download Brochure</a>-->
-            </div>
             <div class="col-lg-4 d-none d-sm-block top-fixed">
                 <div class="excel">
                     <ul>
@@ -453,26 +499,20 @@
                         if (have_rows('live_classes')):
                             $i = 0;
                             while (have_rows('live_classes')): the_row();
-                                if ($i == 3):
-                        ?>
+                                if ($i == 3): ?>
                         <li class="separater"></li>
-                        <?php
-                                endif;
-                        ?>
+                        <?php endif; ?>
                         <li><img src="<?php echo get_sub_field('icon'); ?>" alt=""> <?php echo get_sub_field('name'); ?></li>
-                        <?php
-                                $i++;
-                            endwhile;
-                        endif;
-                        ?>
+                        <?php $i++; endwhile; endif; ?>
                     </ul>
-                    <!--<a href="<?php echo get_field('download_brochure') ?>" class="btn btn-primary d-block">Download Brochure</a>-->
-					<a href="#" class="btn btn-primary d-block" data-bs-toggle="modal" data-bs-target="#exampleModal6">Download Brochure</a>
+                    <a href="#" class="btn btn-primary d-block" data-bs-toggle="modal" data-bs-target="#exampleModal6">Download Brochure</a>
                 </div>
             </div>
         </div>
     </div>
-</div>
+  </div>
+
+
 
   <!-- HTML 5.1(Hyper Text Markup language) -->
 
@@ -791,54 +831,6 @@ endif;
             }
         }
     </style>
-<section class="support wow fadeInLeft scroller" id="careerservice" data-anchor="careerservice">
-    <div class="container">
-        <h2><?php echo get_field('career_support_title') ?></h2>
-
-        <div class="container_details">
-            <div class="sidebar_details" id="sidebar_details">
-                <?php
-                if (have_rows('career_support')): 
-                    $i = 0;
-                    while (have_rows('career_support')): the_row();
-                        $title = get_sub_field('title');
-                        $slug = create_slug($title);  // Assuming create_slug is a function that sanitizes the title
-                ?>
-                    <div onclick="changecontent_details(<?php echo $i; ?>, this)" 
-                         class="<?php echo ($i == 0 ? 'selected' : ''); ?>">
-                        <?php echo $title; ?>
-                    </div>
-                <?php
-                        $i++;
-                    endwhile;
-                endif;
-                ?>
-            </div>
-
-            <div class="content_details" id="content_details">
-                <?php
-                if (have_rows('career_support')): 
-                    $i = 0;
-                    while (have_rows('career_support')): the_row();
-                        $title = get_sub_field('title');
-                        $description = get_sub_field('description');
-                        $img = get_sub_field('image');  // Assuming the image field is present
-                ?>
-                    <div class="card_details card inserted-content_details <?php echo ($i == 0 ? 'active' : ''); ?>">
-                        <img src="<?php echo esc_url($img); ?>" alt="" />
-                        <h3><?php echo $title; ?></h3>
-                        <p><?php echo $description; ?></p>
-                    </div>
-                <?php
-                        $i++;
-                    endwhile;
-                endif;
-                ?>
-            </div>
-        </div>
-    </div>
-</section>
-
 <section class="support scroller" id="careerservice" data-anchor="careerservice">
   <div class="tabbed-content">
     <div class="container">

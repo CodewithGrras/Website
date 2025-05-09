@@ -63,12 +63,12 @@ function my_theme_enqueue_styles() {
     //     array(),
     //     time() // Set version to current timestamp
     // );
-    wp_enqueue_style(
+    /*wp_enqueue_style(
         'style-new',
         get_stylesheet_directory_uri() . '/css/style-new.css',
         array(),
         time() // Set version to current timestamp
-    );
+    );*/
 
     // Google Fonts (typically doesn't need versioning)
     wp_enqueue_style(

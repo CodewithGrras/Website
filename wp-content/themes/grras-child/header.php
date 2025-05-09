@@ -9,7 +9,9 @@
   <title><?php wp_title(''); 
    $header_ads_banner = get_field('header_ads_banner','option');
   ?></title>
-<link rel='stylesheet' href='<?php echo get_stylesheet_directory_uri();?>/css/bootstrap.min.css' media='all' /><link rel='stylesheet' href='<?php echo get_stylesheet_directory_uri();?>/css/owl.carousel.min.css' media='all' /><link rel='stylesheet' href='<?php echo get_stylesheet_directory_uri();?>/css/animate.css' media='all' /><link rel='stylesheet' href='<?php echo get_stylesheet_directory_uri();?>/css/style-new.css' media='all' /><link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&#038;family=Poppins:wght@300;400;500;600;700&#038;display=swap' media='all' />
+<link rel='stylesheet' href='<?php echo get_stylesheet_directory_uri();?>/css/bootstrap.min.css' media='all' /><link rel='stylesheet' href='<?php echo get_stylesheet_directory_uri();?>/css/owl.carousel.min.css' media='all' /><link rel='stylesheet' href='<?php echo get_stylesheet_directory_uri();?>/css/animate.css' media='all' />
+<link rel='stylesheet' href='<?php echo get_stylesheet_directory_uri();?>/css/style-new.css' media='all' />
+<link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&#038;family=Poppins:wght@300;400;500;600;700&#038;display=swap' media='all' />
   <?php wp_head(); // This is where scripts and styles are enqueued 
   ?>
 
@@ -41,8 +43,7 @@ $terms = get_terms(array(
         <form class="d-flex" role="search">
           <div class="megamenu">
             <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"> Courses </a>
-            <div class="collapse menuopen" id="collapseExample" sytle="    position: fixed;
-    top: 0px;">
+            <div class="collapse menuopen" id="collapseExample" sytle="position: fixed; top: 0px;">
               <div class="card">
                 <div class="row">
                   <div class="col-lg-3">

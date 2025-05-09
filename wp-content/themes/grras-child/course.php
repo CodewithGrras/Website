@@ -31,13 +31,7 @@ get_header();
 
 
 <!-- Browse by -->
-<div class="browseby wow fadeInUp">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h2 class="text-center"><?php echo get_field('certifications_title') ?>s</h2>
-            </div>
-            <?php
+<?php
 // Custom query to get 'career_success_story' posts with 'story_types' term 'rating-page'
 $args = array(
     'post_type' => 'courses',
@@ -54,9 +48,16 @@ $args = array(
 
 // Create a new query
 $custom_query = new WP_Query($args);
+if ($custom_query->have_posts()) {
 ?>
- <?php
-            if ($custom_query->have_posts()) {
+<div class="browseby wow fadeInUp">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="text-center"><?php echo get_field('certifications_title') ?>s</h2>
+            </div>
+
+            <?php
                 // Loop through the posts
                 $i = 0;
                 while ($custom_query->have_posts()) {
@@ -70,19 +71,16 @@ $custom_query = new WP_Query($args);
                             <h4><?php the_title() ?></h4>
                         </a>
                     </div>
-             <?php
+            <?php
                 }
-            } else {
-                echo 'No success stories found.';
-            }
             // Reset post data
             wp_reset_postdata();
-?>
+            ?>
         </div>
     </div>
 </div>
 <?php
-
+}
 include "components/course-workshops.php"; ?>
 
 <!-- Traditional Education -->
@@ -146,22 +144,32 @@ include "components/course-workshops.php"; ?>
     <div class="container">
         <h2 class="text-center">Trusted by Learners</h2>
 
-        <ul class="review">
-            <?php if (have_rows('trusted_by_learners')): ?>
+        <div class="review">
+                <?php if (have_rows('trusted_by_learners')): ?>
 
                 <?php while (have_rows('trusted_by_learners')): the_row();
                     $image = get_sub_field('image'); // Adjust this to match your subfield name
+                    $star_rating = get_sub_field('star_rating'); 
                 ?>
 
-                    <li>
-                        <a href="<?php echo get_sub_field('link') ?>">
-                        <img src="<?php echo $image ?>" class="img-fluid" alt="">
+                    <div class="fb-google-area">
+                        <div class="link">
+                            <a href="<?php echo get_sub_field('link') ?>">
+                                <img src="<?php echo $image ?>" class="img-fluid" alt="<?php echo $image; ?>" style="width: 250px; height: 80px;">
                             </a>
-                        </li>
+                        </div>
+                        <div class="rating d-flex">
+                            <div class="stars">
+                                <?php for ($i = 1; $i <= 5; $i++) { ?>
+                                    <span class="star star-enabled">★</span>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
                 <?php endwhile; ?>
 
-            <?php endif; ?>
-        </ul>
+                <?php endif; ?>
+        </div>
 
       <?php include "components/course-stories.php"; ?>
     </div>

@@ -1501,6 +1501,47 @@ document.addEventListener("DOMContentLoaded", (event) => {
     element.style.setProperty('display', 'block', 'important');
   });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const menu = document.getElementById('collapseExample');
+
+  document.addEventListener('click', function(event) {
+    const isClickInside = menu.contains(event.target);
+    const isButton = event.target.closest('[data-bs-toggle="collapse"]');
+
+    // Check if click is outside the menu and not on the toggle button
+    if (!isClickInside && !isButton && menu.classList.contains('show')) {
+      const bsCollapse = bootstrap.Collapse.getInstance(menu);
+      if (bsCollapse) {
+        bsCollapse.hide();
+      }
+    }
+  });
+});
+
+// When modal is fully shown
+jQuery('.youtubeModal').on('shown.bs.modal', function () {
+    console.log('Modal is open');
+    var carousel = jQuery(this).attr('data-owl-carousel');
+    if(carousel) {
+        jQuery(carousel).trigger('stop.owl.autoplay');
+    }
+});
+
+// When modal is fully hidden
+jQuery('.youtubeModal').on('hidden.bs.modal', function () {
+    var ele = jQuery(this);
+    var iframeLink = ele.find(".youtubeIframe").attr('src');
+    ele.find(".youtubeIframe").attr('src', '');
+    setTimeout(() => {
+        ele.find(".youtubeIframe").attr('src', iframeLink);
+    }, 100);
+    var carousel = jQuery(this).attr('data-owl-carousel');
+    if(carousel) {
+        jQuery(carousel).trigger('play.owl.autoplay', [3000]);
+    }
+}); 
+
 </script>
 
 
