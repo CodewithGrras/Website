@@ -410,11 +410,11 @@
                                                 <?php if (!empty($youtube_id)): ?>
                                                 <div class="d-flex align-items-center">
                                                     <button class="btn btn-link p-0 me-2 play-video-btn" data-video-id="<?php echo $youtube_id; ?>">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#f7941e" viewBox="0 0 16 16">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#ef721f" viewBox="0 0 16 16">
                                                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.271 5.055a.5.5 0 0 0-.771.423v5.044a.5.5 0 0 0 .771.423l4.276-2.522a.5.5 0 0 0 0-.846L6.271 5.055z"/>
                                                         </svg>
                                                     </button>
-                                                    <span class="text-warning fw-medium small f-14" id="duration-<?php echo $youtube_id; ?>">Loading...</span>
+                                                    <span class="text-theme-orange fw-medium small f-14" id="duration-<?php echo $youtube_id; ?>">Loading...</span>
                                                 </div>
                                                 <?php endif; ?>
                                             </h4>

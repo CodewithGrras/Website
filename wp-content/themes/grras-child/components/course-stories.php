@@ -30,7 +30,6 @@ $custom_query = new WP_Query($args);
               <div class="carbox" href="#exampleModasdfsdl-<?php echo $i; ?>" data-bs-toggle="modal" data-bs-target="#exampleModasdfsdl-<?php echo $i; ?>">
                 <div class="bigimg"><img src="<?php the_post_thumbnail_url(); ?>" class="img-fluid" alt=""></div>
                 <a href="#exampleModasdfsdl-<?php echo $i; ?>" class="play" data-bs-toggle="modal" data-bs-target="#exampleModasdfsdl-<?php echo $i; ?>"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/caree-play1.png" alt=""></a>
-                <div class="company"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/auto.png" class="img-fluid" alt=""></div>
                 <div class="coname">
                   <h4><?php the_title(); ?></h4>
                   <p><?php echo get_field('post_designation')?> - <?php echo get_field('location'); ?></p>
