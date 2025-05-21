@@ -34,6 +34,8 @@ $partner_with_us = get_field('partner_with_us');
       ?>
     </div>
 </div>
+
+
 <!-- what is grass -->
 <div class="whatgrass">
     <div class="container">
@@ -67,6 +69,7 @@ $partner_with_us = get_field('partner_with_us');
         </div>
     </div>
 </div>
+
 <!-- join india -->
 <div class="joinindia wow fadeInUp">
     <div class="container">
@@ -99,6 +102,7 @@ $partner_with_us = get_field('partner_with_us');
         </div>
     </div>
 </div>
+
 <!-- Board of Directors Profile -->
 <div class="boardof wow fadeInLeft">
     <div class="container">
@@ -127,6 +131,7 @@ $partner_with_us = get_field('partner_with_us');
         </div>
     </div>
 </div>
+
 <!-- What we do -->
 <?php if (have_rows('what_we_do')):
     $i = 1;
@@ -258,6 +263,7 @@ $partner_with_us = get_field('partner_with_us');
 
     </div>
 </div>
+
 <!-- hire us -->
 <div class="endcareer wow fadeInUp">
     <div class="container">
@@ -279,22 +285,23 @@ $partner_with_us = get_field('partner_with_us');
             <?php endif; ?>
         </div>
     </div>
-    </div>
-    <!-- Partner with Us -->
-    <div class="container wow fadeInUp">
-        <div class="partnerwith m-0">
-            <div class="row d-flex align-items-center">
-                <div class="col-lg-4">
-                    <h2><?php echo $partner_with_us["title"]; ?></h2>
-                    <a href="<?php echo $partner_with_us["apply_url"]; ?>" class="btn btn-dark d-none d-md-block">apply now</a>
-                </div>
-                <div class="col-lg-8">
-                    <p><?php echo $partner_with_us["description"]; ?></p>
-                    <a href="<?php echo $partner_with_us["apply_url"]; ?>" class="btn btn-dark d-block d-md-none mt-3">apply now</a>
-                </div>
+</div>
+
+<!-- Partner with Us -->
+<div class="container wow fadeInUp">
+    <div class="partnerwith m-0">
+        <div class="row d-flex align-items-center">
+            <div class="col-lg-4">
+                <h2><?php echo $partner_with_us["title"]; ?></h2>
+                <a href="<?php echo $partner_with_us["apply_url"]; ?>" class="btn btn-dark d-none d-md-block">apply now</a>
+            </div>
+            <div class="col-lg-8">
+                <p><?php echo $partner_with_us["description"]; ?></p>
+                <a href="<?php echo $partner_with_us["apply_url"]; ?>" class="btn btn-dark d-block d-md-none mt-3">apply now</a>
             </div>
         </div>
     </div>
+</div>
 
 
     <?php

@@ -363,14 +363,14 @@ include 'components/city-footer-courses.php';
 
     </script><?php if(!is_home() || !is_front_page()): ?>
     <script type="text/javascript">
-  document.getElementById('workshop-filter').addEventListener('change', function() {
+  /*document.getElementById('workshop-filter').addEventListener('change', function() {
     var filterValue = this.value; // Get selected value
  
     // Get the current URL and add the selected filter as a query parameter
     var url = new URL(window.location.href);
     url.searchParams.set('workshop_filter', filterValue); // Add filter to the URL
     window.location.href = url; // Redirect to the updated URL
-  });
+  });*/
 //   document.getElementById('loader-workshop').addEventListener('click', function() {
     
 
@@ -1432,67 +1432,60 @@ $('.filter-button-group').on( 'click', 'li', function() {
     </script>
 
     <!-- tab change to acordian -->
-       <script>
+    <script>
         jQuery(document).ready(function($) {
-      tabControl();
-
-        /*
-        We also apply the switch when a viewport change is detected on the fly
-        (e.g. when you resize the browser window or flip your device from 
-        portrait mode to landscape). We set a timer with a small delay to run 
-        it only once when the resizing ends. It's not perfect, but it's better
-        than have it running constantly during the action of resizing.
-        */
-        var resizeTimer;
-        $(window).on('resize', function(e) {
-          clearTimeout(resizeTimer);
-          resizeTimer = setTimeout(function() {
             tabControl();
-          }, 250);
+
+            /*
+            We also apply the switch when a viewport change is detected on the fly
+            (e.g. when you resize the browser window or flip your device from 
+            portrait mode to landscape). We set a timer with a small delay to run 
+            it only once when the resizing ends. It's not perfect, but it's better
+            than have it running constantly during the action of resizing.
+            */
+            var resizeTimer;
+            $(window).on('resize', function(e) {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                tabControl();
+            }, 250);
+            });
+
+            /*
+            The function below is responsible for switching the tabs when clicked.
+            It switches both the tabs and the accordion buttons even if 
+            only the one or the other can be visible on a screen. We prefer
+            that in order to have a consistent selection in case the viewport
+            changes (e.g. when you esize the browser window or flip your 
+            device from portrait mode to landscape).
+            */
+            function tabControl() {
+                var tabs = $('.tabbed-content').find('.tabs');
+                if(tabs.is(':visible')) {
+                    tabs.find('a').on('click', function(event) {
+                        event.preventDefault();
+                        var target = $(this).attr('href'),
+                            tabs = $(this).parents('.tabs'),
+                            buttons = tabs.find('a'),
+                            item = tabs.parents('.tabbed-content').find('.item');
+                        buttons.removeClass('active');
+                        item.removeClass('active');
+                        $(this).addClass('active');
+                        $(target).addClass('active');
+                    });
+                } else {
+                    $('.item').on('click', function() {
+                        var container = $(this).parents('.tabbed-content'),
+                        currId = $(this).attr('id'),
+                        items = container.find('.item');
+                        container.find('.tabs a').removeClass('active');
+                        items.removeClass('active');
+                        $(this).addClass('active');
+                        container.find('.tabs a[href$="#'+ currId +'"]').addClass('active');
+                    });
+                } 
+            }
         });
-
-        /*
-        The function below is responsible for switching the tabs when clicked.
-        It switches both the tabs and the accordion buttons even if 
-        only the one or the other can be visible on a screen. We prefer
-        that in order to have a consistent selection in case the viewport
-        changes (e.g. when you esize the browser window or flip your 
-        device from portrait mode to landscape).
-        */
-        function tabControl() {
-          var tabs = $('.tabbed-content').find('.tabs');
-          if(tabs.is(':visible')) {
-            tabs.find('a').on('click', function(event) {
-              event.preventDefault();
-              var target = $(this).attr('href'),
-                  tabs = $(this).parents('.tabs'),
-                  buttons = tabs.find('a'),
-                  item = tabs.parents('.tabbed-content').find('.item');
-              buttons.removeClass('active');
-              item.removeClass('active');
-              $(this).addClass('active');
-              $(target).addClass('active');
-            });
-          } else {
-            $('.item').on('click', function() {
-              var container = $(this).parents('.tabbed-content'),
-                  currId = $(this).attr('id'),
-                  items = container.find('.item');
-              container.find('.tabs a').removeClass('active');
-              items.removeClass('active');
-              $(this).addClass('active');
-              container.find('.tabs a[href$="#'+ currId +'"]').addClass('active');
-            });
-          } 
-        }  
-        
-        
-  
-
-    
-    });
-     
-           
     </script>
 
 <script>
@@ -1540,9 +1533,29 @@ jQuery('.youtubeModal').on('hidden.bs.modal', function () {
     if(carousel) {
         jQuery(carousel).trigger('play.owl.autoplay', [3000]);
     }
-}); 
+});
+
+const menuItems = document.querySelectorAll('.menu li');
+const contents = document.querySelectorAll('.contentarea');
+
+menuItems.forEach(item => {
+    item.addEventListener('click', () => {
+        // Remove active from all menu items
+        menuItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+
+        // Hide all content
+        contents.forEach(c => c.classList.remove('active'));
+
+        // Show target content
+        const targetId = item.getAttribute('data-target');
+        document.getElementById(targetId).classList.add('active');
+    });
+});
 
 </script>
+
+
 
 
  <script src="https://www.google.com/recaptcha/api.js" async defer></script>

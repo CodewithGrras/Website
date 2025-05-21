@@ -1,0 +1,316 @@
+
+@media(max-width:991px){
+    .f-42 {
+        font-size: 32px !important;
+    }
+    .academy-section .banner-content p {
+        font-size: 16px;
+    }
+    .section-padding {
+        padding: 50px 0;
+    }
+    .banner-image-area .avatar-area {
+        left: 0;
+        right: 0;
+        display: -webkit-inline-box;
+        font-size: 12px;
+        gap: 15px;
+        max-width: 250px;
+        bottom: -30px;
+        margin: auto;
+    }
+    .banner-image-area .avatar-area .userimage img {
+        max-height: 22px;
+    }
+    .learner-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 5px;
+    }
+    .info-card-hover-item li img {
+        max-height: 35px;
+    }
+    .Newslatter-section .container:before{
+        height: 100%;
+    }
+    .tab-big li a {
+        font-size: 12px;
+        padding: 15px 15px;
+    }
+    .menu {
+        padding: 10px 35px !important;
+        overflow: hidden;
+    }
+    .menu li {
+        font-size: 13px;
+        padding: 8px 6px;
+        flex: 0 0 auto;
+    }
+    .mobildbtn button {
+        top: 1px;
+        width: 30px;
+        height: 55px;
+        z-index: 99999;
+    }
+    .mobildbtn #nextBtn {
+        right: 1px;
+    }
+    .mobildbtn #prevBtn {
+        left: 1px;
+    }
+    
+}
+@media(max-width:767px){
+    .f-42 {
+        font-size: 24px !important;
+    }
+    .academy-section .banner-content p, .info-card .card-data p, .content-area,
+    .innovation ul li, .heading-area p, .help-section .card, .career-block p {
+        font-size: 12px;
+    }
+    .innovation ul li svg {
+        width: 14px;
+    }
+    .heading-area h1, .refer-section .banner-content h1 {
+        font-size: 20px !important;
+    }
+    .info-card .card-data h5, .help-section .card h5,
+    .refer-section .banner-content, .career-block h5 {
+        font-size: 14px;
+    }
+    .career-block .career-block-count {
+        margin-top: -12px;
+        width: 25px;
+        height: 25px;
+        font-size: 13px;
+    }
+    .content-area h2{
+        font-size: 16px;
+    }
+    .help-section .cardicon svg {
+        width: 30px;
+        height: 30px;
+    }
+    .career-block .cardicon svg {
+        width: 40px;
+        height: 40px;
+    }
+    .hearform .nav a {
+        display: inline-flex;
+        min-width: 100px;
+        justify-content: center;
+        font-size: 11px;
+        margin-bottom: 0;
+        padding: 13px 7px;
+    }
+    .banner-content h3 {
+        font-size: 18px;
+        margin-bottom: 12px;
+    }
+    .refer-section:before{
+        z-index: -1;
+    }
+    .user-block-area .user-block-data .user-name {
+        font-size: 12px;
+    }
+    .tab-big li a.active .collapseicon-mobile {
+        transform: rotate(180deg) translate(0px, 10px);
+    }
+    .faqs .accordion-plus .accordion-button::after{
+        width: 18px;
+        height: 18px;
+        right: 0px;
+    }
+    .exam-section .left-tab li a.active + .exam-course-area .exam-course-area-item {
+        display: block !important;
+    }
+    .user-block-area {
+        padding: 8px !important;
+    }
+    .user-block-area .user-block-icon svg {
+        width: 30px;
+        height: 30px;
+    }
+    .exam-section .exam-course-area .cobox a {
+        padding: 0 0 6px;
+    }
+    .exam-section .exam-course-area .cobox .content.line,
+    .exam-course-area .cobox .content p, .exam-course-area .cobox .cobox-footer {
+        display: none;
+    }
+    .exam-course-area .cobox .p-3 {
+        padding-bottom: 0 !important;
+    }
+    .exam-course-area .cobox .question-list {
+        display: flex;
+        justify-content: space-between;
+    }
+    .exam-course-area .cobox .question-list li {
+        border: 0;
+        display: flex;
+        gap: 5px;
+    }
+    .exam-section .intcourse {
+        padding-bottom: 10px !important;
+    }
+    .exam-section .exam-course-area {
+        overflow: hidden;
+        max-height: initial;
+        background-color: transparent;
+    }
+    .exam-section .exam-course-area .exam-course-area-item {
+        padding: 15px 4px 0 !important;
+    }
+    .faqs .accordion-plus {
+        border-radius: 0;
+    }
+    .faq-section .left-tab li a {
+        position: relative;
+    }
+    .faq-section .left-tab li a:after {
+        background: url(../images/plus-theme.png) no-repeat;
+        left: auto;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        content: "";
+        width: 14px;
+        height: 14px;
+        transform: translate(0px, -50%);
+        background-size: 14px;
+    }
+    .faq-section .left-tab li a.active:after{
+        background: url(../images/minus-theme.png) no-repeat;
+    }
+    .faq-section .left-tab li{
+        margin-bottom: 5px;
+    }
+    .question-block .question-name {
+        font-size: 12px;
+    }
+    .stickybar a {
+        width: 100%;
+    }
+    .mcq-detail h5 {
+        font-size: 14px;
+    }
+    .circle-container {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .btnlight, .roadmap-block h5{
+        font-size: 15px;
+    }
+    .left-tab li a.active + .mobile-view-tab {
+        display: block !important;
+    }
+    .partner-section .trackbox {
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, .08);
+        padding: 15px !important;
+    }
+    .partner-section .trackbox p {
+        padding-bottom: 10px;
+    }
+    .trackbox button {
+        font-size: 9px;
+    }
+    .industryarea{
+        background-color: transparent !important;
+    }
+    .heading-area h4, .industry-section .cousebox, .industry-section .cousebox h5 {
+        font-size: 16px;
+        min-height: initial;
+    }
+    .awardbox {
+        display: flex;
+        text-align: left !important;
+        font-size: 12px;
+    }
+    .awardbox .image-box {
+        min-width: 90px;
+        margin-right: 20px;
+    }
+    .left-tab li a:not(.active) + .eventblock {
+        display: none;
+    }
+    .left-tab li a + .eventblock .pagination li a {
+        line-height: 1;
+    }
+    .exam-section .left-tab {
+        max-height: inherit;
+    }
+    
+    .awardbox h5 {
+        font-size: 14px;
+    }
+}
+@media (min-width: 768px) {
+    .timeline {
+       position: relative;
+       margin: 2rem 0;
+       padding-left: 2rem;
+       overflow: hidden;
+     }
+    
+     .timeline::before {
+       content: '';
+       position: absolute;
+       top: 0;
+       left: 15px;
+       width: 2px;
+       height: 100%;
+       background: #000;
+    }
+    .timeline-item {
+       position: relative;
+       margin-bottom: 2rem;
+       padding-left: 2rem;
+     }
+    
+     .timeline-item::before {
+       content: '';
+       position: absolute;
+       top: 50%;
+       left: -7px;
+       width: 15px;
+       height: 15px;
+       background: #ef7220;
+       border-radius: 50%;
+       z-index: 1;
+     }
+     .timeline-item::after {
+       margin-left: -6px;
+       content: "";
+       position: absolute;
+       top: 50%;
+       left: 50%;
+       width: 35px;
+       height: 35px;
+       background: #d9d9d9;
+       border-radius: 50%;
+       z-index: -1;
+    }
+    .timeline {
+      padding-left: 0;
+    }
+    .timeline::before {
+          left: 50%;
+          margin-left: 10px;
+    }
+    .timeline-item {
+      padding-left: 0;
+      padding-right: 2rem;
+    }
+    .timeline-item:nth-child(odd) {
+      clear: both;
+      float: left;
+    }
+    .timeline-item:nth-child(even) {
+      float: right;
+      clear: both;
+    }
+    .timeline-item::before {
+       left: 50%;
+       margin-left: 4px;
+       margin-top: 10px;
+    }
+ }

@@ -91,7 +91,7 @@ $terms = get_terms(array(
             ?>
         </div>
     </div>
-    <div class="clearfix mt-2"></div>
+    <div class="clearfix mt-4"></div>
     <?php if($loader == 'demo'): ?>
         <div class="col-lg-12 text-center mt-3" ><a href="javascript:void(0)" class="readmore"  >Read More</a></div>
                 <?php 

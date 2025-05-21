@@ -20,6 +20,14 @@ function grras_child_enqueue_scripts() {
         ],
         '1.0.0'
     ); 
+    wp_enqueue_style(
+        'grras-child-responsive',
+        get_stylesheet_directory_uri() . '/css/responsive.css',
+        [
+            'grras-style',
+        ],
+        '1.0.0'
+    ); 
 }
 add_action( 'wp_enqueue_scripts', 'grras_child_enqueue_scripts', 20 );
 
@@ -708,3 +716,17 @@ add_filter('gform_confirmation_7', function($confirmation, $form, $entry) {
     }
     return $confirmation; 
 }, 10, 3);
+
+function get_total_partner_count($term_slug) {
+    $query = new WP_Query([
+        'post_type'      => 'partners',
+        'post_status'    => 'publish',
+        'fields'         => 'ids',
+        'tax_query'      => [[
+            'taxonomy' => 'partner-type',
+            'field'    => 'slug',
+            'terms'    => $term_slug,
+        ]],
+    ]);
+        return $query->found_posts;
+}
