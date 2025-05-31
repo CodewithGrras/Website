@@ -41,6 +41,15 @@ $custom_query = new WP_Query($args);
               <div class="item">
                     <?php get_template_part('template-parts/details', 'course');  ?>
               </div>
+              <div class="item">
+                    <?php get_template_part('template-parts/details', 'course');  ?>
+              </div>
+              <div class="item">
+                    <?php get_template_part('template-parts/details', 'course');  ?>
+              </div>
+              <div class="item">
+                    <?php get_template_part('template-parts/details', 'course');  ?>
+              </div>
               <?php
                         }
                     } else {
@@ -52,7 +61,7 @@ $custom_query = new WP_Query($args);
             </div>
           </div>
         </div>
-        <div class="text-center mt-5"><a href="/course" class="btn btn-secondary">Explore More Courses</a></div>
+        <div class="text-center mt-3"><a href="/course" class="btn btn-secondary">Explore More Courses</a></div>
       </div>
     </div>
       

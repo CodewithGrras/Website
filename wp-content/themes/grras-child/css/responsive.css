@@ -475,8 +475,11 @@
     
  }
 
-@media(min-width: 1200px) {
+@media(min-width: 991px) {
     .industryproject .item {
         height: 380px;
+    }
+    .intcourse .cobox {
+        min-height: 300px;
     }
 }

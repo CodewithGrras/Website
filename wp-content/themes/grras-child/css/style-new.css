@@ -1988,10 +1988,9 @@
   .endcareer p{ margin: 0; font-size: 15px; color: #000; }
 
   /*home*/
-  .homebanner{ background: url(../images/homebanner.jpg) no-repeat center top; padding: 50px 0 0px; background-size: cover; }
+  .homebanner{ background: url(../images/homebanner.jpg) no-repeat center top; padding: 80px 0 80px 0px; background-size: cover; }
   .homeslid .owl-dots, .homeslid .owl-nav{ display: none; }
   .homeslid .item p{ font-size: 20px; font-weight: 600; padding-top: 5px; margin: 10px 0; background: linear-gradient(45deg,  rgba(255,93,46,1) 0%,rgba(240,38,88,1) 29%,rgba(53,116,246,1) 68%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
-  .learn{ padding: 0px 0 60px; }
   .learn h2{ font-size: 45px; color: #111110; }
   .learn .subtext{ font-size: 20px; font-weight: 600; padding-top: 5px; margin: 10px 0; background: linear-gradient(45deg,  rgba(255,93,46,1) 0%,rgba(240,38,88,1) 29%,rgba(53,116,246,1) 68%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
   .learn ul{ margin: 30px 0 0; padding: 0; list-style: none; }
@@ -2907,10 +2906,16 @@
   .topchoice .owl-nav .owl-prev{ width: 46px; height: 46px; border-radius: 50%; background: #fff!important; text-align: center; line-height: 46px; box-shadow: 0 0 20px rgba(0,0,0,.1); margin-left: -60px; }
   .topchoice .owl-nav .owl-next{ width: 46px; height: 46px; border-radius: 50%; background: #fff!important; text-align: center; line-height: 46px; box-shadow: 0 0 20px rgba(0,0,0,.1); float: right; margin-right: -60px; }
 
-  .topchoice .owl-dots { background: #d9d9d9; width: 78px; height: 5px; border:1px #e4a57d solid; border-radius: 3px; position: absolute; bottom: -30px; left: 50%; margin-left: -39px; }
+  /*.topchoice .owl-dots { background: #d9d9d9; width: 78px; height: 5px; border:1px #e4a57d solid; border-radius: 3px; position: absolute; bottom: -30px; left: 50%; margin-left: -39px; }
   .topchoice .owl-dots .owl-dot{ width: 25px; height: 3px; margin: 0; border-radius: 3px; background: #fff!important; position: relative; top: -14px;}
   .topchoice .owl-dots .active{ width: 25px; height: 3px; margin: 0; border-radius: 3px; background: #ef7221!important; position: relative; top: -14px;}
-
+  */
+  .topchoice .owl-dots {
+   margin-top: 15px;
+  }
+  .topchoice .owl-dots .owl-dot:not(.active) {
+      background-color: #bcbcbc !important;
+  }
 
   .course-mobile h6{ font-size: 12px; font-weight: 400; }
   .course-mobile .form-control { font-size: 12px; font-weight: 600; }
