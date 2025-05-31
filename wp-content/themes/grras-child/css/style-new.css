@@ -35,7 +35,11 @@
   background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);}
   .careercourses .imgbox .link{ position: absolute; bottom: 0; right: 0; width: 52px; height: 33px; background: #ef7220; text-align: center; line-height: 33px; }
   .careercourses .imgbox .link:hover{ background: #d76013; }
-
+  .img-tool-icon {
+      background: #fff3e3;
+      padding: 10px;
+      border-radius: 100%;
+  }
     
 
   .learner{ padding: 70px 0 40px; background: #ededed; }
@@ -3721,7 +3725,7 @@
       .bookdemo .input-group-text{ border: none; }
       .bookdemo .btn{ height: 40px; }
       .replace .cologo{padding-left: 10px; padding-right: 10px; }
-      .homebanner{ padding-bottom: 50px; }
+      .homebanner{ padding: 50px 0 !important; }
       .storypeople .cousebox .employ { width: 125px; padding-bottom: 0; }
       .storypeople .cousebox .employ img{ width: 95px; }
       .storypeople .cousebox .name .subtxt{font-size: 10px;}
@@ -4296,7 +4300,6 @@
       .workbanner .leftcontent .bluebar ul li .time{ font-size: 10px; }
       .workbanner .leftcontent .bluebar ul li:before{ top: 0; }
       .learn .subtext{ font-size: 13px; }
-      .learn{ padding-bottom: 40px; }
       .homeslid .item p{ font-size: 13px; }
       
       .studentclub .clubbox ul.clublist{ margin-bottom: 20px; }

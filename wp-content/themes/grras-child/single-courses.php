@@ -114,12 +114,18 @@
 
                 <div class="row justify-content-between align-items-center">
                   <div class="col-lg-6">
-                    <h2><?php $course_overview = get_field("course_overview"); ?></h2>
-                    <div class="custom_contant" style="display: -webkit-box;"><?php echo wpautop($course_overview["content"]); ?></div>
+                    <?php $course_overview = get_field("course_overview"); ?>
+                    <h3 style="font-weight: 700;"><?php echo $course_overview['title']; ?></h3>
+                    <div class="custom_contant" style="display: -webkit-box;">
+                      <?php
+                        echo limitTextHtml($course_overview["content"], 100);
+                        //echo "<p>Test job</p>";
+                      ?>
+                    </div>
                     <div class="my-5">
                       <a href="javascript:void(0)" class="btn btn-secondary mr-2 hide_custom" >Explore</a>
                       <!--<a href="<?php echo get_field('download_brochure'); ?>" class="btn btn-primary">Download Brochure</a>-->
-					  <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal6">Download Brochure</a>
+					            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal6">Download Brochure</a>
                     </div>
                   </div>
                   <div class="col-lg-5 overview_view">
@@ -222,7 +228,7 @@
                       <div class="row align-items-center">
                         <div class="col-lg-6 text-center" >
                           <h5>Annual Salary</h5>
-                          <div class="imgbox p-2"  >
+                          <div class="imgbox"  >
                               <!--<img src="<?php echo get_sub_field('annual_salary') ?>" class="img-fluid" alt="">-->
                               
                              <div id="salary-content">
@@ -235,7 +241,7 @@
                         </div>
                         <div class="col-lg-6 text-center">
                           <h5>Hiring Companies</h5>
-                          <div class="imgbox p-2">
+                          <div class="imgbox">
                               <?php echo get_sub_field('hiring_companies') ?>
                               
                         </div>

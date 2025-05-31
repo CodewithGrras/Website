@@ -141,7 +141,7 @@ $terms = get_terms(array(
                     <div class="right-content">
                       <div class="<?php echo get_field('best_seller_color'); ?>"><?php echo get_field('best_seller'); ?></div>
                       <h4> <small><?php echo $term_names[0]?></small><br><?php the_title(); ?></h4>
-<?php the_content()?>
+
                       <div class="content">
                         <div class="row">
                           <div class="col-md-7 col-7">

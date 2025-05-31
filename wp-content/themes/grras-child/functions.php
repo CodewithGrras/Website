@@ -767,3 +767,17 @@ function redirect_old_course_urls() {
     }
 }
 add_action('template_redirect', 'redirect_old_course_urls');*/
+
+function limitTextHtml($full_text, $limit = 200) {
+    $short_text = mb_substr($full_text, 0, $limit);
+    $is_long = mb_strlen($full_text) > $limit;
+
+    $html = "";
+    $html.='<span class="short-text">'. $short_text .'</span>';
+    if ($is_long):
+        $html.='<span class="dots">...</span>';
+        $html.='<span class="more-text d-none">'. mb_substr($full_text, $limit) . '</span>';
+        $html.='<a href="javascript:void(0);" class="theme-text-primary fw-semibold text-decoration-none toggle-more">Read more</a>';
+    endif;
+    return $html;
+}
