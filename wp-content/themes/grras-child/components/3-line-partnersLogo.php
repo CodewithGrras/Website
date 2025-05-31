@@ -29,7 +29,7 @@ createCarouselItems($split3, 'across-slid1');
 ?>
 
 	         
-	            <div class="text-center mt-4"><a href="/internship" class="btn btn-primary text-14">See All Our Hiring Partners</a></div>
+	            <div class="text-center mt-4"><a href="<?php echo site_url('aboutus?tab=partnerssection'); ?>" class="btn btn-primary text-14">See All Our Hiring Partners</a></div>
 
 	          </div>
 	        </div>

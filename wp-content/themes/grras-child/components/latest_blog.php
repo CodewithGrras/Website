@@ -1,5 +1,5 @@
 <!-- Latest Blogs -->
-<div class="lastestblog wow fadeInUp">
+<div class="lastestblog wow fadeInUp theme-grras">
   <div class="container">
     <div class="row">
       <div class="col-12">

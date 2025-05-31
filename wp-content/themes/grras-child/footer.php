@@ -754,7 +754,7 @@ function addClasses() {
         autoplay: false,
         margin: 16,
         nav: true,
-        dots: false,
+        dots: true,
         loop: true,
         smartSpeed: 450,
         navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],

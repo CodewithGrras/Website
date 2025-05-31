@@ -8,7 +8,7 @@
     $what_our_learners = get_field("what_our_learners",'option');
                     echo $what_our_learners["title"];
 ?>
-                   <span>Grras</span>
+                  
 </h2>
          <div class="subtext"><?php echo $what_our_learners["short_description"]; ?> </div>
               <?php
