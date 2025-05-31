@@ -705,10 +705,10 @@ document.getElementsByClassName("input-group")[0].style.display = "block";
           </div>
         </form>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContentForMobile" aria-controls="navbarSupportedContentForMobile" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navbarSupportedContentForMobile">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <?php
             // Get the menu items for the 'primary' menu

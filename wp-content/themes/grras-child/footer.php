@@ -1510,6 +1510,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
+  //Desktop
   const menu = document.getElementById('collapseExample');
 
   document.addEventListener('click', function(event) {
@@ -1522,6 +1523,24 @@ document.addEventListener('DOMContentLoaded', function() {
       if (bsCollapse) {
         bsCollapse.hide();
       }
+    }
+  });
+
+  //Mobile
+  const mobileMenu = document.getElementById('navbarSupportedContentForMobile');
+
+  document.addEventListener('click', function(event) {
+    const isClickInside = mobileMenu.contains(event.target);
+    const isButton = event.target.closest('[data-bs-toggle="collapse"]');
+
+    // Check if click is outside the menu and not on the toggle button
+    console.log(`isClickInside: ${isClickInside}, isButton: ${isButton} mobileClass: ${jQuery("#navbarSupportedContentForMobile").attr('class')}`);
+    if (!isClickInside && !isButton && mobileMenu.classList.contains('show')) {
+        console.log('need to hide');
+        const mobCollapse = bootstrap.Collapse.getInstance(mobileMenu);
+        if (mobCollapse) {
+            mobCollapse.hide();
+        }
     }
   });
 });
