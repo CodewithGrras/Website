@@ -64,18 +64,6 @@ $career_oriented = get_field("career_oriented");
       </div>
     </div>
   </div>
-  <!-- Book demo -->
-  <div class="container wow fadeInUp">
-    <div class="bookdemo">
-      <h2><?php echo $choose_your_career["title"]; ?></h2>
-      <p><?php echo $choose_your_career["short_description"]; ?></p>
-    
-      <div class="row g-3 align-items-center">
-            <?php echo do_shortcode('[gravityform id="10" title="false" ajax="true"]'); ?>
-     
-      </div>
-    </div>
-  </div>
 </div>
 
 <!-- company logo -->

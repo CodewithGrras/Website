@@ -1389,7 +1389,7 @@
   .workshop .item .cousebox p strong{ font-size: 14px; color: #000; font-weight: 500; }
   .workshop .item .cousebox .date{ background: url(../images/date.png) no-repeat 0 2px; font-size: 14px; color: rgba(0,0,0,.7); margin: 0 0 10px; padding-left: 25px; }
   .workshop .item .cousebox .time{ background: url(../images/time.png) no-repeat 0 2px; font-size: 14px; color: rgba(0,0,0,.7); margin: 0 0 10px; padding-left: 25px; }
-  .workshop .item .cousebox .detail{ min-height: 130px; }
+  .workshop .item .cousebox .detail{ min-height: auto; }
   .workshop .btn-outline-secondary{ font-size: 18px; font-weight: 600; padding: 5px 30px; display: block; border: 2px #bababa solid; color: #bababa; border-radius: 3px; }
   .workshop .btn-outline-secondary:hover{ background: #bababa; color: #fff; }
   .workshop .btn-success{ font-size: 18px; font-weight: 500; padding: 8px 10px; display: block; border: none; color: #fff; background: #1db100; border-radius: 5px; }
@@ -1550,7 +1550,8 @@
     font-size: 12px;
     padding: 13px 30px;
 }
-  .btn-primary:hover{background: #d76013;font-size: 15px!important;!importan;!importa;!import;!impor;!impo;!imp;!im;!imo;!imop;!im;!i;!;}
+  .btn-primary:hover{background: #d76013;  }
+  .btn-primary.increase-font:hover{ font-size: 15px!important; }
   .btn-primary:focus-visible{ background: #d76013; box-shadow: none; }
   .btn-primary:checked+.btn, .btn-primary.active, .btn-primary.show, .btn-primary:first-child:active, :not(.btn-primary-check)+.btn-primary:active{ background: #d76013; }
   /*.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active{ background: #d76013; border: none; }*/
@@ -1987,7 +1988,7 @@
   .endcareer p{ margin: 0; font-size: 15px; color: #000; }
 
   /*home*/
-  .homebanner{ background: url(../images/homebanner.jpg) no-repeat center top; min-height: 858px; padding: 50px 0 70px; background-size: cover; }
+  .homebanner{ background: url(../images/homebanner.jpg) no-repeat center top; padding: 50px 0 0px; background-size: cover; }
   .homeslid .owl-dots, .homeslid .owl-nav{ display: none; }
   .homeslid .item p{ font-size: 20px; font-weight: 600; padding-top: 5px; margin: 10px 0; background: linear-gradient(45deg,  rgba(255,93,46,1) 0%,rgba(240,38,88,1) 29%,rgba(53,116,246,1) 68%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
   .learn{ padding: 0px 0 60px; }
@@ -3096,7 +3097,7 @@
 
   .partnerind{ padding: 80px 0; background: #fff7ef; }
   .partnerind .blue{ color: #334155; }
-  .partnerind p{padding-top: 10px;font-size: 15px;color: #4D5756; padding-bottom: 30px; }
+  .partnerind p{padding-top: 10px;font-size: 15px;color: #4D5756; }
   .partnerind .owl-carousel{margin-top: 30px;}
   .partnerind .owl-carousel .owl-item img{ width: auto; max-width: 100%; }
 
@@ -3361,7 +3362,7 @@
 
     .whyenroll .goalbox h4{ min-height: 76px; }
     .whyenroll .goalbox p{ min-height: 140px; }
-    .whygrras .iconbox{ min-height: 256px; }
+    .whygrras .iconbox{ min-height: 190px; }
     .lastestblog .cousebox p{ min-height: 130px; }
 
     .examcenter h4{ font-size: 20px; }
@@ -4529,7 +4530,6 @@
       font-size: 13px;
       font-weight: 600;
       padding: 5px 22px;
-      border-radius: 5px;
       color: #fff;
       display: inline-block;
       text-transform: uppercase;

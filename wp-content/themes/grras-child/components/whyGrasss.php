@@ -1,4 +1,5 @@
 <!-- Why grras -->
+ 
 <div class="whygrras wow fadeInLeft">
     <div class="container">
         <div class="row">
@@ -38,11 +39,24 @@
                 <div class="row">
                     <?php if (have_rows('opportunities','option')): ?>
                         <?php while (have_rows('opportunities','option')): the_row(); ?>
+                             <?php
+                            $full_text = get_sub_field('short_description');
+                            $short_text = mb_substr($full_text, 0, 120);
+                            $is_long = mb_strlen($full_text) > 120;
+
+                            ?>
                             <div class="col-lg-4 col-md-6 col-6 g-3">
                                 <div class="iconbox">
                                     <img src="<?php echo get_sub_field('icon'); ?>" alt="">
                                     <h4><?php echo get_sub_field('title'); ?></h4>
-                                    <p><?php echo get_sub_field('short_description'); ?></p>
+                                    <p class="mb-1">
+                                        <span class="short-text"><?php echo wp_kses_post($short_text); ?></span>
+                                        <?php if ($is_long): ?>
+                                            <span class="dots">...</span>
+                                            <span class="more-text d-none"><?php echo wp_kses_post(mb_substr($full_text, 120)); ?></span>
+                                            <a href="javascript:void(0);" class="theme-text-primary fw-semibold text-decoration-none toggle-more">Read more</a>
+                                        <?php endif; ?>
+                                    </p>
                                 </div>
                             </div>
                         <?php endwhile; ?>

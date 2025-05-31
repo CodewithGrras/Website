@@ -328,6 +328,7 @@ include 'components/city-footer-courses.php';
             <div class="col-lg-10">
               <ul>
                 <li><a href="<?php get_link_custom('aboutus') ?>">About Us</a></li>
+                <li><a href="<?php get_link_custom('services') ?>">Services</a></li>
                 <li><a href="<?php get_link_custom('hire-from-us') ?>">Hire From Us</a></li>
                 <li><a href="<?php get_link_custom('careers') ?>">Careers</a></li>
                 <!--<li><a href="<?php get_link_custom('blog') ?>">Become a Mentor</a></li>-->
@@ -1566,24 +1567,26 @@ menuItems.forEach(item => {
     });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const toggleLink = document.querySelector(".toggle-more");
-    if (!toggleLink) return;
+jQuery(document).ready(function ($) {
+  const $toggleLink = $(".toggle-more");
+  alert
 
-    toggleLink.addEventListener("click", function () {
-      const moreText = document.querySelector(".more-text");
-      const dots = document.querySelector(".dots");
+  if ($toggleLink.length === 0) return;
 
-      if (moreText.classList.contains("d-none")) {
-        moreText.classList.remove("d-none");
-        dots.style.display = "none";
-        this.textContent = "Read less";
-      } else {
-        moreText.classList.add("d-none");
-        dots.style.display = "inline";
-        this.textContent = "Read more";
-      }
-    });
+  $toggleLink.on("click", function () {
+    const $moreText = $(this).parents("p").find(".more-text");
+    const $dots = $(this).parents("p").find(".dots");
+
+    if ($moreText.hasClass("d-none")) {
+      $moreText.removeClass("d-none");
+      $dots.css("display", "none");
+      $(this).text("Read less");
+    } else {
+      $moreText.addClass("d-none");
+      $dots.css("display", "inline");
+      $(this).text("Read more");
+    }
+  });
 });
 </script>
 
