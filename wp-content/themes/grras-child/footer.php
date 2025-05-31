@@ -1332,6 +1332,17 @@ function addClasses() {
         autoplayHoverPause: true
     });
 
+    $('.innovation-slider-area').owlCarousel({
+            autoplay: true,
+            margin: 20,
+            nav: false,
+            dots: true,
+            loop: true,
+            items:1,
+            smartSpeed: 450,
+            navText : false,        
+    });
+
     $("#toggle").click(function() {
           
             var elem = $("#toggle").text();
@@ -1344,7 +1355,9 @@ function addClasses() {
               $("#toggle").text("Read More");
               $("#text").slideUp();
             }
-          });
+    });
+
+    
 
           $(document).ready( function() {   
 
@@ -1553,6 +1566,25 @@ menuItems.forEach(item => {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const toggleLink = document.querySelector(".toggle-more");
+    if (!toggleLink) return;
+
+    toggleLink.addEventListener("click", function () {
+      const moreText = document.querySelector(".more-text");
+      const dots = document.querySelector(".dots");
+
+      if (moreText.classList.contains("d-none")) {
+        moreText.classList.remove("d-none");
+        dots.style.display = "none";
+        this.textContent = "Read less";
+      } else {
+        moreText.classList.add("d-none");
+        dots.style.display = "inline";
+        this.textContent = "Read more";
+      }
+    });
+});
 </script>
 
 

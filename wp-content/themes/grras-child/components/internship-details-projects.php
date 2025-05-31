@@ -1,4 +1,4 @@
-   <div class="industryproject ent-pro no-bg pt-0">
+   <div class="industryproject ent-pro bg-theme-light-gradient-md">
 	      <div class="container">
 	        <div class="text-center">
 	          <h2><?php echo $internship_detail_page['project_title']; ?></h2>

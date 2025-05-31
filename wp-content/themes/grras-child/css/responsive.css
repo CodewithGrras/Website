@@ -38,7 +38,10 @@
     }
     .menu {
         padding: 10px 35px !important;
-        overflow: hidden;
+    }
+    .menu > ul {
+        justify-content: start !important;
+        overflow-x: auto;
     }
     .menu li {
         font-size: 13px;
@@ -57,14 +60,58 @@
     .mobildbtn #prevBtn {
         left: 1px;
     }
-    
+    .btn-area{
+        width: 100% !important;
+    }
+    .mobildbtn {
+        width: 100%;
+        max-width: 100%;
+        z-index: 99999;
+        top: 0;
+        left: 0;
+    }
+    .menu > ul::-webkit-scrollbar {
+        height: 0;
+        width: 0px;
+    }
+    .menu + .child-item {
+        margin: 0;
+        min-width: 100%;
+        position: fixed;
+        top: 57px;
+        padding: 10px 30px;
+        overflow-x: auto;
+        gap: 15px;
+    }
+    .menu + .child-item li {
+        flex: 0 0 auto;
+    }
+    .inten-banner h1 {
+        font-size: 24px;
+    }
+    .inten-banner p, .inten-banner .lang, .inten-banner .intslid .subtext {
+        font-size: 14px;
+    }
+    .inten-banner {
+        padding-bottom: 80px !important;
+    }
 }
 @media(max-width:767px){
+    .tools-section.help-section .cardicon svg {
+        width: 17px;
+        height: 17px;
+    }
+    .industryproject .content ul li{
+        min-width: 70px;
+    }
+    .menu + .child-item li a {
+        font-size: 12px;
+    }
     .f-42 {
         font-size: 24px !important;
     }
     .academy-section .banner-content p, .info-card .card-data p, .content-area,
-    .innovation ul li, .heading-area p, .help-section .card, .career-block p {
+    .innovation ul li, .heading-area p, .help-section .card, .career-block p, .dataarea span {
         font-size: 12px;
     }
     .innovation ul li svg {
@@ -74,8 +121,12 @@
         font-size: 20px !important;
     }
     .info-card .card-data h5, .help-section .card h5,
-    .refer-section .banner-content, .career-block h5 {
+    .refer-section .banner-content, .career-block h5,
+    .careerarea h5 {
         font-size: 14px;
+    }
+    .dataarea h4 {
+        font-size: 18px;
     }
     .career-block .career-block-count {
         margin-top: -12px;
@@ -109,7 +160,10 @@
     .refer-section:before{
         z-index: -1;
     }
-    .user-block-area .user-block-data .user-name {
+    .user-block-area .user-block-data .user-name,
+    .banner-content .banner-tags li, .contactform .coform .form-label,
+    .bold-counter p, p, .jobopen .jobox, .explorearea h6,
+    .shape-card h5, .careerarea p {
         font-size: 12px;
     }
     .tab-big li a.active .collapseicon-mobile {
@@ -119,6 +173,41 @@
         width: 18px;
         height: 18px;
         right: 0px;
+    }
+    .thesummer button {
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .program-section h5, .thesummer button, .contactform .coform .btn-outline-primary {
+        font-size: 14px;
+    }
+    .bold-counter big {
+        font-size: 20px;
+    }
+    .program-section .cardicon svg,
+    .explorearea .iconarea, .shape-card .cardicon {
+        width: 35px;
+        height: 35px;
+    }
+    .explorearea .iconarea {
+        min-width: 35px;
+    }
+    .explorearea .iconarea svg {
+        width: 16px;
+        height: 16px;
+    }
+    .shape-card .cardicon svg {
+        width: 22px;
+        height: 22px;
+    }
+    .shape-card .cardicon {
+        padding: 5px;
+        text-align: center;
+    }
+    .contactform .coform .form-control {
+        height: 30px;
+        border-radius: 2px;
+        font-size: 12px;
     }
     .exam-section .left-tab li a.active + .exam-course-area .exam-course-area-item {
         display: block !important;
@@ -183,6 +272,7 @@
     }
     .faq-section .left-tab li{
         margin-bottom: 5px;
+        font-size: 12px;
     }
     .question-block .question-name {
         font-size: 12px;
@@ -203,12 +293,16 @@
     .left-tab li a.active + .mobile-view-tab {
         display: block !important;
     }
+    .trackrecord .trackbox img {
+        width: 70px;
+    }
     .partner-section .trackbox {
-        box-shadow: 5px 5px 10px rgba(0, 0, 0, .08);
-        padding: 15px !important;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, .08);
+        padding: 12px !important;
     }
     .partner-section .trackbox p {
         padding-bottom: 10px;
+                font-weight: 500;
     }
     .trackbox button {
         font-size: 9px;
@@ -241,6 +335,71 @@
     
     .awardbox h5 {
         font-size: 14px;
+    }
+    .careerarea .careerarea-icon {
+        max-width: 70px;
+    }
+    .careerarea1 .careerarea-icon {
+        min-width: 40px;
+    }
+    .careerarea1 .careerarea-icon img {
+        max-width: 40px;
+    }
+    .mobbtn-100{
+        width: 100%;
+    }
+    .careerarea1 .careerarea-text h6, .heading-area h5, .mobilefont {
+        font-size: 12px;
+    }
+    .turnover-detail .icon {
+        width: 35px;
+        height: 35px;
+        border: 0 !important;
+        padding: 0;
+        background-color: transparent;
+    }
+    .turnover-detail p big {
+        font-size: 20px;
+    }
+    .turnover-detail p, .intslid .subtext, .lang  {
+        overflow: hidden;
+        font-size: 12px;
+    }
+    .heading-area p, .endcareer2-area h6, .help-section .card p{
+        font-size: 12px;
+    }
+    .endcareer2-area img {
+        width: 28px;
+    }
+    .btnwith-icon-sm .btn-icon {
+        width: 26px;
+        height: 26px;
+    }
+    .contactform hr {
+        margin: 20px auto;
+    }
+    .turnover p big {
+        font-size: 20px;
+    }
+    .help-section .card {
+        height: auto !important;
+    }
+    .info-card .card-icon-sm {
+        max-width: 36px;
+        height: 36px;
+        min-width: 36px;
+        font-size: 14px;
+    }
+    .content-area h4 {
+        font-size: 16px;
+    }
+    .grrasint td {
+        font-size: 12px;
+        padding: 10px 10px;
+    }
+    .grrasint th {
+        font-size: 12px;
+        padding: 10px 5px;
     }
 }
 @media (min-width: 768px) {
@@ -313,4 +472,11 @@
        margin-left: 4px;
        margin-top: 10px;
     }
+    
  }
+
+@media(min-width: 1200px) {
+    .industryproject .item {
+        height: 380px;
+    }
+}

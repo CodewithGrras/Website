@@ -28,7 +28,7 @@
 	              <?php endforeach; ?>
 	            </table>
 	            
-	            <div class="text-center mt-5"><a href="#" class="btn btn-primary text-14" data-bs-toggle="modal" data-bs-target="#exampleModal5">Register For Free Demo</a></div>
+	            <!--<div class="text-center mt-5"><a href="#" class="btn btn-primary text-14" data-bs-toggle="modal" data-bs-target="#exampleModal5">Register For Free Demo</a></div>-->
 	          </div>
 	        </div>
 	      </div>

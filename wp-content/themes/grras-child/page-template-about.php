@@ -100,17 +100,17 @@ $partner_with_us = get_field('partner_with_us');
     </div>
     </div>
     <ul id="menu" class="menu list-unstyled mb-0 bg-white p-2 d-flex position-relative justify-content-center">
-    <li class="menu-item active" data-target="overviewsection" >Overview</li>
-    <li class="menu-item" data-target="solutionsection">Our Solutions</li>
-    <li class="menu-item" data-target="partnerssection">Our Partners</li>
-    <li class="menu-item" data-target="industrysection">Industry Certification</li>
-    <li class="menu-item" data-target="awardsection">Awards & Recognitions</li>
-    <li class="menu-item" data-target="eventssection">Events</li>
+    <li class="menu-item <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'overviewsection' : true) ? 'active' : ''; ?>" data-target="overviewsection" >Overview</li>
+    <li class="menu-item <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'solutionsection' : true) ? 'active' : ''; ?>" data-target="solutionsection">Our Solutions</li>
+    <li class="menu-item <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'partnerssection' : true) ? 'active' : ''; ?>" data-target="partnerssection">Our Partners</li>
+    <li class="menu-item <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'industrysection' : true) ? 'active' : ''; ?>" data-target="industrysection">Industry Certification</li>
+    <li class="menu-item <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'awardsection' : true) ? 'active' : ''; ?>"  data-target="awardsection">Awards & Recognitions</li>
+    <li class="menu-item <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'eventssection' : true) ? 'active' : ''; ?>" data-target="eventssection">Events</li>
     </ul>
 </div>
 
 <div class="menu-area">
-    <div id="overviewsection" class="contentarea active">
+    <div id="overviewsection" class="contentarea <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'overviewsection' : true) ? 'active' : ''; ?>">
 
 <!-- what is grass -->
 <div class="whatgrass">
@@ -544,7 +544,7 @@ endif; ?>
         </div>
         </section>
     </div>
-    <div id="solutionsection" class="contentarea">
+    <div id="solutionsection" class="contentarea <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'solutionsection' : true) ? 'active' : ''; ?>">
         <div class="container">
             <div class="heading-area text-center py-4 py-md-5">
                 <h1 class="fw-bold">Your Career, Our <span class="theme-text-primary">Commitment</span></h1>
@@ -639,7 +639,7 @@ endif; ?>
             </div>
         </div>
     </div>
-    <div id="partnerssection" class="contentarea">
+    <div id="partnerssection" class="contentarea <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'partnerssection' : true) ? 'active' : ''; ?>">
 
         <!-- Academic Partners Section -->
         <?php
@@ -743,7 +743,7 @@ endif; ?>
         </div>
     </div>
 
-    <div id="industrysection" class="contentarea">
+    <div id="industrysection" class="contentarea <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'industrysection' : true) ? 'active' : ''; ?>">
     <!-- Partner Section -->
     <div class="trackrecord industry-section wow fadeInLeft section-padding">
         <div class="container">
@@ -816,7 +816,7 @@ endif; ?>
     </div>
     <!-- End Partner Section -->
     </div>
-    <div id="awardsection" class="contentarea">
+    <div id="awardsection" class="contentarea <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'awardsection' : true) ? 'active' : ''; ?>">
     <!-- Award Section -->
     <div class="trackrecord award-section wow fadeInUps section-padding">
         <div class="container">
@@ -1042,7 +1042,7 @@ endif; ?>
     <!-- End Innovation Section -->
 
     </div>
-    <div id="eventssection" class="contentarea">
+    <div id="eventssection" class="contentarea <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'eventssection' : true) ? 'active' : ''; ?>">
 
     <!-- Exam Section -->
     

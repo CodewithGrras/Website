@@ -730,3 +730,40 @@ function get_total_partner_count($term_slug) {
     ]);
         return $query->found_posts;
 }
+
+/*function remove_course_slug_rewrite() {
+    add_rewrite_rule(
+        '^([^/]+)?$',
+        'index.php?post_type=courses&name=$matches[1]',
+        'top'
+    );
+}
+add_action('init', 'remove_course_slug_rewrite');
+
+function detect_course_post_type($query_vars) {
+    if (!isset($query_vars['post_type']) && isset($query_vars['name'])) {
+        global $wpdb;
+        $slug = $query_vars['name'];
+
+        // Check if it's a 'course' post
+        $exists = $wpdb->get_var($wpdb->prepare(
+            "SELECT ID FROM $wpdb->posts WHERE post_name = %s AND post_type = 'courses' LIMIT 1",
+            $slug
+        ));
+
+        if ($exists) {
+            $query_vars['post_type'] = 'courses';
+        }
+    }
+
+    return $query_vars;
+}
+add_filter('request', 'detect_course_post_type');
+
+function redirect_old_course_urls() {
+    if (is_singular('courses') && strpos($_SERVER['REQUEST_URI'], '/course/') > 0) {
+        wp_redirect(home_url('/' . get_post_field('post_name', get_post())), 301);
+        exit;
+    }
+}
+add_action('template_redirect', 'redirect_old_course_urls');*/
