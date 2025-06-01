@@ -20,20 +20,20 @@
 	    <div class="inten-banner academy-section bg-theme-light section-padding"  style="padding-bottom: 150px; background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/images/academy-vector.png');">
 	      <div class="container">
 	        <div class="row justify-content-between">
-	          <div class="col-lg-7 wow fadeInLeft">
-				<ul class="list-unstyled">
-					<li class="list-inline-item">
-						<span class="bg-white-sm p-2 rounded-1 theme-text-primary fw-semibold">ISO-certified</span>
-					</li>
-					<li class="list-inline-item">
-						<span class="bg-white-sm p-2 rounded-1 theme-text-primary fw-semibold">
-						<span>AI-Powered</span>
-						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
-							<path d="M13.9922 11.5156C13.0234 11.5156 12.1172 11.3281 11.2734 10.9531C10.4297 10.5938 9.69141 10.0938 9.05859 9.45312C8.42578 8.8125 7.92188 8.07031 7.54688 7.22656C7.1875 6.36719 7.00781 5.46094 7.00781 4.50781C7.00781 5.46094 6.82031 6.36719 6.44531 7.22656C6.08594 8.07031 5.58984 8.8125 4.95703 9.45312C4.32422 10.0938 3.57812 10.5938 2.71875 10.9531C1.875 11.3281 0.96875 11.5156 0 11.5156C0.96875 11.5156 1.875 11.6953 2.71875 12.0547C3.57812 12.4141 4.32422 12.9102 4.95703 13.543C5.58984 14.1758 6.08594 14.9219 6.44531 15.7812C6.82031 16.625 7.00781 17.5312 7.00781 18.5C7.00781 17.5312 7.1875 16.625 7.54688 15.7812C7.92188 14.9219 8.42578 14.1758 9.05859 13.543C9.69141 12.9102 10.4297 12.4141 11.2734 12.0547C12.1172 11.6953 13.0234 11.5156 13.9922 11.5156ZM18 3.99219C17.0312 3.99219 16.207 3.65234 15.5273 2.97266C14.8477 2.29297 14.5078 1.46875 14.5078 0.5C14.5078 1.46875 14.1641 2.29297 13.4766 2.97266C12.7891 3.65234 11.9609 3.99219 10.9922 3.99219C11.9609 3.99219 12.7891 4.33594 13.4766 5.02344C14.1641 5.71094 14.5078 6.53906 14.5078 7.50781C14.5078 6.53906 14.8477 5.71094 15.5273 5.02344C16.207 4.33594 17.0312 3.99219 18 3.99219Z" fill="#EF7220"/>
-						</svg>
-						</span>
-					</li>
-				</ul>
+	          <div class="col-lg-6 wow fadeInLeft">
+        <?php if(have_rows('banner_banner_tags')): ?>
+          <ul class="list-unstyled">
+            <?php while(have_rows('banner_banner_tags')): the_row();
+              $tag = get_sub_field('tag');
+            ?>
+            <li class="list-inline-item">
+              <span class="bg-white-sm p-2 rounded-1 theme-text-primary fw-semibold">
+                <?php echo $tag; ?>
+              </span>
+            </li>
+            <?php endwhile; ?>
+          </ul>
+        <?php endif; ?>
 	            <h1 class="fw-bold"><?php echo $banner['title']; ?></h1>
 	            <p><?php echo $banner['short_description']; ?></p>
 
@@ -55,27 +55,8 @@
 					</span>
 				</a>
 	          </div>
-	          <!--<div class="col-lg-5 wow fadeInRight pattern">-->
-	          <!--  <div class="row">-->
-	          <!--    <div class="col-6">-->
-	          <!--      <div class="story mt-5">-->
-	          <!--        <div class="student wid160">-->
-	          <!--          <div class="text"><?php echo $banner['student_counts']; ?> <small>Student</small></div> <img src="<?php echo get_stylesheet_directory_uri() ?>/images/student.png" class="img-fluid" alt="">-->
-	          <!--        </div>-->
-	          <!--        <img src="<?php echo get_stylesheet_directory_uri() ?>/images/intb1.png" class="img-fluid intgirl" alt="">-->
-	          <!--      </div>-->
-	          <!--    </div>-->
-	          <!--    <div class="col-6">-->
-	          <!--      <div class="story">-->
-	          <!--        <img src="<?php echo get_stylesheet_directory_uri() ?>/images/intb2.png" class="img-fluid" alt="">-->
-	          <!--        <div class="student intboy">-->
-	          <!--          <?php echo $banner['student_corsouse_']; ?> <small>Success Courses</small>-->
-	          <!--        </div>-->
-	          <!--      </div>-->
-	          <!--    </div>-->
-	          <!--  </div>-->
-	          <!--</div>-->
-	                <div class="col-lg-5 wow fadeInRight pattern position-relative">
+	         
+	                <div class="col-lg-5 col-lg-offset-1 wow fadeInRight pattern position-relative">
 	                    <div class="banner-image-area position-relative text-center text-md-start ">
 							<div class="d-none d-md-block avatar-area bg-white theme-box-shadow py-3 px-3 px-md-4 position-absolute text-start" style="bottom: -60px; border-radius: 40px;">
 								<div class="d-flex gap-3">
@@ -89,24 +70,17 @@
 							</div>
 						</div>
 						<div class="owl-carousel owl-loaded owl-drag custom-coursal-internship nodots" >
-							<div class="item">
-							<img src="<?php echo get_stylesheet_directory_uri() ?>/images/intb2.png" class="img-fluid" alt="">
-							</div>
-							<div class="item">
-							<img src="<?php echo get_stylesheet_directory_uri() ?>/images/intb1.png" class="img-fluid" alt="">
-							</div>
-							<div class="item">
-							<img src="<?php echo get_stylesheet_directory_uri() ?>/images/intb2.png" class="img-fluid" alt="">
-							</div>
-							<div class="item">
-							<img src="<?php echo get_stylesheet_directory_uri() ?>/images/intb1.png" class="img-fluid" alt="">
-							</div>
-							<div class="item">
-							<img src="<?php echo get_stylesheet_directory_uri() ?>/images/intb2.png" class="img-fluid" alt="">
-							</div>
-							<div class="item">
-							<img src="<?php echo get_stylesheet_directory_uri() ?>/images/intb1.png" class="img-fluid" alt="">
-							</div>
+              <?php 
+              $bannerGallery = $banner['banner_student_gallery'];
+              if(!empty($bannerGallery)):
+                foreach($bannerGallery as $imageId):
+                  $imageUrl = wp_get_attachment_image_url($imageId, 'full');
+              ?>
+                <div class="item">
+                <img src="<?php echo $imageUrl; ?>" class="img-fluid" alt="">
+                </div>
+                <?php endforeach; ?>
+							<?php endif; ?>
 
 						</div>
             
