@@ -180,6 +180,15 @@ if ( function_exists('acf_add_options_page') ) {
         'redirect'      => false,
         'icon_url'      => 'dashicons-admin-generic',
     ));
+
+    acf_add_options_page(array(
+        'page_title'    => 'Internship Options',
+        'menu_title'    => 'Internship Options',
+        'menu_slug'     => 'internship-options',
+        'capability'    => 'edit_others_posts', // Change capability to allow Editors to access
+        'redirect'      => false,
+        'icon_url'      => 'dashicons-admin-generic',
+    ));
 }
 
 

@@ -781,3 +781,35 @@ function limitTextHtml($full_text, $limit = 200) {
     endif;
     return $html;
 }
+
+add_action('admin_menu', 'add_internship_options_page');
+
+function add_internship_options_page() {
+    acf_add_options_page(array(
+        'page_title'    => 'Internship Options',
+        'menu_title'    => 'Internship Options',
+        'menu_slug'     => 'internship-options',
+        'capability'    => 'edit_others_posts', // Change capability to allow Editors to access
+        'redirect'      => false,
+        'icon_url'      => 'dashicons-admin-generic',
+    ));
+}
+
+function render_internship_options_page() {
+    ?>
+    <div class="wrap">
+        <h1>Internship Options</h1>
+        <?php
+        if (function_exists('acf_form')) {
+            acf_form(array(
+                'post_id' => 'options',
+                'field_groups' => array(), // Leave empty to show all ACF option fields
+                'submit_value' => 'Save Changes',
+            ));
+        } else {
+            echo '<p><em>Please install and activate the Advanced Custom Fields plugin.</em></p>';
+        }
+        ?>
+    </div>
+    <?php
+}

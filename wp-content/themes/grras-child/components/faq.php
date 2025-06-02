@@ -1,6 +1,9 @@
 <?php 
 	  $frequently_asked_questions_new = get_field('frequently_asked_questions_new');
-    if(!empty($frequently_asked_questions_new)) { ?>
+    $frequently_asked_questions = get_field('frequently_asked_questions');
+
+    $faqs = !empty($frequently_asked_questions_new) ? $frequently_asked_questions_new : $frequently_asked_questions;
+    if(!empty($faqs)) { ?>
 ?>
     <section class="faqs scroller" id="faqsec" data-anchor="faqsec">
       <div class="container wow fadeInUp">
