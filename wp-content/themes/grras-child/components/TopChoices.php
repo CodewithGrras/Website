@@ -41,15 +41,6 @@ $custom_query = new WP_Query($args);
               <div class="item">
                     <?php get_template_part('template-parts/details', 'course');  ?>
               </div>
-              <div class="item">
-                    <?php get_template_part('template-parts/details', 'course');  ?>
-              </div>
-              <div class="item">
-                    <?php get_template_part('template-parts/details', 'course');  ?>
-              </div>
-              <div class="item">
-                    <?php get_template_part('template-parts/details', 'course');  ?>
-              </div>
               <?php
                         }
                     } else {

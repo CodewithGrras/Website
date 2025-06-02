@@ -22,14 +22,14 @@ get_header();
                 $download_attr = $attachment_id ? 'download' : '';
                 ?>
 
-                <p class="mb-0">
+                <div class="mb-0 readmoretext">
                 <span class="short-text"><?php echo esc_html($short_text); ?></span>
                 <?php if ($is_long): ?>
                     <span class="dots">...</span>
                     <span class="more-text d-none"><?php echo esc_html(mb_substr($full_text, 100)); ?></span>
                     <a href="javascript:void(0);" class="theme-text-primary fw-semibold text-decoration-none toggle-more">Read more</a>
                 <?php endif; ?>
-                </p>
+                </div>
                 <hr class="w-75 w-75 my-lg-5"/>
                 <a 
                     href="<?php echo $attachment_url; ?>" 

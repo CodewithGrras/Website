@@ -1536,7 +1536,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check if click is outside the menu and not on the toggle button
     console.log(`isClickInside: ${isClickInside}, isButton: ${isButton} mobileClass: ${jQuery("#navbarSupportedContentForMobile").attr('class')}`);
     if (!isClickInside && !isButton && mobileMenu.classList.contains('show')) {
-        console.log('need to hide');
         const mobCollapse = bootstrap.Collapse.getInstance(mobileMenu);
         if (mobCollapse) {
             mobCollapse.hide();
@@ -1588,13 +1587,13 @@ menuItems.forEach(item => {
 
 jQuery(document).ready(function ($) {
   const $toggleLink = $(".toggle-more");
-  alert
+  
 
-  if ($toggleLink.length === 0) return;
+  //if ($toggleLink.length === 0) return;
 
   $toggleLink.on("click", function () {
-    const $moreText = $(this).parents("p").find(".more-text");
-    const $dots = $(this).parents("p").find(".dots");
+    const $moreText = $(this).parents(".readmoretext").find(".more-text");
+    const $dots = $(this).parents(".readmoretext").find(".dots");
 
     if ($moreText.hasClass("d-none")) {
       $moreText.removeClass("d-none");

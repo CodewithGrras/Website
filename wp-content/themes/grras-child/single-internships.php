@@ -141,14 +141,14 @@
 						$attachment_url = $attachment_id ? wp_get_attachment_url($attachment_id) : 'javascript:void(0)';
 						$download_attr = $attachment_id ? 'download' : '';
 						?>
-						<p class="mb-1">
+						<div class="mb-1 readmoretext">
 							<span class="short-text"><?php echo wp_kses_post($short_text); ?></span>
 							<?php if ($is_long): ?>
 								<span class="dots">...</span>
 								<span class="more-text d-none"><?php echo wp_kses_post(mb_substr($full_text, 100)); ?></span>
 								<a href="javascript:void(0);" class="theme-text-primary fw-semibold text-decoration-none toggle-more">Read more</a>
 							<?php endif; ?>
-						</p>
+              </div>
 					</div>
 					<a href="#" class="btn btn-primary mt-4">Download Brochure</a>
 				</div>
@@ -319,20 +319,22 @@
     const viewMoreBtn = document.getElementById('view-more-btn');
     const hiddenItems = document.querySelectorAll('.hidden-item');
 
-    viewMoreBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        hiddenItems.forEach(function(item) {
-            item.style.display = 'block';
-        });
-        if(viewMoreBtn.textContent == 'Show Less'){
-        viewMoreBtn.textContent = 'Show More';
-        hiddenItems.forEach(function(item) {
-            item.style.display = 'none';
-        });
-        }else{
-        viewMoreBtn.textContent = 'Show Less'; 
-        }
-    });
+    if(viewMoreBtn) {
+      viewMoreBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          hiddenItems.forEach(function(item) {
+              item.style.display = 'block';
+          });
+          if(viewMoreBtn.textContent == 'Show Less'){
+          viewMoreBtn.textContent = 'Show More';
+          hiddenItems.forEach(function(item) {
+              item.style.display = 'none';
+          });
+          }else{
+          viewMoreBtn.textContent = 'Show Less'; 
+          }
+      });
+    }
 });
 
 </script>

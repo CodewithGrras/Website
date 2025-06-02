@@ -116,7 +116,7 @@
                   <div class="col-lg-6">
                     <?php $course_overview = get_field("course_overview"); ?>
                     <h3 style="font-weight: 700;"><?php echo $course_overview['title']; ?></h3>
-                    <div class="custom_contant" style="display: -webkit-box;">
+                    <div class="custom_contant readmoretext" style="display: -webkit-box;">
                       <?php
                         echo limitTextHtml($course_overview["content"], 100);
                         //echo "<p>Test job</p>";

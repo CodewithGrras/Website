@@ -49,14 +49,14 @@
                                 <div class="iconbox">
                                     <img src="<?php echo get_sub_field('icon'); ?>" alt="">
                                     <h4><?php echo get_sub_field('title'); ?></h4>
-                                    <p class="mb-1">
+                                    <div class="mb-1 readmoretext">
                                         <span class="short-text"><?php echo wp_kses_post($short_text); ?></span>
                                         <?php if ($is_long): ?>
                                             <span class="dots">...</span>
                                             <span class="more-text d-none"><?php echo wp_kses_post(mb_substr($full_text, 100)); ?></span>
                                             <a href="javascript:void(0);" class="theme-text-primary fw-semibold text-decoration-none toggle-more">Read more</a>
                                         <?php endif; ?>
-                                    </p>
+                                        </div>
                                 </div>
                             </div>
                         <?php endwhile; ?>
