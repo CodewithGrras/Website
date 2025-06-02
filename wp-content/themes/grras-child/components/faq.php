@@ -1,9 +1,9 @@
 <?php 
-	  $frequently_asked_questions_new = get_field('frequently_asked_questions_new');
+	  $frequently_asked_questions_latest = get_field('frequently_asked_questions_new');
     $frequently_asked_questions = get_field('frequently_asked_questions');
 
-    $faqs = !empty($frequently_asked_questions_new) ? $frequently_asked_questions_new : $frequently_asked_questions;
-    if(!empty($faqs)) { ?>
+    $frequently_asked_questions_new = !empty($frequently_asked_questions_latest) ? $frequently_asked_questions_latest : $frequently_asked_questions;
+    if(!empty($frequently_asked_questions_new)) { ?>
 ?>
     <section class="faqs scroller" id="faqsec" data-anchor="faqsec">
       <div class="container wow fadeInUp">
@@ -14,7 +14,7 @@
         </div>
          <?php 
          
-         $frequently_asked_questions_new = get_field('frequently_asked_questions_new'); ?>
+         //$frequently_asked_questions_new = get_field('frequently_asked_questions_new'); ?>
         <div class="row">
           	<div class="col-lg-4 d-none d-md-block">
 	            <ul class="nav left-tab mt-0" id="myTab" role="tablist">
