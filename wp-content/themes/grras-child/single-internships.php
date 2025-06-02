@@ -47,7 +47,7 @@
 				</div>
 				<div class="clearfix"></div>
 	            <a href="#" class="align-items-center btn btn-primary btnwith-icon-sm d-inline-flex justify-content-center p-2 rounded-2 text-center" data-bs-toggle="modal" data-bs-target="#exampleModal5">
-					<span class="pe-3 ps-2">Register For Free Demo</span>
+					<span class="pe-3 ps-2" data-bs-toggle="modal" data-bs-target="#exampleModal5">Register For Free Demo</span>
 					<span class="btn-icon d-inline-flex justify-content-center align-items-center">
 						<svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 23 23" fill="none">
 						<path d="M6.21305 7.32844V6.23463C6.23791 5.76231 6.6108 5.38942 7.05827 5.38942L16.7285 5.36456C17.2008 5.38942 17.5737 5.76231 17.5737 6.20977V15.9049C17.5737 16.3523 17.2008 16.7252 16.7285 16.7501H15.6347C15.1624 16.7252 14.7895 16.3523 14.7646 15.88L14.9138 10.0132L7.77919 17.1478C7.43116 17.4959 6.93397 17.4959 6.58594 17.1478L5.79045 16.3523C5.46728 16.0292 5.44242 15.5071 5.79045 15.1591L12.925 8.0245L7.08313 8.19851C6.6108 8.17365 6.21305 7.82563 6.21305 7.32844Z" fill="CurrentColor"></path>
@@ -150,7 +150,7 @@
 							<?php endif; ?>
               </div>
 					</div>
-					<a href="#" class="btn btn-primary mt-4">Download Brochure</a>
+					<a href="#" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal5">Download Brochure</a>
 				</div>
 				<div class="col-12 col-lg-6">
 					<iframe width="100%" height="315" src="<?php echo get_field('youtube_url'); ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -171,7 +171,7 @@
 	              echo $certificate['title'];
 	              ?></h2>
 	              <?php echo wpautop($certificate['description']);?>
-	              <div class="d-none d-md-block"><a href="#" class="btn btn-primary">Apply for Intermship</a></div>
+	              <div class="d-none d-md-block"><a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal5">Apply for Intermship</a></div>
 	            </div>
 	            <div class="col-lg-6 order-md-first">
 	              <div class="certibox d-block">
@@ -1609,7 +1609,7 @@ endif;
 					<p class="mb-0">Have doubts about Full Stack Placement Course? Reach out to our counsellors by filling this form.</p>
 				</div>
 				<div class="col-12 col-lg-3">
-					<a href="#" class="btn btn-primary d-block">Speak to a counsellor</a>
+					<a href="#" class="btn btn-primary d-block" data-bs-toggle="modal" data-bs-target="#exampleModal5">Speak to a counsellor</a>
 				</div>
 			</div>  
 		</div>

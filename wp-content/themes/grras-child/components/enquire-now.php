@@ -16,7 +16,14 @@
               <div class="col-lg-6">
               <div class="formbox">
                   <h4>Book a Demo Class, For <strong>Free!</strong> </h4>
-                  <?php echo do_shortcode('[gravityform id="20" title="false" ajax="true"]'); ?>
+                  <?php
+                  if (is_singular('internships')) {
+                      $form_id = 21; // Default form ID for internships
+                  } else {
+                      $form_id = 20; // Default form ID for other pages 
+                  }
+                  echo do_shortcode('[gravityform id="' . $form_id . '" title="false" ajax="true"]');
+                  ?>
               </div>
               </div>
             </div>

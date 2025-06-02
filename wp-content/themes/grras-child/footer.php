@@ -196,7 +196,15 @@ if(divCount <= 0){
 <div class="footerfix">
 
       <div class="container d-none d-md-block"> 
-        <strong>Need Help?</strong> Talk to us at +91 90019 97178 or <a href="#" class="callback" data-bs-toggle="modal" data-bs-target="#exampleModal2">REQUEST CALLBACK</a> 
+        <?php
+            $modalTarget = null;
+            if (is_singular('internships')) {
+                $modalTarget = 'exampleModal5'; // Default form ID for internships
+            } else {
+                $modalTarget = 'exampleModal2'; // Default form ID for other pages 
+            }
+        ?>
+        <strong>Need Help?</strong> Talk to us at +91 90019 97178 or <a href="#" class="callback" data-bs-toggle="modal" data-bs-target="#<?php echo $modalTarget; ?>">REQUEST CALLBACK</a> 
       </div>
         <div class="container d-block d-md-none">
           <div class="btn-group">
