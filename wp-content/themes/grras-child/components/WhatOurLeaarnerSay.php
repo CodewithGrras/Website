@@ -1,5 +1,5 @@
 <!-- What our learners have to say about Grras -->
-<div class="learner ==no-bg">
+<div class="learner ==no-bg bglight-sm">
       <div class="container">
         <div class="row">
           <div class="col-lg-5 order-lg-2 wow fadeInRight">

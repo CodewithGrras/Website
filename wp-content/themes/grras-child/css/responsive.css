@@ -97,6 +97,9 @@
     }
 }
 @media(max-width:767px){
+    .overview .item-content .theme-text-primary, .whyenroll .goalbox .theme-text-primary {
+        font-size: 12px;
+    }
     .tools-section.help-section .cardicon svg {
         width: 17px;
         height: 17px;
@@ -369,8 +372,20 @@
         font-size: 12px;
     }
     .endcareer2-area img {
-        width: 28px;
+                width: 28px;
+        padding: 2px;
     }
+    .industryproject .content img {
+        width: 60px;
+    }
+    .fullstack h5 {
+    font-size: 16px;
+}
+.faqs .accordion .accordion-item .accordion-button:not(.collapsed) {
+    background-color: #fff7ef;
+    color: #ef7220;
+    font-weight: 500;
+}
     .btnwith-icon-sm .btn-icon {
         width: 26px;
         height: 26px;
@@ -476,9 +491,9 @@
  }
 
 @media(min-width: 991px) {
-    .industryproject .item {
+    /* .industryproject .item {
         height: 380px;
-    }
+    } */
     .intcourse .cobox {
         min-height: 300px;
     }

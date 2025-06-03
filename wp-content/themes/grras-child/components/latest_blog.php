@@ -72,7 +72,7 @@
         <?php endif; ?>
 
       </div>
-      <div class="col-lg-12 text-center mt-5">
+      <div class="col-lg-12 text-center mt-4">
         <a href="<?php get_link_custom('blog') ?>" class="btn btn-primary">Read More Blogs</a>
       </div>
     </div>

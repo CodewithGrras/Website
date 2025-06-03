@@ -22,11 +22,11 @@
   </nav>
 
   <!-- Learn today -->
-  <div class="jobform">
+  <div class="jobform jobfornnew">
     <div class="container">
       <div class="row justify-content-between">
         <div class="col-lg-6 wow fadeInLeft">
-          <h1><?php echo get_field('banner_title') ?></h1>
+          <h1><?php echo get_field('banner_title') ?></h1> 
           <div class="subtext"><?php the_content() ?></div>
           <a href="#" class="btn btn-primary d-block d-sm-none mb-5" data-bs-toggle="modal" data-bs-target="#exampleModal6">Download Brochure</a>
           <div class="lang"><?php echo get_field("stack_top_heading") ?></div>
@@ -37,9 +37,9 @@
 ?>
 
           
-          <div class="btntext"><?php echo get_field("stack_bottom_heading") ?></div>
+          <!-- <div class="btntext"><?php echo get_field("stack_bottom_heading") ?></div> -->
           <!--<a href="<?php echo get_field('download_brochure'); ?>" class="btn btn-dark d-none d-sm-block">Download Brochure</a>-->
-          <a href="#" class="btn btn-dark d-none d-sm-block" data-bs-toggle="modal" data-bs-target="#exampleModal6">Download Brochures</a>
+          <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#exampleModal6">Download Brochures</a>
 <!-- Modal -->
 <div class="modal fade" id="otpModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog">
@@ -107,7 +107,7 @@
             </ul>
           </nav>
         </div>
-        <div class="overbg">
+        <div class="overbg bglight-sm section-padding">
           <div class="container">
             <section class="scroller" id="overview" data-anchor="overview">
               <div class="item-content">
@@ -115,20 +115,22 @@
                 <div class="row justify-content-between align-items-center">
                   <div class="col-lg-6">
                     <?php $course_overview = get_field("course_overview"); ?>
-                    <h3 style="font-weight: 700;"><?php echo $course_overview['title']; ?></h3>
+                    <h2 style="font-weight: 700;"><?php echo $course_overview['title']; ?></h2>
                     <div class="custom_contant readmoretext" style="display: -webkit-box;">
                       <?php
                         echo limitTextHtml($course_overview["content"], 100);
                         //echo "<p>Test job</p>";
                       ?>
+                      
                     </div>
-                    <div class="my-5">
-                      <a href="javascript:void(0)" class="btn btn-secondary mr-2 hide_custom" >Explore</a>
+                    <a href="javascript:void(0)" class="theme-text-primary fw-semibold text-decoration-none toggle-more" >Read More</a>
+                    <div class="mt-4 mt-lg-5">
+                      <!-- <a href="javascript:void(0)" class="btn btn-dark fw-normal py-2 px-3 mr-2 hide_custom" >Explore</a> -->
                       <!--<a href="<?php echo get_field('download_brochure'); ?>" class="btn btn-primary">Download Brochure</a>-->
-					            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal6">Download Brochure</a>
+					            <a href="#" class="btn btn-primary py-2 px-3" data-bs-toggle="modal" data-bs-target="#exampleModal6" >Download Brochure</a>
                     </div>
                   </div>
-                  <div class="col-lg-5 overview_view">
+                  <div class="col-lg-5 overview_view mt-4 mt-lg-0">
                     <div class="videobox">
                       <iframe width="100%" height="315" src="<?php echo $course_overview["youtube_url"] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
@@ -172,7 +174,7 @@
       <div class="container d-none d-md-block">
         <div class="row">
 
-          <div class="col-lg-12">
+          <div class="col-lg-12 mb-3">
             <h2 class="text-center"><?php echo get_field("benefit_heading"); ?></h2>
             <p class="text-center"><?php echo get_field("benefit_description"); ?></p>
           </div>
@@ -265,7 +267,7 @@
 
       <!-- mobile acrodian -->
       <div class="container d-block d-md-none">
-        <div class="col-lg-12">
+        <div class="col-lg-12 mb-4 mb-md-0">
           <h2 class="text-center"><?php echo get_field("benefit_heading"); ?></h2>
           <p class="text-center"><?php echo get_field("benefit_description"); ?></p>
         </div>
@@ -342,10 +344,11 @@
           while (have_rows('why_enrol')): the_row();
         ?>
             <div class="col-lg-3 col-sm-6 col-6 g-3">
-              <div class="goalbox">
+              <div class="goalbox text-start h-100">
                 <img src="<?php echo get_sub_field('icon') ?>" class="img-fluid" alt="">
                 <?php echo get_sub_field('title') ?>
                 <?php echo get_sub_field('content') ?>
+                <a href="javascript:void(0)" class="theme-text-primary fw-semibold text-decoration-none toggle-more">Read More</a>
               </div>
             </div>
         <?php
@@ -364,7 +367,8 @@
     <div class="container">
         <div class="row" style="position: relative!important;">
             <div class="col-lg-8" style="position: relative;">
-                <h2><?php echo get_field("course_curriculum_heading"); ?></h2>
+                <h2 class="mb-2"><?php echo get_field("course_curriculum_heading"); ?></h2>
+                <h5>Master Tools, Techniques, and Real-World Applications</h5>
                 <div class="subtext"><?php echo get_field("course_curriculum_description"); ?></div>
                 <div class="accordion" id="accordionExample2">
                     <?php
@@ -626,7 +630,7 @@ echo $left_section['experience'];
 
 
   <!-- Happy Student -->
-  <section class="studentsay">
+  <section class="studentsay section-padding bg-theme-light">
     <div class="container">
       <div class="row">
         <div class="col-md-12">

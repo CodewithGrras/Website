@@ -24,7 +24,7 @@
                     <?php endif; ?>
         </div>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3 g-3">
             <div class="imgbox">
               <iframe width="100%" height="454" src="<?php echo $why_grras['video_url'] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
             </div>

@@ -17,7 +17,7 @@ $args = array(
 $custom_query = new WP_Query($args);
 ?>
 
-<div class="recentplacement successstory wow fadeInRight">
+<div class="recentplacement successstory wow fadeInRight section-padding bglight-sm">
     <div class="container">
         
         <h2 style="

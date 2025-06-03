@@ -23,7 +23,7 @@ $terms = get_terms(array(
    
 ));
 ?>
-<div class="recentplacement recentarrow wow fadeInLeft">
+<div class="recentplacement recentarrow wow fadeInLeft section-padding">
     <div class="container">
         <h2> <?php 
         if(get_field('our_recent_placements')):
