@@ -22,7 +22,7 @@
   <!-- header -->
   
   <?php
-
+				
 
 // Get the term object for 'top-choices'
 $top_choices_term = get_term_by('slug', 'top-choices', 'course_types');

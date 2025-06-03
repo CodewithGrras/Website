@@ -54,9 +54,9 @@
 
           <div class="endcareer2-area align-items-center d-flex gap-3 p-3 border rounded-2 brd-theme-light">
 
-            <img class="img-tool-icon" src="<?php echo $image_url; ?>" alt="<?php echo $image_alt; ?>" />
+            <a href="<?php echo $tag_permalink; ?>"><img class="img-tool-icon" src="<?php echo $image_url; ?>" alt="<?php echo $image_alt; ?>" />
 
-            <h6 class="mb-0"><a href="javascript:void"><?php echo $image_alt; ?></a></h6>
+            <h6 class="mb-0"><?php echo $image_alt; ?></h6></a>
 
           </div>
 
