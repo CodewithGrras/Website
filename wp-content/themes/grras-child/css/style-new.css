@@ -3609,9 +3609,13 @@
 
   .jobready h2 span{ color: #ef7220; }
 
-  .jobready .imgbox{ position: absolute; bottom: -50px; right: 0; max-width: 280px; }
+  /* .jobready .imgbox{ position: absolute; bottom: -50px; right: 0; max-width: 280px; } */
+  .jobready .imgbox{ 
+   max-width: 280px;
+   margin-left: auto;
+ }
 
-  .jobready .formbox{ background: #fff; background-size: cover; border-radius: 15px; padding: 30px 40px; box-shadow: 0 0 20px rgba(0,0,0,.1); }
+  .jobready .formbox{  background: #fff; background-size: cover; border-radius: 15px; padding: 30px 40px; box-shadow: 0 0 20px rgba(0,0,0,.1); }
 
   .jobready .formbox h3 { font-size: 23px; color: #000; font-weight: 600;}
 
@@ -3707,7 +3711,7 @@
 
   .hirepartner .content .imgbox{ padding: 6px; border:1px #b9b9b9 solid; border-radius: 10px; display: inline-block; }
 
-  .hirepartner .content h4{ font-size: 19px; color: #000; font-weight: 600; padding: 10px 0 5px; margin: 0; }
+  .hirepartner .content h4{ font-size: 16px; color: #000; font-weight: 600; padding: 10px 0 5px; margin: 0; }
 
   .hirepartner .content .degtext{ font-size: 11px; color: #8d8d8d; font-weight: 600; }
 
@@ -4637,7 +4641,7 @@
 
   .presence .single-content { padding: 5px;}
 
-  .presence .single-content img { width: 266px; height: 100%; border-radius: 10px; border:1px #b9b9b9 solid; }
+  .presence .single-content img { object-fit: cover; width: 266px; height: 100%; border-radius: 10px; border:1px #b9b9b9 solid; }
 
   .filters { width: 100%; }
 
@@ -4679,7 +4683,7 @@
 
   .blogs h2 small{ font-size: 14px; color: #f18e21; vertical-align: middle; padding-left: 10px; font-family: 'Poppins', sans-serif; }
 
-  .blogs .form-control{ height: 50px; box-shadow: none; outline: none; }
+  .blogs .form-control{ box-shadow: none; outline: none; }
 
   .blogs .blogbox{ margin-top: 25px; }
 
@@ -4937,7 +4941,7 @@
 
 
 
-  .locate{ background: #f5f5f5 url(../images/feature-topleft.png) no-repeat top left; padding: 70px 0 80px; text-align: center; }
+  .locate{ background: #f5f5f5 url(../images/feature-topleft.png) no-repeat top left; padding: 70px 0 0; text-align: center; }
 
   .locate h2{ font-size: 35px; color: #020202; margin-bottom: 20px; }
 
@@ -8510,7 +8514,11 @@
 
 
   @media(max-width: 480px){
-
+   .course-mobile .right-content h4 {
+      color: #2d2d2d;
+      font-size: 12px;
+      font-weight: 500;
+   }
     .header .logo{ text-align: left; margin-right: 0; }
 
     .navbar .btn{ font-size: 12px; font-weight: 400; width: 110px; }
@@ -8559,7 +8567,7 @@
 
     .getjob ul li{ padding: 10px 3px; width: 29%; }
 
-    .getjob ul li p{ font-size: 10px; }
+    .getjob ul li p{ font-size: 9px; }
 
     .reviewpop .reviewimg{ width: 120px; height: 120px; }
 
@@ -8728,7 +8736,9 @@
       /* .whygrras .imgbox iframe{ height: 240px; } */
 
       .whyhire ul li{ font-size: 11px; padding-top: 2px; padding-bottom: 2px; }
-
+      .whyhire .whycont a {
+         font-size: 11px;
+      }
       .whyhire ul li:before{ top: 8px; }
 
       .whyhire .whycont{ min-height: 410px; }
@@ -13792,4 +13802,10 @@ form.Exam-form input.form-control {
 .serach-course h4 {
     margin-top: 30px;
     font-weight: 600;
+}
+.examcenter a:hover h4 {
+    color: #ef7220;
+}
+.examcenter a:hover img {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .05);
 }
