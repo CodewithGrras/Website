@@ -1,4 +1,4 @@
-<div class="industryproject ent-pro bg-theme-light-gradient-md" id="projects" data-anchor="projects" >
+<div class="industryproject ent-pro bg-theme-light-gradient-md scroller" id="projects" data-anchor="projects" >
 
     
 
@@ -218,14 +218,7 @@
 
              </div>
 
-            <div class="custom_contant" style="display: -webkit-box;" id="custom-<?php echo $project->ID; ?>"><?php echo $queried_post->post_content; ?></div>
-
-            <a href="javascript:void(0)" class="link-primary hide_custom " style="    color: orange;
-
-    text-decoration: none;"  id="btn-<?php echo $project->ID; ?>" onclick="hideProShow('custom-<?php echo $project->ID; ?>', 'btn-<?php echo $project->ID; ?>')"
-
->Read More</a>
-
+            <div class="readmoretext"><?php echo limitTextHtml($queried_post->post_content, 600); ?></div>
     <br/>
 
     <?php if(get_field('explore_more', $project->ID)):?> 

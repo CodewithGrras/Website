@@ -1,6 +1,6 @@
 <?php
 ?>
-  <div class="ourhire wow fadeInUp" id="placement" data-anchor="placement">
+  <div class="ourhire wow fadeInUp scroller" id="placement" data-anchor="placement">
     <div class="container">
       <div class="whbox">
         <h2>Our Hiring Partners</h2>

@@ -622,10 +622,25 @@ add_filter('gform_confirmation_22', function($confirmation, $form, $entry) {
 
     $post_id = rgar($entry, '10'); // hidden field id
     $pdf_url = get_field('download_brochure', $post_id); // Change 'course_pdf' to your actual ACF field name
-
     if (!$pdf_url) {
         $pdf_url = site_url('/wp-content/uploads/sample.pdf'); // Default PDF if none exists
     }
+
+
+    //$download_url = get_stylesheet_directory_uri().'/download_pdf.php?file=' . urlencode($pdf_url);
+    $confirmation = "<script>window.open('$pdf_url', '_blank');</script>";
+
+    return $confirmation;
+}, 10, 3);
+
+add_filter('gform_confirmation_21', function($confirmation, $form, $entry) {
+
+    $post_id = rgar($entry, '10'); // hidden field id
+    $pdf_id = get_field('banner_download_brochure', $post_id); // Change 'course_pdf' to your actual ACF field name
+    $pdf_url = !empty($pdf_id) ? wp_get_attachment_url($pdf_id) : null;
+    if (!$pdf_url) {
+        $pdf_url = site_url('/wp-content/uploads/sample.pdf'); // Default PDF if none exists
+    } 
 
 
     //$download_url = get_stylesheet_directory_uri().'/download_pdf.php?file=' . urlencode($pdf_url);
@@ -635,11 +650,10 @@ add_filter('gform_confirmation_22', function($confirmation, $form, $entry) {
 }, 10, 3);
 
 /////////////////  Download Pdf on Submitting Gravity Form (Home Page)  /////////////////
-add_filter('gform_confirmation_22', function($confirmation, $form, $entry) {
+/*add_filter('gform_confirmation_22', function($confirmation, $form, $entry) {
 
     $post_id = rgar($entry, '10'); // hidden field id
     $pdf_url = get_field('download_placement_report', $post_id); // Change 'course_pdf' to your actual ACF field name
-
     if (!$pdf_url) {
         $pdf_url = site_url('/wp-content/uploads/sample.pdf'); // Default PDF if none exists
     }
@@ -649,10 +663,10 @@ add_filter('gform_confirmation_22', function($confirmation, $form, $entry) {
     $confirmation = "<script>window.open('$pdf_url', '_blank');</script>";
 
     return $confirmation;
-}, 10, 3);
+}, 10, 3);*/
 
 /////////////////  Download Pdf on Submitting Gravity Form (Placement Page)  /////////////////
-add_filter('gform_confirmation_22', function($confirmation, $form, $entry) {
+/*add_filter('gform_confirmation_22', function($confirmation, $form, $entry) {
 
     $post_id = rgar($entry, '10'); // hidden field id
 
@@ -672,7 +686,7 @@ add_filter('gform_confirmation_22', function($confirmation, $form, $entry) {
     $confirmation = "<script>window.open('$pdf_url', '_blank');</script>";
 
     return $confirmation;
-}, 10, 3);
+}, 10, 3);*/
 
 add_filter('gform_confirmation_7', function($confirmation, $form, $entry) {
     $event = rgar($entry, '15'); // hidden field id
@@ -769,15 +783,27 @@ function redirect_old_course_urls() {
 add_action('template_redirect', 'redirect_old_course_urls');*/
 
 function limitTextHtml($full_text, $limit = 200) {
-    $short_text = mb_substr($full_text, 0, $limit);
-    $is_long = mb_strlen($full_text) > $limit;
+    // Remove block-level tags that cannot go inside <span>
+    $allowed_tags = '<span><b><strong><i><em><u><a><br>';
+    $inline_safe_html = strip_tags($full_text, $allowed_tags);
 
-    $html = "";
-    $html.='<span class="short-text">'. $short_text .'</span>';
-    if ($is_long):
-        $html.='<span class="dots">...</span>';
-        $html.='<span class="more-text d-none">'. mb_substr($full_text, $limit) . '</span>';
-        $html.='<a href="javascript:void(0);" class="theme-text-primary fw-semibold text-decoration-none toggle-more">Read more</a>';
-    endif;
+    // Decode HTML entities for safe mb_substr
+    $text_content = html_entity_decode(strip_tags($inline_safe_html));
+    
+    $short_text = mb_substr($text_content, 0, $limit);
+    $is_long = mb_strlen($text_content) > $limit;
+
+    // Encode again for HTML output
+    $short_text_encoded = htmlentities($short_text);
+    $remaining_text_encoded = htmlentities(mb_substr($text_content, $limit));
+
+    // Wrap in span-based layout
+    $html  = '<span class="short-text">' . $short_text_encoded . '</span>';
+    if ($is_long) {
+        $html .= '<span class="dots">...</span>';
+        $html .= '<span class="more-text d-none">' . $remaining_text_encoded . '</span>';
+        $html .= '<a href="javascript:void(0);" class="theme-text-primary fw-semibold text-decoration-none toggle-more p-1">Read more</a>';
+    }
+
     return $html;
 }

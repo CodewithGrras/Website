@@ -332,7 +332,7 @@ include "components/course-workshops.php"; ?>
 
                         </div>
 
-                         <div class="rating-number fw-semibold px-4 ms-4">4.5</div>           
+                         <div class="rating-number fw-semibold px-4 ms-4"><?php echo $star_rating; ?></div>           
                     </div>
 
                 <?php endwhile; ?>

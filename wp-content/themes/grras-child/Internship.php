@@ -13,11 +13,12 @@ get_header();
                 <h1><?php $banner = get_field("banner");
                     echo $banner["title"];
                     ?></h1>
-                <a href="javascript:void(0)" class="btn btn-dark"  data-bs-toggle="modal" data-bs-target="#exampleModal590" class="btn btn-dark">Apply Now</a>
-                <a href="<?php echo $banner["brochore_url"] ?>" class="btn btn-primary">Download Brochrue</a>
-                <p>
+                    <p>
                 <?php echo $banner["short_description"] ?>
                 </p>
+                <a href="javascript:void(0)" class="btn btn-dark"  data-bs-toggle="modal" data-bs-target="#exampleModal590" class="btn btn-dark">Apply Now</a>
+                <a href="<?php echo $banner["brochore_url"] ?>" class="btn btn-primary">Download Brochrue</a>
+                
             </div>
         </div>
     </div>
@@ -29,7 +30,7 @@ get_header();
 <?php include 'components/courses.php'; ?>
 
 <!-- The Summer Training program 2023 Provides -->
-<div class="thesummer">
+<div class="thesummer bg-image-hide">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">

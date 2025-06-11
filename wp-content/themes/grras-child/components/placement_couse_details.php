@@ -102,7 +102,7 @@
 
               <div class="item">
 
-                   <a href="/placement-support/" class="global-link">
+                   <a href="<?php echo site_url('placement-support'); ?>" class="global-link">
 
                 <div class="cousebox">
 
@@ -124,7 +124,7 @@
 
                     <div class="placement_contant"><?php the_content() ?></div>
 
-                    <a href="javascript:void(0)" class="link placement_show">Read more</a>
+                    <a href="<?php echo site_url('placement-support'); ?>" class="link placement_show">Read more</a>
 
                   </div>
 

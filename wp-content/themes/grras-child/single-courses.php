@@ -39,7 +39,7 @@
           
           <!-- <div class="btntext"><?php echo get_field("stack_bottom_heading") ?></div> -->
           <!--<a href="<?php echo get_field('download_brochure'); ?>" class="btn btn-dark d-none d-sm-block">Download Brochure</a>-->
-          <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#exampleModal6">Download Brochures</a>
+          <a href="#" class="btn btn-primary d-none d-sm-inline-block mt-lg-5" data-bs-toggle="modal" data-bs-target="#exampleModal6">Download Brochures</a>
 <!-- Modal -->
 <div class="modal fade" id="otpModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog">
@@ -116,16 +116,15 @@
                   <div class="col-lg-6">
                     <?php $course_overview = get_field("course_overview"); ?>
                     <h2 style="font-weight: 700;"><?php echo $course_overview['title']; ?></h2>
-                    <div class="custom_contant readmoretext" style="display: -webkit-box;">
+                    <div class="custom_contant" style="display: -webkit-box;">
                       <?php
-                        echo limitTextHtml($course_overview["content"], 100);
+                        echo $course_overview["content"];
                         //echo "<p>Test job</p>";
                       ?>
                       
                     </div>
-                    <a href="javascript:void(0)" class="theme-text-primary fw-semibold text-decoration-none toggle-more" >Read More</a>
                     <div class="mt-4 mt-lg-5">
-                      <!-- <a href="javascript:void(0)" class="btn btn-dark fw-normal py-2 px-3 mr-2 hide_custom" >Explore</a> -->
+                      <a href="javascript:void(0)" class="btn btn-dark fw-normal py-2 px-3 mr-2 hide_custom" >Read more</a>
                       <!--<a href="<?php echo get_field('download_brochure'); ?>" class="btn btn-primary">Download Brochure</a>-->
 					            <a href="#" class="btn btn-primary py-2 px-3" data-bs-toggle="modal" data-bs-target="#exampleModal6" >Download Brochure</a>
                     </div>
@@ -169,7 +168,7 @@
    <?php
               if (!in_array("Benefits Remove", $permission)) {
 ?>
-            <div class="benefits scroller" id="whythis" data-anchor="whythis">
+            <div class="benefits">
     <div class="tabbed-content">
       <div class="container d-none d-md-block">
         <div class="row">
@@ -332,7 +331,8 @@
               ?>
 
   <!-- Why enrol for GRRAS -->
-  <div class="yourgoal whyenroll wow fadeInLeft" >
+  <div class="yourgoal whyenroll wow fadeInLeft scroller" id="whythis" data-anchor="whythis">
+      
     <div class="container">
       <div class="row">
         <div class="col-12">
@@ -344,11 +344,11 @@
           while (have_rows('why_enrol')): the_row();
         ?>
             <div class="col-lg-3 col-sm-6 col-6 g-3">
-              <div class="goalbox text-start h-100">
+              <div class="goalbox text-start">
                 <img src="<?php echo get_sub_field('icon') ?>" class="img-fluid" alt="">
-                <?php echo get_sub_field('title') ?>
-                <?php echo get_sub_field('content') ?>
-                <a href="javascript:void(0)" class="theme-text-primary fw-semibold text-decoration-none toggle-more">Read More</a>
+                <?php echo get_sub_field('tittle') ?>
+                <div class="readmoretext looklikep"><?php echo limitTextHtml(get_sub_field('content'), 200); ?></div>
+                
               </div>
             </div>
         <?php
@@ -841,76 +841,119 @@ endif;
             }
         }
     </style>
-<section class="support scroller" id="careerservice" data-anchor="careerservice">
-  <div class="tabbed-content">
-    <div class="container">
-      <h2><?php echo get_field('career_support_title'); ?></h2>
-      <div class="row">
-        <div class="col-lg-5 d-none d-lg-block">
-          <?php
-            $side_img = get_field('career_support_image');
-            if ($side_img):
-          ?>
-            <img src="<?php echo esc_url($side_img); ?>" class="img-fluid" alt="">
-          <?php endif; ?>
+    <?php 
+    $course_common_detail = get_field('course_common_config', 'option');
+    ?>
+<section class="faqs faq-section py-5 scroller" id="careerservice" data-anchor="careerservice">
+      <div class="container wow fadeInUp">
+        <div class="row justify-content-center">
+          <div class="col-md-12">
+            <div class="heading-area mb-4">
+              <h2 class="fw-bold"><?php echo $course_common_detail['from_training_to_placement_a_roadmap_to_success_title_course']; ?></h2>
+              <p></p>
+            </div>
+          </div>
         </div>
-        <div class="col-lg-7">
-          <nav class="tabs">
-            <ul>
-              <?php
-              if (have_rows('career_support')):
-                $i = 0;
-                while (have_rows('career_support')): the_row();
-                  $title = get_sub_field('title');
-                  $slug = 'tab-' . create_slug($title); // Use a function that makes a clean slug
-                  $active = ($i === 0) ? 'active' : '';
+        <?php 
+        $tabsData = $course_common_detail['from_training_to_placement_a_roadmap_to_success_tabs_course'];
+        if(!empty($tabsData)):
+        ?>
+        <div class="row">
+          <div class="col-12  col-md-4">
+            <ul class="nav left-tab my-0 theme-default-tab" id="myTab" role="tablist">
+              <?php 
+              $countTab = 1;
+              foreach($tabsData as $tabKey=>$tabObj):
               ?>
-                <li><a href="#<?php echo $slug; ?>" class="<?php echo $active; ?>"><?php echo esc_html($title); ?></a></li>
-              <?php
-                  $i++;
-                endwhile;
-              endif;
-              ?>
-              <div class="clearfix"></div>
-            </ul>
-          </nav>
-
-          <?php
-          if (have_rows('career_support')):
-            $i = 0;
-            while (have_rows('career_support')): the_row();
-              $title = get_sub_field('title');
-              $description = get_sub_field('description');
-              $img = get_sub_field('image');
-              $slug = 'tab-' . create_slug($title);
-              $active = ($i === 0) ? 'active' : '';
-          ?>
-            <section id="<?php echo $slug; ?>" class="item <?php echo $active; ?>">
-              <div class="item-content">
-                <div class="posts">
-                  <?php if (!empty($img)): ?>
-                    <img src="<?php echo esc_url($img); ?>" alt="" class="img-fluid mb-3" />
+              <li class="nav-item" role="presentation">
+                <a href="#" class="nav-link <?php if($countTab === 1 ) { echo 'active'; } ?> bg-white border rounded-1" data-bs-toggle="tab" data-bs-target="#RoadmapTab-<?php echo $countTab; ?>"><?php echo $tabObj['tab_title']; ?></a>
+                <div class="mobile-view-tab d-none p-2">
+                  <?php if(isset($tabObj['tab_boxes']) && !empty($tabObj['tab_boxes'])): ?>
+                    <?php foreach($tabObj['tab_boxes'] as $boxKey=>$boxObj): ?>
+                          <div class="row">
+                            <div class="col-12 col-sm-6 col-lg-6 mb-3">
+                              <div class="card h-100 roadmap-block border-0 bg-theme-light">
+                                <div class="card-body p-lg-4">
+                                    <div class="cardicon mb-3 d-flex justify-content-center align-items-center">
+                                      <?php echo $boxObj['svg_code']; ?>
+                                    </div>
+                                    <h5 class="fw-semibold"><?php echo $boxObj['box_title']; ?></h5>
+                                    <p class="mb-0 p-0"><?php echo $boxObj['box_description']; ?></p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                    <?php endforeach; ?>
                   <?php endif; ?>
-                  <h5><?php echo esc_html($title); ?></h5>
-                  <p><?php echo esc_html($description); ?></p>
-
-                  <div class="mt-3">
-                    <a href="#" class="btn btn-primary">Course</a>
-                  </div>
-                  <div class="clearfix"></div>
+                </div>
+              </li>
+              <?php $countTab++; endforeach; ?>
+            </ul>
+          </div>
+          <div class="col-12 col-md-8">
+            <div class="tab-content d-none d-md-block" id="myTabContent">
+            <?php 
+              $countTab = 1;
+              foreach($tabsData as $tabKey=>$tabObj):
+            ?>
+              <div class="tab-pane fade <?php if($countTab == 1) { echo 'show active'; } ?>" id="RoadmapTab-<?php echo $countTab; ?>">
+                <div class="row">
+                  <?php if(isset($tabObj['tab_boxes']) && !empty($tabObj['tab_boxes'])): ?>  
+                    <?php foreach($tabObj['tab_boxes'] as $boxKey=>$boxObj): ?>
+                        <div class="col-12 col-sm-6 col-lg-6 mb-3">
+                            <div class="card h-100 roadmap-block border-0 bg-theme-light">
+                                <div class="card-body p-lg-4">
+                                    <div class="cardicon mb-3 d-flex justify-content-center align-items-center">
+                                        <?php echo $boxObj['svg_code']; ?>
+                                    </div>
+                                    <h5 class="fw-semibold"><?php echo $boxObj['box_title']; ?></h5>
+                                    <p class="mb-0 p-0"><?php echo $boxObj['box_description']; ?></p>
+                                 </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
                 </div>
               </div>
-            </section>
-          <?php
-              $i++;
-            endwhile;
-          endif;
-          ?>
+            <?php $countTab++; endforeach; ?>
+            </div>
+          </div>
         </div>
+        <?php endif; ?>
+        <?php
+		$attachment_id = $course_common_detail['our_mission_download_placement_report_file_course'];
+		$attachment_url = $attachment_id ? wp_get_attachment_url($attachment_id) : 'javascript:void(0);';
+		$download_attr = $attachment_id ? 'download' : '';
+		
+		$attachment_right_id = $course_common_detail['our_mission_right_image_course'];
+		$attachment_right_url = $attachment_right_id ? wp_get_attachment_url($attachment_right_id) : '';
+        ?>
+        <div class="border rounded-2 brd-theme-light mt-4">
+          <div class="row">
+            <div class="col-12 col-lg-8 order-2 order-lg-1">
+              <div class="dataarea p-3">
+                <span><?php echo $course_common_detail['our_mission_revolves_around_our_learners_title_course']; ?></span>
+                <h4 class="fw-bold my-md-3"><?php echo $course_common_detail['our_mission_revolves_around_our_learners_subheading_course']; ?></h4>
+                <a href="<?php echo $attachment_url; ?>" class="align-items-center btn btn-primary btnwith-icon-sm d-inline-flex justify-content-center p-2 rounded-2 text-center" <?php echo $download_attr; ?>>
+                  <span class="pe-3 ps-2">Download Placement Report</span>
+                  <span class="btn-icon d-inline-flex justify-content-center align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                      <path d="M5.39062 9.46533C5.50781 9.33512 5.6543 9.27002 5.83008 9.27002C6.00586 9.27002 6.15234 9.33512 6.26953 9.46533L10 13.1763L13.7305 9.46533C13.8477 9.33512 13.9941 9.27002 14.1699 9.27002C14.3457 9.27002 14.4922 9.33512 14.6094 9.46533C14.7266 9.58252 14.7852 9.729 14.7852 9.90479C14.7852 10.0806 14.7266 10.2271 14.6094 10.3442L10.4492 14.5044C10.319 14.6346 10.1693 14.6997 10 14.6997C9.83073 14.6997 9.68099 14.6346 9.55078 14.5044L5.39062 10.3442C5.27344 10.2271 5.21484 10.0806 5.21484 9.90479C5.21484 9.729 5.27344 9.58252 5.39062 9.46533ZM10 4.27002C10.1693 4.27002 10.3158 4.33187 10.4395 4.45557C10.5632 4.57926 10.625 4.72575 10.625 4.89502V13.2349C10.625 13.4041 10.5632 13.5506 10.4395 13.6743C10.3158 13.798 10.1693 13.8599 10 13.8599C9.83073 13.8599 9.68424 13.798 9.56055 13.6743C9.43685 13.5506 9.375 13.4041 9.375 13.2349V4.89502C9.375 4.72575 9.43685 4.57926 9.56055 4.45557C9.68424 4.33187 9.83073 4.27002 10 4.27002ZM3.53516 17.395C3.53516 17.2257 3.59701 17.0793 3.7207 16.9556C3.8444 16.8319 3.99089 16.77 4.16016 16.77H15.8398C16.0091 16.77 16.1556 16.8319 16.2793 16.9556C16.403 17.0793 16.4648 17.2257 16.4648 17.395C16.4648 17.5773 16.403 17.7271 16.2793 17.8442C16.1556 17.9614 16.0091 18.02 15.8398 18.02H4.16016C3.99089 18.02 3.8444 17.9614 3.7207 17.8442C3.59701 17.7271 3.53516 17.5773 3.53516 17.395Z" fill="white"/>
+                    </svg>
+                  </span>
+                </a>
+              </div>
+            </div>
+            <div class="col-12 col-lg-4 order-1 order-lg-2">
+              <div class="image-area text-end">
+                <img src="<?php echo $attachment_right_url; ?>" class="img-fluid" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+        
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
 
 <script>

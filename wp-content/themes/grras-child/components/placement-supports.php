@@ -93,7 +93,7 @@ $terms = get_terms(array(
     </div>
     <div class="clearfix mt-4"></div>
     <?php if($loader == 'demo'): ?>
-        <div class="col-lg-12 text-center mt-3" ><a href="javascript:void(0)" class="readmore"  >Read More</a></div>
+        <div class="col-lg-12 text-center mt-3" ><a href="javascript:void(0)" class="readmore"  >Load More</a></div>
                 <?php 
                else:
                ?>

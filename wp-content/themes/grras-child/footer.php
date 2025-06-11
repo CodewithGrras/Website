@@ -56,17 +56,20 @@ include 'components/download-brochure.php';
     });
 </script>
 <script>
-function hideProShow(name, btn_name) {
+function hideProShow(name, btn_name, curBtn) {
     const exploreBtns = document.getElementById(btn_name); // Corrected 'getElementsById' to 'getElementById'
     const custom_contant = document.getElementById(name); // Corrected 'getElementsById' to 'getElementById'
-    
-    if (custom_contant.style.display === '-webkit-box') { // Corrected the comparison operator to '==='
+    console.log(`display : ${custom_contant.style.display}`);
+    if (custom_contant.style.display == '-webkit-box') { // Corrected the comparison operator to '==='
         custom_contant.style.display = 'block';
-        exploreBtns.textContent = 'Show Less';
+        //exploreBtns.textContent = 'Show Less';
+        jQuery(curBtn).html('Show Less1');
     } else {
         custom_contant.style.display = '-webkit-box'; // Fixed the unclosed quote in '-webkit-box'
-        exploreBtns.textContent = 'Read More';
+        //exploreBtns.textContent = 'Read More';
+        jQuery(curBtn).html('Read More1');
     }
+    
 }
 
   document.addEventListener("DOMContentLoaded", function() {
@@ -80,14 +83,14 @@ function hideProShow(name, btn_name) {
             e.preventDefault();
             if (contents[i].style.display == '-webkit-box') {
                 contents[i].style.display = 'block';
-                exploreBtns[i].textContent = 'Show Less';
+                exploreBtns[i].textContent = 'Show Less2';
             } else {
                 contents[i].style.display = '-webkit-box';
-                      <?php if (is_page('home')): ?>
-            exploreBtns[i].textContent = 'Read More';
-        <?php else: ?>
-            exploreBtns[i].textContent = 'Read More';
-        <?php endif; ?>
+                <?php if (is_page('home')): ?>
+                    exploreBtns[i].textContent = 'Read More3';
+                <?php else: ?>
+                    exploreBtns[i].textContent = 'Read More4';
+                <?php endif; ?>
             }
         });
     }
@@ -1383,7 +1386,7 @@ $('.filter-button-group').on( 'click', 'li', function() {
 });
   $('.navtab a').on('click', function() {
       var scrollAnchor = $(this).attr('data-scroll'),
-          scrollPoint = $('div[data-anchor="' + scrollAnchor + '"], footer[data-anchor="' + scrollAnchor + '"]')?.offset()?.top-1;
+          scrollPoint = $('div[data-anchor="' + scrollAnchor + '"], section[data-anchor="' + scrollAnchor + '"], footer[data-anchor="' + scrollAnchor + '"]')?.offset()?.top-1;
           // scrollPoint = $().offset().top - 28;    
       $('body,html').animate({
             scrollTop: scrollPoint
@@ -1393,25 +1396,26 @@ $('.filter-button-group').on( 'click', 'li', function() {
 
       })
 
-      $(window).scroll(function() {
-          var windscroll = $(window).scrollTop();
-          if (windscroll >= 0) {
-              // $('navtab').addClass('fixed');
-              $('.scroller').each(function(i) {
-                  if ($(this).position().top <= windscroll + 500) {
-                      $('.navtab a.active').removeClass('active');
-                      $('.navtab a').eq(i).addClass('active');
-                  }
-              });
+      $(window).on('scroll', function () {
+        var windscroll = $(window).scrollTop();
+        var windowHeight = $(window).height();
+    
+        $('.scroller').each(function () {
+            var $this = $(this);
+            var scroll = $this.attr('data-anchor');
+            var elementTop = $this.offset().top;
+            var elementBottom = elementTop + $this.outerHeight();
+    
+            // Check if this element is in viewport
+            if (elementTop <= windscroll + windowHeight / 2 && elementBottom > windscroll + windowHeight / 2) {
+                $('.navtab a').removeClass('active');
+                $(`.navtab a[data-scroll="${scroll}"]`).addClass('active');
+                //return false; // stop loop once the current section is found
+            }
+        });
+       }).scroll(); // Trigger once on load
 
-          } else {
 
-              // $('navtab').removeClass('fixed');
-              $('.navtab a.active').removeClass('active');
-              $('.navtab a:first').addClass('active');
-          }
-
-      }).scroll();
 })
 });
     
