@@ -175,22 +175,37 @@ get_header();
     
     echo get_field('trusted_by_learners_title') ?></h2>
 
-    <ul class="review">
-      <?php if ($what_our_learners['companies_image']): ?>
+    <div class="review">
 
-        <?php foreach ($what_our_learners['companies_image'] as $item){
-          $image = $item['image'] // Adjust this to match your subfield name
-        ?>
+                <?php if (have_rows('trusted_by_learners_section', 'option')): ?>
+                    <?php while (have_rows('trusted_by_learners_section', 'option')): the_row();
+    
+                        $image = get_sub_field('image'); // Adjust this to match your subfield name
+    
+                        $star_rating = get_sub_field('star_rating'); 
+    
+                    ?>
+    
+    
+    
+                        <div class="fb-google-area d-flex align-items-center">
+    
+                            <div class="link text-start">
+    
+                                <a href="<?php echo get_sub_field('link') ?>">
+    
+                                    <img src="<?php echo $image ?>" class="img-fluid" alt="<?php echo $image; ?>" style="max-width: 180px;">
+    
+                                </a>
+                            </div>
+    
+                             <div class="rating-number fw-semibold px-4 ms-4"><?php echo $star_rating; ?></div>           
+                        </div>
+    
+                    <?php endwhile; ?>
+                <?php endif; ?>
 
-          <li>
-              <a href="<?php echo $item['link'] ?>">
-              <img src="<?php echo $image ?>" class="img-fluid" alt="">
-              </a>
-              </li>
-        <?php } ?>
-
-      <?php endif; ?>
-    </ul>
+        </div>
 
 
 

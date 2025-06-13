@@ -198,6 +198,15 @@ if ( function_exists('acf_add_options_page') ) {
         'redirect'      => false,
         'icon_url'      => 'dashicons-admin-generic',
     ));
+    
+    acf_add_options_page(array(
+        'page_title'    => 'Common Options',
+        'menu_title'    => 'Common Options',
+        'menu_slug'     => 'common-options',
+        'capability'    => 'edit_others_posts', // Change capability to allow Editors to access
+        'redirect'      => false,
+        'icon_url'      => 'dashicons-admin-generic',
+    ));
 }
 
 

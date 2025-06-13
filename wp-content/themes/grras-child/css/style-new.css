@@ -1617,6 +1617,20 @@
 
 
   @media(max-width: 767px){
+   body.single-internships .content {
+      min-height: 255px;
+   }
+   .hearform .owl-carousel .owl-item .carbox {
+      margin-bottom: 0;
+   }
+   .hearform .nav {
+      margin-bottom: 15px;
+   }
+   .hearform .owl-carousel .owl-item .bigimg img {
+      max-height: 210px;
+      width: 100%;
+      object-fit: cover;
+   }
    .search-mobile h4 {
         font-size: 18px !important;
         margin-bottom: 20px !important;
@@ -2890,11 +2904,15 @@
 
 
   .trackrecord{ padding: 0px 0 70px; }
-
-  .trackrecord .trackbox{ padding: 30px; border:1px #e8e8e8 solid; border-radius: 10px; /*margin-top: 10px;*/ box-shadow: 5px 5px 10px rgba(0,0,0,.08); min-height: 130px;}
-
-  .trackrecord .trackbox p{ padding: 20px 0px 15px; margin: 0; font-size: 15px; color: #000; font-weight: 600; }
-
+.trackrecord .trackbox{ transition: all 0.4s ease; padding: 30px; border:1px #e8e8e8 solid; border-radius: 10px; margin-top: 10px; box-shadow: 5px 5px 10px rgba(0,0,0,.08); }
+.trackrecord .trackbox p{ padding: 20px 0px 15px; margin: 0; font-size: 17px; color: #000; font-weight: 600; }
+.trackrecord .trackbox:hover {
+   box-shadow: 0px 0px 10px rgba(0, 0, 0, .1);
+}
+.trackrecord .trackbox:hover button {
+   background-color: #ef7221;
+   color: #fff;
+}
 
 
   .storypeople{ padding-bottom: 60px; }
@@ -5084,7 +5102,7 @@
 .jobfornnew .top-company-course {
     padding: 50px 0;
 }
-  .jobform{ padding:30px 0 70px; background: url(../images/course-bg.jpg) no-repeat center bottom; background-size: cover; }
+  .jobform{ padding:30px 0 70px; background: url(../images/course-bg.jpg) no-repeat center bottom; background-size: cover !important; }
 
   .jobform h1{ margin: 0; padding: 25px 0 0; font-size: 40px; color: #212529; font-weight: 700; }
 
@@ -5272,7 +5290,7 @@
 
   .whyenroll { padding: 50px 0 80px; text-align: center;}
 
-  .whyenroll .goalbox { box-shadow: 0 2px 5px rgba(0,0,0,.05); border:1px #c3c3c3 solid; margin-top: 20px; padding: 25px 15px; border-radius: 10px; }
+  .whyenroll .goalbox { box-shadow: 0 2px 5px rgba(0,0,0,.05); border:1px #c3c3c3 solid; margin-top: 20px; padding: 25px 15px; border-radius: 5px; }
 
   .whyenroll .goalbox h4 {
     color: #212529;
@@ -5389,7 +5407,7 @@
 
   .fullstack .accordion .accordion-body ul li:last-child:after{ display: none; }
 
-  .fullstack .accordion .accordion-body .accordion-button{ padding-top: 10px; padding-bottom: 10px; margin-top: 0; font-size: 14px; }
+  .fullstack .accordion .accordion-body .accordion-button{ padding-top: 10px; padding-bottom: 10px; margin-top: 0; }
 
   .fullstack .accordion .accordion-body .accordion-button:after{ top: 12px; }
 
@@ -6271,7 +6289,23 @@
 
   .trainplace:before{ background:#fff url(../images/topbg.svg) no-repeat center top; position: absolute; top: 0; left: 0; right: 0; content: ''; width: 100%; height: 135px;}
 
-  .trainplace h2{ font-weight: 400; margin-bottom: 20px; padding-top: 235px; }
+  .trainplace h2{ font-weight: 400; margin-bottom: 20px; padding-top: 200px; }
+  .make-me-sticky {
+    position: sticky;
+    top: 20px;
+    z-index: 10;
+    height: calc(100% - 60%);
+}
+.make-me-sticky-global {
+    position: sticky;
+    top: 20px;
+    z-index: 10;
+}
+
+.make-me-sticky.un-stuck {
+  position: relative !important;
+  top: auto !important;
+}
 
   .trainplace ul.iconlist{ margin: 0; padding: 0 0 0 55px; list-style: none; position: relative; }
 
@@ -7165,7 +7199,13 @@
 
       .trainplace h2{ padding-top: 0; }
 
-      .trainplace ul.iconlist{ padding-top: 20px; }
+      .trainplace ul.iconlist{ padding-top: 20px;         padding-left: 0;}
+      .trainplace ul.iconlist:before {
+         background: none;
+      }
+      .trainplace ul.iconlist li .number {
+         display: none;
+      }
 
       .trainplace ul.iconlist:before{ left: 20px; }
 
@@ -7236,9 +7276,35 @@
   }
 
   @media(max-width: 767px){
+       body.single-courses .yourgoal .goalbox {
+         min-height: 100%;
+         height: auto;
+         padding: 15px 15px 10px;
+      }
+      body.single-courses .yourgoal .goalbox .readmoretext {
+         font-size: 11px;
+      }
+      body.single-courses .yourgoal .goalbox img {
+         max-width: 40px;
+      }
+      .benefits .accordion-button::after {
+         width: 14px;
+         height: 14px;
+         background-size: auto;
+      }
+      
       .successstory .review {
          padding: 0;
          margin-bottom: 15px;
+      }
+      .fullstack .accordion .accordion-body p{
+         font-size: 12px;
+      }
+      .fullstack .accordion .accordion-body .accordion-body {
+         padding: 0px 20px 0px 45px;
+      }
+      .fullstack .accordion .accordion-item .accordion-collapse .accordion-item:not(:first-child) {
+         margin-top: 0;
       }
       .successstory .review .fb-google-area {
          padding: 0 15px;
@@ -7688,11 +7754,13 @@
 
       .inten-banner p{ font-size: 12px; }
 
-      .inten-banner .lang{ font-size: 13px; float: none; display: inline-block; width: 48%; text-align: right; }
+          .inten-banner .lang {
+            font-size: 13px;
+         }
 
       .inten-banner .subtext{ font-size: 13px; text-align: left; }
 
-      .inten-banner .intslid{ float: none; display: inline-block; vertical-align: top; }
+      .inten-banner .intslid{ float: none; vertical-align: top; }
 
       .inten-banner .btn-primary{ font-size: 12px; }
 
@@ -7726,7 +7794,9 @@
 
       .grrasint th, .grrasint td{ font-size: 10px; }
 
-      .hearform .orangebox p{ font-size: 11px; }
+      .hearform .orangebox p {
+        font-size: 11px !important;
+    }
 
       .hearform .blackbg h5{ font-size: 14px; }
 
@@ -7938,7 +8008,7 @@
 
     .fullstack h2 small{ font-size: 16px; }
 
-    .fullstack .accordion .accordion-button{ font-size: 13px; font-weight: 400;}
+    .fullstack .accordion .accordion-button{ font-size: 12px; font-weight: 400;}
 
     .tools{ padding: 40px 0 20px; }
 
@@ -8135,6 +8205,11 @@
       .successstory h2{ text-align: center; }
 
       .whygrras .iconbox img{ float: left; width: 33px; margin: 0 10px 0px 0; }
+      .beint .iconbox img {
+         float: none;
+         height: auto !important;
+         margin-bottom: 10px;
+      }
 
       .careercourses .imgbox .link{ line-height: 26px; height: 26px; width: 42px; }
 
@@ -8192,7 +8267,8 @@
 
       .intcourse .cobox .content .rating img{ width: 50px;}
 
-      .certificate .certibox p{ padding-bottom: 10px; }
+      .certificate .certibox p{ padding-bottom: 10px;         font-size: 13px;
+        line-height: 22px;}
 
       .jobready .formbox label{ font-size: 12px; }
 
@@ -8366,7 +8442,7 @@
 
       .intcourse .proven { background: linear-gradient(45deg,  rgba(255,93,46,1) 0%,rgba(240,38,88,1) 29%,rgba(53,116,246,1) 68%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; } 
 
-      .hirepartner .content{ min-height: 300px; }
+      .hirepartner .content{ min-height: 330px; }
 
       .hirepartner .container{ padding: 0; }
 
@@ -8880,7 +8956,16 @@
 
       .studentclub .clubbox ul.clublist:before{ height: 355px; }
 
-      .whygrras .iconbox{ min-height: 160px; }
+          body.single-internships .whygrras .iconbox {
+            min-height: 210px !important;
+         }
+         body.single-internships .content {
+            height: 100%;
+            min-height: 265px;
+         }
+         body.single-internships .hearform .blackbg h5{
+            font-size: 14px;
+         }
 
       .lastestblog .cousebox h4{ min-height: 50px; }
 
@@ -8950,7 +9035,7 @@
 
       .turnover p{ padding-left: 60px; display: inherit; font-size: 10px; }
 
-      .turnover p big{ font-size: 20px; }
+      .turnover p big{ font-size: 20px;         margin-bottom: 8px;}
 
       .aboutinter .monybox{ padding-top: 30px; padding-bottom: 30px; background-size: 60px; }
 
@@ -9292,6 +9377,26 @@
   }
 
   @media (max-width: 767px) {
+   body.single-internships .hearform .orangebox .content {
+      padding: 20px 30px 0;
+      min-height: auto;
+   }
+   .theme-default-tab li {
+      width: 100%;
+   }
+   .theme-default-tab li a {
+      font-size: 12px;
+   }
+   .toggle-more {
+      font-size: 12px;
+   }
+   /* .certificate-full p{
+      margin-bottom: 0px;
+   } */
+   .turnover-detail p {
+      padding-left: 0;
+      line-height: 17px;
+   }
    .course-mobile p {
       min-height: 60px;
       margin-bottom: 0;
@@ -9717,16 +9822,16 @@
 
 }
 
-.hearform .owl-carousel .owl-item img {
-
-   width: auto;
-
-   max-width: 100%;
-
-   display: inline-block;
-
+body.single-internships .hearform .owl-carousel .owl-item img {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: inline-block;
+    object-fit: cover;
+    max-height: 315px;
 }
-
+body.single-internships .hearform .owl-carousel .owl-item .orangebox img {
+    width: auto !important;
+}
 .hearform .star, .hearform .star-enabled {
 
    color: #fff;
@@ -12081,7 +12186,7 @@ form.Exam-form input.form-control {
 
 }
 
-.inten-banner .owl-carousel .item img {
+/*.inten-banner .owl-carousel .item img {
 
     transform: scale(0.9);
 
@@ -12093,7 +12198,7 @@ form.Exam-form input.form-control {
 
     transform: scale(0.7);
 
-}
+}*/
 
 .custom-coursal-internship .owl-nav {
 
@@ -12229,7 +12334,7 @@ form.Exam-form input.form-control {
 
 }
 
-.inten-banner .owl-carousel .item img {
+.inten-banner .owl-carousel .owl-item.highlight .item img {
 
     transform: scale(0.9);
 
@@ -12237,7 +12342,7 @@ form.Exam-form input.form-control {
 
 }
 
-.inten-banner .owl-carousel .owl-item.active .item img{
+.inten-banner .owl-carousel .owl-item:not(.highlight) .item img{
 
     transform: scale(0.7);
 
@@ -13848,4 +13953,25 @@ form.Exam-form input.form-control {
 .toggle-more {
     display: block;
     padding: 0;
+}
+.cert-content p {
+         margin-bottom: 0;
+      }
+
+      body.single-internships .whygrras .iconbox h4 {
+    margin-bottom: 6px;
+    padding-top: 10px;
+}
+.flex-auto{
+   flex: auto;
+}
+body.single-internships .content {
+    height: 100%;
+    min-height: 345px;
+}
+body.single-courses .whyenroll .goalbox h4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }

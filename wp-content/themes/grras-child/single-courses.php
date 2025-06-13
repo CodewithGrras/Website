@@ -343,11 +343,13 @@
 
           while (have_rows('why_enrol')): the_row();
         ?>
-            <div class="col-lg-3 col-sm-6 col-6 g-3">
+            <div class="col-lg-3 col-sm-6 col-12 g-3">
               <div class="goalbox text-start">
-                <img src="<?php echo get_sub_field('icon') ?>" class="img-fluid" alt="">
-                <?php echo get_sub_field('tittle') ?>
-                <div class="readmoretext looklikep"><?php echo limitTextHtml(get_sub_field('content'), 200); ?></div>
+                <div class="goal-row d-flex align-items-center gap-2 mb-2">
+                    <img src="<?php echo get_sub_field('icon') ?>" class="img-fluid" alt="">
+                    <h4 class="goal-title py-0 ms-3" style="min-height: inherit !important;"><?php echo get_sub_field('tittle') ?></h4>    
+                </div>
+                <div class="readmoretext looklikep"><?php echo limitTextHtml(get_sub_field('content'), 150); ?></div>
                 
               </div>
             </div>
@@ -368,7 +370,7 @@
         <div class="row" style="position: relative!important;">
             <div class="col-lg-8" style="position: relative;">
                 <h2 class="mb-2"><?php echo get_field("course_curriculum_heading"); ?></h2>
-                <h5>Master Tools, Techniques, and Real-World Applications</h5>
+                <h5><?php echo get_field("course_curriculum_subheading"); ?></h5>
                 <div class="subtext"><?php echo get_field("course_curriculum_description"); ?></div>
                 <div class="accordion" id="accordionExample2">
                     <?php
@@ -503,7 +505,7 @@
             </div>
 
             <div class="col-lg-4 d-none d-sm-block top-fixed">
-                <div class="excel">
+                <div class="excel make-me-sticky-global">
                     <ul>
                         <?php
                         if (have_rows('live_classes')):

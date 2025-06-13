@@ -3,9 +3,6 @@
 include 'components/enquire-now.php';
 include 'components/download-brochure.php';
 ?>
-
-
-
 <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 <!-- Thank you -->
 
@@ -36,6 +33,62 @@ include 'components/download-brochure.php';
                 let searchinput = $('#search-input').val();
                 return window.location.href = '/search?q=' + encodeURIComponent(searchinput);
             }
+        });
+        
+        var $sticky = $('.make-me-sticky');
+        var $section = $('.trainplace');
+        
+        // Only run if the section exists
+        if ($section.length && $sticky.length) {
+          $(window).on('scroll', function () {
+            var scrollTop = $(window).scrollTop();
+            var sectionTop = $section.offset().top;
+            var sectionBottom = sectionTop + $section.outerHeight();
+        
+            if (scrollTop >= sectionBottom || scrollTop + $sticky.outerHeight() < sectionTop) {
+              $sticky.addClass('un-stuck');
+            } else {
+              $sticky.removeClass('un-stuck');
+            }
+          });
+        }
+        
+        $('#load-more-partners').on('click', function() {
+            var $button = $(this);
+            var offset = parseInt($button.attr('data-offset'));
+            var total = parseInt($button.attr('data-total'));
+            var slug = $button.attr('data-slug');
+        
+            $.ajax({
+              url: '<?php echo admin_url("admin-ajax.php"); ?>',
+              type: 'POST',
+              data: {
+                action: 'load_more_academic_partners',
+                offset: offset,
+                slug: slug
+              },
+              beforeSend: function() {
+                $button.text('Loading...');
+              },
+              success: function(response) {
+                if (response) {
+                  $('#academic-partners').append(response);
+                  offset += 8;
+                  $button.attr('data-offset', offset);
+                  $button.text('Load More');
+        
+                  // Update remaining count
+                  var remaining = total - offset;
+                  if (remaining > 0) {
+                    $('#remaining-count').text(remaining + ' more academic partners available');
+                  } else {
+                    $('#load-more-partners, #remaining-count').remove();
+                  }
+                } else {
+                  $('#load-more-partners, #remaining-count').remove();
+                }
+              }
+            });
         });
     });
     jQuery(document).ready(function($) {
@@ -438,7 +491,6 @@ include 'components/city-footer-courses.php';
       });
      
 $('.custom-coursal-internship').owlCarousel({
-  items: 2,
   autoplay: true,
   margin: 5,
   nav: false,
@@ -447,38 +499,39 @@ $('.custom-coursal-internship').owlCarousel({
   smartSpeed: 450,
   slideTransition: 'linear',
   autoplaySpeed: 5000,
-  navText: [
-    "<img src='<?php echo get_stylesheet_directory_uri();?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>",
-    "<img src='<?php echo get_stylesheet_directory_uri();?>/images/fe-arrow-right.png' alt=''>"
-  ],
   responsiveClass: true,
   responsive: {
     0: {
-      items: 1,
+      items: 3
     },
-    500: {
-      items: 2,
+    768: {
+      items: 2
     }
   },
   animateOut: 'fadeOut',
   animateIn: 'fadeIn',
-  onInitialized: addClasses,
-  onTranslated: addClasses,
-  rtl: true
+  onInitialized: highlightItem,
+  onTranslated: highlightItem,
+  rtl: true,
+  center: true
 });
 
-function addClasses() {
-  const items = document.querySelectorAll('.custom-coursal-internship .item');
-  console.log(items.length)
-  items.forEach((item, index) => {
-    if (index % 2 === 0) {
-      item.classList.remove('wid160');
-      item.classList.add('story');
-    } else {
-      item.classList.remove('story');
-      item.classList.add('wid160');
-    }
-  });
+function highlightItem() {
+  const $allItems = $('.custom-coursal-internship .owl-item');
+  $allItems.removeClass('highlight');
+
+  const $activeItems = $('.custom-coursal-internship .owl-item.active');
+  $activeItems.removeClass('highlight');
+  const isMobile = $(window).width() < 768;
+
+  if (isMobile && $activeItems.length >= 3) {
+    // Highlight only the middle (2nd) item of 3 active items
+    $activeItems.eq(1).addClass('highlight');
+    $('.custom-coursal-internship .owl-item.active.center').addClass('highlight');
+  } else if (!isMobile && $activeItems.length >= 2) {
+    // Highlight the 2nd visible item on desktop
+    $activeItems.eq(1).addClass('highlight');
+  }
 }
 
      
@@ -1317,6 +1370,7 @@ function addClasses() {
         responsive:{
             0:{
                 items:1,
+                stagePadding: 50 // shows part of the next item
             },
             500:{
                 items:2,
@@ -1399,6 +1453,7 @@ $('.filter-button-group').on( 'click', 'li', function() {
       $(window).on('scroll', function () {
         var windscroll = $(window).scrollTop();
         var windowHeight = $(window).height();
+        console.log('scroll is going on');
     
         $('.scroller').each(function () {
             var $this = $(this);
@@ -1410,7 +1465,7 @@ $('.filter-button-group').on( 'click', 'li', function() {
             if (elementTop <= windscroll + windowHeight / 2 && elementBottom > windscroll + windowHeight / 2) {
                 $('.navtab a').removeClass('active');
                 $(`.navtab a[data-scroll="${scroll}"]`).addClass('active');
-                //return false; // stop loop once the current section is found
+                return false; // stop loop once the current section is found
             }
         });
        }).scroll(); // Trigger once on load

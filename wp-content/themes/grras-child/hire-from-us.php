@@ -136,10 +136,7 @@ $candidates = get_field('candidates');
 
                         <h4><?php echo get_sub_field("title"); ?></h4>
 
-                        <?php echo get_sub_field("content"); ?>
-
-                        <a href="javascript:void(0);" class="theme-text-primary fw-semibold text-decoration-none toggle-more">Read More</a>
-
+                        <div class="readmoretext looklikep"><?php echo limitTextHtml(get_sub_field("content"), 252); ?></div>
                         </div>
 
                     </div>
@@ -176,7 +173,7 @@ $candidates = get_field('candidates');
 
         </ul>
 
-        <div class="text-center"><a href="/contact-us/" class="btn btn-primary">Get in Touch</a></div>
+        <div class="text-center"><a href="<?php echo site_url('aboutus?tab=partnerssection'); ?>" class="btn btn-primary">Get in Touch</a></div>
 
     </div>
 

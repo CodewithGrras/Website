@@ -1,8 +1,8 @@
    <div class="industryproject ent-pro bg-theme-light-gradient-md">
 	      <div class="container">
 	        <div class="text-center">
-	          <h2><?php echo $internship_detail_page['project_title']; ?></h2>
-	          <div class="subtext"><?php echo $internship_detail_page['project_description']; ?></div>
+	          <h2><?php echo get_field('project_title'); ?></h2>
+	          <div class="subtext"><?php echo get_field('project_description'); ?></div>
 	        </div>
         <div class="owl-carousel project-works">
             <?php
@@ -34,14 +34,16 @@
                             <?php 
                             if($curse_tags):
                              echo '<ul>';
-                                foreach($curse_tags as $item):
-                                    
-                            ?>
-	                <li><?php echo $item->name;?></li>
-
-                            <?php 
-                                endforeach;
-	              echo '</ul>';
+                                foreach($curse_tags as $key => $item) {
+                                    if ($key < 3) {
+                                        echo '<li>' . $item->name . '</li>';
+                                    } elseif ($key > 3) {
+                                        $remaining = count($curse_tags) - 3;
+                                        echo '<li>' . $remaining . '+ More</li>';
+                                        break;
+                                    }
+                                }
+	                        echo '</ul>';
                             endif;
                             ?>
 

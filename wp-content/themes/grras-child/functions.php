@@ -807,3 +807,40 @@ function limitTextHtml($full_text, $limit = 200) {
 
     return $html;
 }
+
+add_action('wp_ajax_load_more_academic_partners', 'load_more_academic_partners');
+add_action('wp_ajax_nopriv_load_more_academic_partners', 'load_more_academic_partners');
+
+function load_more_academic_partners() {
+    $offset = isset($_POST['offset']) ? intval($_POST['offset']) : 0;
+    $slug = sanitize_text_field($_POST['slug']);
+
+    $query = new WP_Query([
+        'post_type'      => 'partners',
+        'post_status'    => 'publish',
+        'posts_per_page' => 8,
+        'offset'         => $offset,
+        'tax_query'      => [[
+            'taxonomy' => 'partner-type',
+            'field'    => 'slug',
+            'terms'    => $slug,
+        ]],
+    ]);
+
+    if ($query->have_posts()) :
+        while ($query->have_posts()): $query->the_post(); ?>
+            <div class="col-6 col-md-4 col-lg-3 col-xl-3 mb-4">
+              <div class="trackbox text-center p-4 border-0">
+                <?php if (has_post_thumbnail()): ?>
+                  <img src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'medium')); ?>" alt="<?php the_title_attribute(); ?>" class="img-fluid">
+                <?php endif; ?>
+                <p><?php the_title(); ?></p>
+                <button type="button">Verify Authorisation</button>
+              </div>
+            </div>
+        <?php endwhile;
+        wp_reset_postdata();
+    endif;
+
+    wp_die(); // Required to properly terminate AJAX
+}

@@ -4,7 +4,7 @@
 
 	    $internship_detail_page = get_field('internship_detail_page','option');
 
-	  $internship =  is_page('internship') ? 'pt-0' : ''
+	  $internship =  is_page('internship') ? '' : ''
 
 	    ?>
 

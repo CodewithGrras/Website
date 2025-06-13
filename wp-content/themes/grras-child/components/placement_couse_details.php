@@ -152,7 +152,7 @@
 
             </div>
 
-             <div class="text-center"><a href="/review-rating" class="btn btn-primary">Read All Success Stories</a></div>
+             <div class="text-center mt-4 mt-md-0"><a href="/review-rating" class="btn btn-primary">Read All Success Stories</a></div>
 
             </div>
 

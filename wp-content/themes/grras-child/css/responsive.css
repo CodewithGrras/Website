@@ -150,11 +150,13 @@
     }
     .hearform .nav a {
         display: inline-flex;
-        min-width: 100px;
         justify-content: center;
         font-size: 11px;
         margin-bottom: 0;
-        padding: 13px 7px;
+        padding: 13px 7px !important;
+        align-items: center;
+        vertical-align: middle;
+        min-height: 60px;
     }
     .banner-content h3 {
         font-size: 18px;
@@ -272,6 +274,7 @@
     }
     .faq-section .left-tab li a.active:after{
         background: url(../images/minus-theme.png) no-repeat;
+        height: 2px;
     }
     .faq-section .left-tab li{
         margin-bottom: 5px;
@@ -372,7 +375,7 @@
         font-size: 12px;
     }
     .endcareer2-area img {
-                width: 28px;
+                width: 38px;
         padding: 2px;
     }
     .industryproject .content img {
@@ -415,6 +418,37 @@
     .grrasint th {
         font-size: 12px;
         padding: 10px 5px;
+                vertical-align: middle;
+    }
+    .hearform .reviewbox br {
+        display: none;
+    }
+    .hearform .reviewbox img {
+        float: left;
+    }
+    .hearform .reviewbox .content {
+        overflow: hidden;
+    }
+    .hearform .reviewbox .content p{
+        margin-bottom: 0;
+    }
+    .hearform .reviewbox .content + p {
+        float: left;
+        margin-top: 5px;
+    }
+    .hearform .reviewbox .content h4 {
+        margin-top: 10px;
+    }
+    body.single-internships .content h4 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        font-size: 15px;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    body.single-internships .content {
+        height: 100%;
+        min-height: 300px;
     }
 }
 @media (min-width: 768px) {
@@ -497,5 +531,7 @@
     .intcourse .cobox {
         min-height: 300px;
     }
-    .whygrras .iconbox{ min-height: 220px; }
+        body.single-internships .whygrras .iconbox {
+            min-height: 230px !important;
+        }
 }

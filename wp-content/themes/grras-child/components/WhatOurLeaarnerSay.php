@@ -11,16 +11,26 @@
                   
 </h2>
          <div class="subtext"><?php echo $what_our_learners["short_description"]; ?> </div>
-              <?php
-              if ($what_our_learners['companies_image']): ?>
-         <?php foreach ($what_our_learners['companies_image'] as $item): ?>
-    <div class="review">
-          <a href="<?php echo $item['link']; ?>">
-        <img src="<?php echo $item['image']; ?>" class="img-fluid" alt="">
-        </a>
-        </div>
-                  <?php endforeach; ?>
-<?php endif; ?>
+              <?php if (have_rows('trusted_by_learners_section', 'option')): ?>
+                <?php while (have_rows('trusted_by_learners_section', 'option')): the_row();
+                    $image = get_sub_field('image'); // Adjust this to match your subfield name
+                    $star_rating = get_sub_field('star_rating'); 
+                ?>
+                    <div class="fb-google-area d-flex align-items-center review p-3 justify-content-center w-100">
+                        
+                        <div class="link flex-auto text-center">
+
+                            <a href="<?php echo get_sub_field('link') ?>">
+
+                                <img src="<?php echo $image ?>" class="img-fluid" alt="<?php echo $image; ?>" style="max-width: 145px;">
+
+                            </a>
+                        </div>
+
+                         <div class="rating-number fw-semibold px-4 flex-auto"><?php echo $star_rating; ?></div>           
+                    </div>
+                <?php endwhile; ?>
+              <?php endif; ?>
           </div>
           <div class="col-lg-7 wow fadeInLeft">
             <div class="owl-carousel review-slid d-none d-lg-block">

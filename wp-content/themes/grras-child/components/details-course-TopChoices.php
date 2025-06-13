@@ -115,6 +115,6 @@ $highly_recommended_course = get_field('highly_recommended_course');
         </div>
       </div>
     </div>
-    <div class="text-center mt-5"><a href="/course" class="btn btn-secondary">Explore More Courses</a></div>
+    <div class="text-center mt-3 mt-lg-5"><a href="/course" class="btn btn-secondary">Explore More Courses</a></div>
   </div>
 </div>
