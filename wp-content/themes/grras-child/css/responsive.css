@@ -23,8 +23,11 @@
         max-height: 22px;
     }
     .learner-grid {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
         gap: 5px;
+    }
+    #partnerssection .learner-grid .name {
+        font-size: 12px;
     }
     .info-card-hover-item li img {
         max-height: 35px;
@@ -39,7 +42,7 @@
     .menu {
         padding: 10px 35px !important;
     }
-    .menu > ul {
+    ul.menu, .menu > ul {
         justify-content: start !important;
         overflow-x: auto;
     }
@@ -70,7 +73,7 @@
         top: 0;
         left: 0;
     }
-    .menu > ul::-webkit-scrollbar {
+    ul.menu::-webkit-scrollbar, .menu > ul::-webkit-scrollbar {
         height: 0;
         width: 0px;
     }
@@ -97,6 +100,76 @@
     }
 }
 @media(max-width:767px){
+    .topchoice .choice-course .intcourse .cobox .content p {
+        display: block;
+        font-weight: 400;
+    }
+    .locationmap-area ul.nav-tabs li button.active h5:after {
+        display: none !important;
+    }
+    #mega-menu-wrap-max_mega_menu_1 .mega-menu-toggle ~ button.mega-close:before {
+        background: #ef721f;
+        color: #fff;
+        border-radius: 100%;
+        height: 25px;
+        width: 25px;
+        margin-right: 5px;
+        margin-top: 15px;
+    }
+    #corporatetrainings .turnover p {
+        font-size: 12px;
+                line-height: 18px;
+    }
+    #corporatetrainings .thesummer button {
+        font-size: 12px;
+    }
+    #corporatetrainings .award .item .cousebox h4 {
+        min-height: 65px !important;
+    }
+    
+    #corporatetrainings .award .item .cousebox img {
+        max-height: 150px !important;
+        min-height: 150px !important;
+    }
+    #partnerssection .partner-section .trackbox p,
+    #academic-collaborations .partner-section .trackbox p {
+        padding-top: 6px;
+    }
+    #partnerssection .partner-section .trackbox .verify-btn,
+    #academic-collaborations .partner-section .trackbox .verify-btn {
+        display: inline-block;
+        font-size: 10px;
+        padding: 5px 10px;
+    }
+    #overviewsection .endcareer .contbox {
+        margin-bottom: 0;
+    }
+    #overviewsection .help-section .card {
+        height: 100% !important;
+    }
+    #partnerssection .learner-grid .name {
+        font-size: 12px;
+    }
+    #industrysection .industry-section .cousebox ul li {
+        font-size: 13px;
+        padding-bottom: 5px;
+    }
+    #industrysection .industry-section .cousebox {
+        border-radius: 5px;
+    }
+    #industrysection .industry-section .cousebox ul + a {
+        font-size: 12px;
+    }
+    #industrysection .industry-section .cousebox ul {
+        min-height: auto !important;
+    }
+    #solutionsection .timeline .timeline-item ul li {
+        font-size: 12px;
+        padding-bottom: 5px;
+    }
+    #solutionsection .timeline .timeline-item h5 {
+        font-size: 16px;
+    }
     .overview .item-content .theme-text-primary, .whyenroll .goalbox .theme-text-primary {
         font-size: 12px;
     }
@@ -250,6 +323,7 @@
         overflow: hidden;
         max-height: initial;
         background-color: transparent;
+        padding-top: 0;
     }
     .exam-section .exam-course-area .exam-course-area-item {
         padding: 15px 4px 0 !important;
@@ -305,10 +379,15 @@
     .partner-section .trackbox {
         box-shadow: 0px 0px 10px rgba(0, 0, 0, .08);
         padding: 12px !important;
+        text-align: center;
+    }
+    #eventssection .awardbox .content h5 {
+        min-height: 45px;
     }
     .partner-section .trackbox p {
         padding-bottom: 10px;
                 font-weight: 500;
+                        font-size: 11px;
     }
     .trackbox button {
         font-size: 9px;
@@ -432,9 +511,53 @@
     .hearform .reviewbox .content p{
         margin-bottom: 0;
     }
-    .hearform .reviewbox .content + p {
-        float: left;
+    .page-template-redhat .turnover .icon {
+        width: 50px;
+        height: 50px;
+        padding-top: 10px;
+    }
+    .page-template-redhat .turnover p big {
+        margin-bottom: 0;
+    }
+    .page-template-redhat .redhatpro h4 {
+        padding: 0;
+    }
+    .page-template-redhat .careerpath ul li img {
+        height: 40px;
+    }
+    .page-template-redhat .needmore h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    .page-template-redhat .trainingcourse .btn {
+        border-radius: 2px;
+    }
+    .page-template-redhat .coursesec .imgbox .imgcontent {
+        top: 26px;
+    }
+    .page-template-redhat .course-mobile p a {
+        font-size: 10px;
+    }
+    .page-template-redhat .redcartiholder .rec-certi img {
+        height: 200px;
+    }
+    .page-template-redhat .redlogo .item {
+        padding: 0 10px;
+    }
+    body.single-internships .hearform .owl-carousel .owl-item .reviewbox .content + p,
+    body.page-template-page-template-services .hearform .owl-carousel .owl-item .reviewbox .content + p{
+        float: none;
         margin-top: 5px;
+    }
+    body.page-template-page-template-services .hearform .owl-carousel .owl-item .reviewbox .content {
+        min-height: 65px;
+    }
+    body.single-internships .hearform .owl-carousel .owl-item .reviewbox,
+    body.page-template-page-template-services .hearform .owl-carousel .owl-item .reviewbox {
+        min-height: 70px;
+    }
+   body.single-internships .hearform .owl-carousel .owl-item .carbox .bigimg img {
+        min-height: 314px;
     }
     .hearform .reviewbox .content h4 {
         margin-top: 10px;

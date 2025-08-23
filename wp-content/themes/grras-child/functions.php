@@ -10,6 +10,126 @@
  *
  * @return void
  */
+ 
+/* Marito Functions */
+
+function sendToNoPaperForms(array $leadData, $source = "Website", $campaign = "Website Leads", $operator = "Auto") {
+    $url = 'https://api.nopaperforms.io/lead/v1/createOrUpdate';
+    $headers = getNoPaperFormsHeaders();
+
+    $commonData = buildLeadPayload($leadData, $source, $campaign, $operator);
+
+    // Attempt 1: With email as identifier
+    $payload1 = array_merge([
+        "search_criteria" => "email",
+        "email" => $leadData['email']
+    ], $commonData);
+
+    $response1 = callNoPaperFormsAPI($url, $headers, $payload1);
+
+    // If failed, attempt 2: With mobile as fallback
+    if ($response1['http_code'] !== 200) {
+        $payload2 = array_merge([
+            "search_criteria" => "mobile"
+        ], $commonData);
+        unset($payload2['email']);
+        $payload2['field_message'] = "email : " . $leadData['email']; // embed email in message
+        $response2 = callNoPaperFormsAPI($url, $headers, $payload2);
+        return $response2;
+    }
+
+    return $response1;
+}
+
+function getNoPaperFormsHeaders() {
+    return [
+        "Content-Type: application/json",
+        "secret-key: d8ca6fa80d7d44d3b59ac3c4ee7212c7",
+        "access-key: 7312a817c32d45aeb06bbce7b4504b22"
+    ];
+}
+
+function buildLeadPayload(array $leadData, $source, $campaign, $operator) {
+    $payload = [
+        "name"                      => $leadData['name'],
+        "country_dial_code"         => "91",
+        "mobile"                    => $leadData['mobile'],
+        "field_whatsapp_number"     => "+91-" . $leadData['mobile'],
+        "field_message"             => "email : " . $leadData['email'],
+        //"field_courses"             => $leadData['course'],
+        "field_mode_of_delivery"    => $leadData['delivery_mode'] ?? "Online",
+        "field_preferred_location"  => "Jaipur - Gopalpura",
+        "field_preferred_language"  => $leadData['preferred_language'] ?? "English",
+        "field_website_page_url"    => $leadData['website_url'],
+        "field_data_entry_operator" => $operator,
+        "field_purpose"             => "Course",
+        "source"                    => $source,
+        "medium"                    => "NA",
+        "campaign"                  => $campaign,
+        //"field_category"            => $leadData['category'],
+        //"field_occupation"          => $leadData['occupation']
+    ];
+    
+    if(isset($leadData['course'])) {
+        $payload['field_courses'] = $leadData['course'];    
+    }
+    
+    if(isset($leadData['category'])) {
+        $payload['field_category'] = $leadData['category'];
+    }
+    
+    if(isset($leadData['occupation'])) {
+        $payload['field_occupation'] = $leadData['occupation'];
+    }
+    
+    
+    if($leadData['category'] == 'Internship') {
+        $payload['field_duration'] = $leadData['duration'];
+    }
+    return $payload;
+}
+
+function callNoPaperFormsAPI($url, $headers, $payload) {
+    $ch = curl_init($url);
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_HTTPHEADER     => $headers,
+        CURLOPT_POSTFIELDS     => json_encode($payload),
+    ]);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    logNoPaperFormsRequest($payload, $response, $httpCode);
+
+    return [
+        'http_code' => $httpCode,
+        'response'  => $response,
+        'payload'   => $payload
+    ];
+}
+
+function logNoPaperFormsRequest($payload, $response, $httpCode) {
+    $logFile = WP_CONTENT_DIR . '/nopaperforms-logs/nopaper-' . date('Ymd-His') . '.log';
+    $logDir = dirname($logFile);
+
+    if (!file_exists($logDir)) {
+        mkdir($logDir, 0755, true);
+    }
+
+    $log = "=== NoPaperForms API Call ===\n";
+    $log .= "Time: " . date('Y-m-d H:i:s') . "\n";
+    $log .= "HTTP Code: {$httpCode}\n";
+    $log .= "Payload:\n" . print_r($payload, true) . "\n";
+    $log .= "Response:\n" . $response . "\n";
+    $log .= "============================\n\n";
+
+    file_put_contents($logFile, $log);
+}
+
+/* Marito functions */
 
 function grras_child_enqueue_scripts() {
     wp_enqueue_style(
@@ -621,8 +741,13 @@ function after_submission( $entry, $form ) {
 add_filter('gform_confirmation_22', function($confirmation, $form, $entry) {
 
     $post_id = rgar($entry, '10'); // hidden field id
-    $pdf_url = get_field('download_brochure', $post_id); // Change 'course_pdf' to your actual ACF field name
-    if (!$pdf_url) {
+    $pdf_url = null;
+    if(is_front_page()) {
+        $pdf_url = get_field('download_placement_report', $post_id); // Change 'course_pdf' to your actual ACF field name
+    } else {
+        $pdf_url = get_field('download_brochure', $post_id); // Change 'course_pdf' to your actual ACF field name    
+    }
+    if (empty($pdf_url)) {
         $pdf_url = site_url('/wp-content/uploads/sample.pdf'); // Default PDF if none exists
     }
 
@@ -635,10 +760,42 @@ add_filter('gform_confirmation_22', function($confirmation, $form, $entry) {
 
 add_filter('gform_confirmation_21', function($confirmation, $form, $entry) {
 
+    /*$data = [
+        'form' => $form,
+        'entry' => $entry
+    ];
+    $timestamp = time();
+    $log_filename = "gform-entry-21-{$timestamp}.log";
+    $log_path = WP_CONTENT_DIR . '/'.$log_filename;
+    $log_content = "=== Entry Submitted on " . date('Y-m-d H:i:s') . " ===\n<pre>";
+    $log_content .= print_r($data, true);
+    $log_content .= "</pre>\n=============================\n\n";
+
+    file_put_contents($log_path, $log_content, FILE_APPEND | LOCK_EX);*/
+    
+    $occupation = '';
+    if($entry[8] == 'Working Professional' || $entry[8] == 'Student') {
+        $occupation = $entry[8];
+    } else {
+        $occupation = 'Others';
+    }
+    $lead = [
+        'name' => $entry[4],
+        'email' => $entry[1],
+        'mobile' => $entry[5],
+        'course' => $entry[6],
+        'category' => 'Internship',
+        'occupation' => $occupation,
+        'website_url' => $entry['source_url'],
+        'duration' => $entry[7]
+    ];
+    
+    $response = sendToNoPaperForms($lead, 'Grras Website Internship-Page');
+    
     $post_id = rgar($entry, '10'); // hidden field id
     $pdf_id = get_field('banner_download_brochure', $post_id); // Change 'course_pdf' to your actual ACF field name
     $pdf_url = !empty($pdf_id) ? wp_get_attachment_url($pdf_id) : null;
-    if (!$pdf_url) {
+    if (empty($pdf_url)) {
         $pdf_url = site_url('/wp-content/uploads/sample.pdf'); // Default PDF if none exists
     } 
 
@@ -729,6 +886,68 @@ add_filter('gform_confirmation_7', function($confirmation, $form, $entry) {
         }
     }
     return $confirmation; 
+}, 10, 3);
+
+add_filter('gform_confirmation_18', function($confirmation, $form, $entry) {
+    /*$data = [
+        'form' => $form,
+        'entry' => $entry
+    ];
+    $timestamp = time();
+    $log_filename = "gform-entry-18-{$timestamp}.log";
+    $log_path = WP_CONTENT_DIR . '/'.$log_filename;
+    $log_content = "=== Entry Submitted on " . date('Y-m-d H:i:s') . " ===\n<pre>";
+    $log_content .= print_r($data, true);
+    $log_content .= "</pre>\n=============================\n\n";
+
+    file_put_contents($log_path, $log_content, FILE_APPEND | LOCK_EX);*/
+    
+    $occupation = '';
+    if($entry[18] == 'Working Professional' || $entry[18] == 'Student') {
+        $occupation = $entry[18];
+    } else {
+        $occupation = 'Others';
+    }
+    $lead = [
+        'name' => $entry[3],
+        'email' => $entry[20],
+        'mobile' => $entry[17],
+        'course' => $entry[19],
+        'occupation' => $occupation,
+        'category' => '',
+        'website_url' => $entry[11]
+    ];
+    
+    $response = sendToNoPaperForms($lead);
+
+    return $confirmation;
+}, 10, 3);
+
+add_filter('gform_confirmation_1', function($confirmation, $form, $entry) {
+    /*$data = [
+        'entry' => $entry
+    ];
+    $timestamp = time();
+    $log_filename = "gform-entry-1-{$timestamp}.log";
+    $log_path = WP_CONTENT_DIR . '/'.$log_filename;
+    $log_content = "=== Entry Submitted on " . date('Y-m-d H:i:s') . " ===\n<pre>";
+    $log_content .= print_r($data, true);
+    $log_content .= "</pre>\n=============================\n\n";
+
+    file_put_contents($log_path, $log_content, FILE_APPEND | LOCK_EX);*/
+    
+    
+    $lead = [
+        'name' => $entry[6],
+        'email' => $entry[2],
+        'mobile' => preg_replace('/\D+/', '', $entry[5]),
+        'category' => '',
+        'website_url' => $entry['source_url']
+    ];
+    
+    $response = sendToNoPaperForms($lead, 'Grras Website');
+
+    return $confirmation;
 }, 10, 3);
 
 function get_total_partner_count($term_slug) {
@@ -835,7 +1054,7 @@ function load_more_academic_partners() {
                   <img src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'medium')); ?>" alt="<?php the_title_attribute(); ?>" class="img-fluid">
                 <?php endif; ?>
                 <p><?php the_title(); ?></p>
-                <button type="button">Verify Authorisation</button>
+                <a class="verify-btn" href="<?php echo get_field('verify_auth_link'); ?>" <?php if(!empty(get_field('verify_auth_link'))) { echo 'target="_blank"'; } ?>>Verify Authorisation</a>
               </div>
             </div>
         <?php endwhile;
@@ -843,4 +1062,928 @@ function load_more_academic_partners() {
     endif;
 
     wp_die(); // Required to properly terminate AJAX
+}
+
+// AJAX handler for loading more corporate partners
+add_action('wp_ajax_load_more_corporate_partners', 'ajax_load_more_corporate_partners');
+add_action('wp_ajax_nopriv_load_more_corporate_partners', 'ajax_load_more_corporate_partners');
+
+function ajax_load_more_corporate_partners() {
+    $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+    $per_page = 10;
+    $corporate_slug = 'corporate-partner';
+
+    $query = new WP_Query([
+        'post_type'      => 'partners',
+        'post_status'    => 'publish',
+        'posts_per_page' => $per_page,
+        'paged'          => $page,
+        'tax_query'      => [[
+            'taxonomy' => 'partner-type',
+            'field'    => 'slug',
+            'terms'    => $corporate_slug,
+        ]],
+    ]);
+
+    ob_start();
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post(); ?>
+            <div class="imgbox text-center bg-white">
+                <?php if (has_post_thumbnail()): ?>
+                    <img src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'medium')); ?>" alt="<?php the_title_attribute(); ?>" class="img-fluid p-3">
+                <?php endif; ?>
+                <div class="fw-semibold name p-3"><?php the_title(); ?></div>
+            </div>
+            <?php
+        }
+        wp_reset_postdata();
+    }
+
+    $html = ob_get_clean();
+
+    $total_posts = get_total_partner_count($corporate_slug);
+    $has_more = ($page * $per_page) < $total_posts;
+    $remaining = max(0, $total_posts - ($page * $per_page));
+
+    wp_send_json_success([
+        'html'      => $html,
+        'has_more'  => $has_more,
+        'remaining' => $remaining,
+    ]);
+}
+
+add_action('wp_ajax_load_more_awards', 'ajax_load_more_awards');
+add_action('wp_ajax_nopriv_load_more_awards', 'ajax_load_more_awards');
+
+function ajax_load_more_awards() {
+    $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+    $year = isset($_POST['year']) ? intval($_POST['year']) : date('Y');
+    $per_page = 9;
+
+    $query = new WP_Query([
+        'post_type'      => 'awards',
+        'post_status'    => 'publish',
+        'posts_per_page' => $per_page,
+        'paged'          => $page,
+        'date_query'     => [[
+            'year' => $year,
+        ]],
+    ]);
+
+    ob_start();
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post(); ?>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="awardbox p-3 text-center mb-4">
+                    <div class="image-box pb-md-3 mb-md-3 border-bottom">
+                        <?php if (has_post_thumbnail()): ?>
+                            <img src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'medium')); ?>" class="img-fluid" alt="<?php the_title_attribute(); ?>">
+                        <?php endif; ?>
+                    </div>
+                    <div class="content">
+                        <h5 class="color-black fw-bold"><?php the_title(); ?></h5>
+                        <p><?php echo wp_kses_post(get_the_excerpt()); ?></p>
+                        <a href="<?php the_permalink(); ?>" class="theme-text-primary fw-medium text-decoration-none">Learn more</a>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+        wp_reset_postdata();
+    }
+
+    // Count total posts for this year
+    $count_query = new WP_Query([
+        'post_type'   => 'awards',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'date_query' => [[
+            'year' => $year,
+        ]],
+    ]);
+
+    $total_awards = $count_query->found_posts;
+    $has_more = ($page * $per_page) < $total_awards;
+    $remaining = max(0, $total_awards - ($page * $per_page));
+
+    wp_send_json_success([
+        'html'      => ob_get_clean(),
+        'has_more'  => $has_more,
+        'remaining' => $remaining,
+    ]);
+}
+
+add_action('wp_ajax_search_courses', 'ajax_search_courses');
+add_action('wp_ajax_nopriv_search_courses', 'ajax_search_courses');
+
+function ajax_search_courses() {
+    $term = sanitize_text_field($_GET['term']);
+
+    $args = array(
+        'post_type' => 'courses',
+        'posts_per_page' => -1,
+        's' => $term,
+        'tax_query' => array(
+            array(
+                'taxonomy' => 'city',
+                'field'    => 'term_id',
+                'terms'    => get_terms(array(
+                    'taxonomy'   => 'city',
+                    'fields'     => 'ids',
+                    'hide_empty' => false,
+                )),
+                'operator' => 'NOT IN',
+            ),
+        ),
+    );
+
+    $query = new WP_Query($args);
+
+    ob_start();
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            ?>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6 g-3">
+                <?php get_template_part('template-parts/details', 'course'); ?>
+            </div>
+            <?php
+        }
+    } else {
+        echo '<p>No courses found.</p>';
+    }
+
+    wp_reset_postdata();
+
+    echo ob_get_clean();
+    wp_die();
+}
+
+add_action('wp_ajax_redhat_filter_courses', 'redhat_filter_courses');
+add_action('wp_ajax_nopriv_redhat_filter_courses', 'redhat_filter_courses');
+
+function redhat_filter_courses() {
+    $search = sanitize_text_field($_POST['search']);
+    $device = $_POST['device'] === 'mobile' ? 'mobile' : 'desktop';
+
+    $tax_query = ['relation' => 'AND'];
+    $taxonomies = ['types_of_offerings', 'certification_path', 'product_lines', 'products'];
+    
+    $mapPostToTaxes = [
+        'offering'      => 'types_of_offerings',
+        'certification' => 'certification_path',
+        'productline'   => 'product_lines',
+        'product'       => 'products'
+    ];
+
+    foreach ($mapPostToTaxes as $taxkey => $taxSlug) {
+        if (!empty($_POST[$taxkey])) {
+            $redhatTerms = array_map('intval', explode(',', $_POST[$taxkey]));
+            $tax_query[] = [
+                'taxonomy' => $taxSlug,
+                'field'    => 'term_id',
+                'terms'    => $redhatTerms,
+                'operator' => 'IN' 
+            ];
+        }
+    }
+
+    $args = [
+        'post_type'      => 'redhat_courses',
+        'posts_per_page' => -1,
+        's'              => $search,
+        'tax_query'      => count($tax_query) > 1 ? $tax_query : [],
+    ];
+    //echo "<pre>"; print_r($args); die;
+
+    $query = new WP_Query($args);
+
+    ob_start();
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+
+            $course_id = get_the_ID();
+            $course_image = get_the_post_thumbnail_url();
+            $course_title = get_the_title();
+            $content = get_the_content();
+            $course_duration = get_field('days');
+            $term_names = [];
+            $terms = get_the_terms($course_id, 'red_hat_category');
+            
+            $course_code = get_field('course_code');
+            $specialization = get_field('course_specialization');
+            $rating = get_field('rating'); // e.g. 5
+            $rating_count = get_field('review_count'); // e.g. 21
+            $duration = get_field('days'); // e.g. "30 Day"
+            $icon = get_field('course_icon'); // ACF image
+            $featured_img = get_the_post_thumbnail_url(get_the_ID(), 'full');
+            if ($terms) {
+                foreach ($terms as $term) {
+                    $term_names[] = $term->name;
+                }
+            }
+
+            if ($device === 'desktop') {
+                ?>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-6 g-3">
+                    <div class="cobox">
+                        <div class="imgbox">
+                            <img src="<?php echo esc_url(get_field('mobile_background_image')); ?>" class="img-fluid bigimg" alt="">
+                            <div class="imgcontent">
+                                <div class="icon"><img src="<?php echo esc_url($course_image); ?>" class="img-fluid" alt=""></div>
+                                <h4><small><?php echo esc_html($term_names[0] ?? ''); ?></small><br><?php echo esc_html($course_title); ?></h4>
+                            </div>
+                            <?php if (get_field('best_seller')) : ?>
+                                <div class="<?php echo esc_attr(get_field('best_seller_color')); ?>"><?php echo esc_html(get_field('best_seller')); ?></div>
+                            <?php endif; ?>
+                            <?php if (get_field('discount')) : ?>
+                                <div class="offer"><?php echo esc_html(get_field('discount')); ?><span>%</span> OFF</div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="content">
+                            <p><a href="<?php the_permalink(); ?>" class="two_line"> <?php echo wp_trim_words($content, 20); ?></a></p>
+                        </div>
+                        <div class="content line">
+                            <h5>Skills</h5>
+                            <ul>
+                                <?php
+                                $skills = get_the_terms($course_id, 'skills');
+                                $count = 0;
+                                if ($skills && !is_wp_error($skills)) {
+                                    foreach ($skills as $skill) {
+                                        if ($count++ < 4) {
+                                            echo '<li>' . esc_html($skill->name) . '</li>';
+                                        }
+                                    }
+                                }
+                                if ($count > 4) {
+                                    echo '<li>More +' . ($count - 4) . '</li>';
+                                }
+                                ?>
+                            </ul>
+                        </div>
+                        <div class="content line">
+                            <div class="row">
+                                <div class="col-md-6 col-6">
+                                    <div class="star"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/star.svg" alt=""></a> 5/5 <span>(21)</span></div>
+                                </div>
+                                <div class="col-md-6 col-6">
+                                    <div class="day"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/days.svg" alt=""> <?php echo esc_html($course_duration); ?> Days</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            } else {
+                // Simplified mobile output (or repeat desktop markup if mobile card is identical)
+                ?>
+                <div class="cobox mt-3">
+                <div class="imgbox">
+                  <img src="<?php echo get_stylesheet_directory_uri() ?>/images/red-coursem.png" class="img-fluid bigimg" alt="">
+                  <div class="imgcontent">
+                    <div class="icon">
+                        <img src="<?php echo esc_url($featured_img); ?>" class="img-fluid" alt="">
+                    </div>
+                  </div>
+                </div>
+                <div class="right-content">
+                  <h4>
+                    <small><?php the_title(); ?></small><br>
+                    <?php echo esc_html($course_code); ?>
+                  </h4>
+                  <p><a href="<?php the_permalink(); ?>"><?php echo esc_html($specialization); ?></a></p>
+                  <div class="content">
+                    <div class="row">
+                      <div class="col-md-6 col-6">
+                        <div class="star">
+                          <a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/star.svg" alt=""></a>
+                          <?php echo esc_html($rating); ?>/5 <span>(<?php echo esc_html($rating_count); ?>)</span>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-6">
+                        <div class="day">
+                          <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/days.svg" alt="">
+                          <?php echo esc_html($duration); ?>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <?php
+            }
+        }
+    } else {
+        echo '<div class="col-md-12">No courses found.</div>';
+    }
+    wp_reset_postdata();
+    
+    echo ob_get_clean();
+    wp_die();
+}
+
+
+function custom_courses_display_shortcode($atts) {
+    ob_start();
+
+    // Shortcode attributes
+    $atts = shortcode_atts(array(
+        'type_id' => '',
+        'show_title' => true,
+        'show_desc' => true,
+        'button_text' => 'Explore more courses',
+        'button_page_slug' => 'course'
+    ), $atts);
+
+    // Prepare query args
+    $args = array(
+        'post_type' => 'courses',
+        'posts_per_page' => 6,
+        'tax_query' => array(
+            array(
+                'taxonomy' => 'city',
+                'field'    => 'term_id',
+                'terms'    => get_terms(array(
+                    'taxonomy' => 'city',
+                    'fields'   => 'ids',
+                )),
+                'operator' => 'NOT IN',
+            ),
+        )
+    );
+
+    // Add course_types filter if provided
+    if (!empty($atts['type_id'])) {
+        $args['tax_query'][] = array(
+            'taxonomy' => 'course_types',
+            'field'    => 'id',
+            'terms'    => $atts['type_id'],
+        );
+    }
+
+    $query = new WP_Query($args);
+    echo "<div class='row'>";
+    ?>
+    <div class="col-12">
+        <?php if(!empty($atts['type_id'])) {
+                $term = get_term($atts['type_id']);
+            ?>
+            <?php if($atts['show_title'] === true) { ?>
+            <h6 class="mb-1"><?php echo esc_html($term->name) ?></h6>
+            <?php } ?>
+            
+            <?php if($atts['show_desc'] === true) { ?>
+            <p class="unstyled f12 mt-0"><?php echo esc_html($term->description) ?></p>
+            <?php } ?>
+        <?php } ?>
+    </div>
+    <?php
+    if ($query->have_posts()) :
+        
+        while ($query->have_posts()) : $query->the_post();
+
+            // Get first term from taxonomy for display
+            $terms = get_the_terms(get_the_ID(), 'course_types');
+            $term_name = !empty($terms) && !is_wp_error($terms) ? $terms[0]->name : '';
+
+            ?>
+            <div class="col-lg-6 col-12">
+            <a href="<?php the_permalink(); ?>">
+                <div class="cobox">
+                    <div class="imgbox">
+                        <img src="<?php echo esc_url(get_field('mobile_background_image')); ?>" class="img-fluid bigimg" alt="">
+                        <div class="imgcontent">
+                            <div class="icon"><img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" class="img-fluid" alt=""></div>
+                        </div>
+                        <?php if (get_field('discount')) : ?>
+                            <div class="offer"><?php echo esc_html(get_field('discount')); ?><span>%</span> OFF</div>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="right-content">
+                        <div class="<?php echo esc_attr(get_field('best_seller_color')); ?>">
+                            <?php echo esc_html(get_field('best_seller')); ?>
+                        </div>
+                        <h4><small><?php echo esc_html($term_name); ?></small><br><span><?php the_title(); ?></span></h4>
+                        <p><?php the_content(); ?></p>
+
+                        <div class="content">
+                            <div class="row align-items-center">
+                                <div class="col-md-9 col-9 align-self-center">
+                                    <div class="star">
+                                        <?php
+                                        $rating = get_field('rating');
+                                        for ($i = 1; $i <= $rating; $i++) {
+                                            echo '<span class="star star-enabled">★</span>';
+                                        }
+                                        ?>
+                                        &nbsp;  <span><?php echo esc_html($rating); ?>/5 (<?php echo esc_html(get_field('review_count')); ?>)</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-3 px-0">
+                                    <div class="day text-start">
+                                        <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/images/hours.svg'); ?>" alt="">
+                                        <span><?php echo esc_html(get_field('course_hours')); ?> hrs</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>    
+            </div>
+            
+            <?php
+
+        endwhile;
+        wp_reset_postdata();
+        
+    else :
+        //echo '<p>No courses found.</p>';
+    endif;
+    if(!empty($atts['button_text']) && !empty($atts['button_page_slug'])):
+        $page = get_page_by_path($atts['button_page_slug']);
+        $page_url = '#';
+        if ( $page ) {
+            $page_url = get_permalink( $page->ID );
+        }
+    ?>
+    
+    <a href="<?php echo $page_url; ?>" class="mt-2" style="color: inherit;">
+        <span class="svg-icon">
+            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="CurrentColor"><path d="m29.71 16.71-9 9a1 1 0 0 1 -1.42 0 1 1 0 0 1 0-1.42l7.3-7.29h-24.59a1 1 0 0 1 0-2h24.59l-7.3-7.29a1 1 0 0 1 1.42-1.42l9 9a1 1 0 0 1 0 1.42z"></path></svg>
+        </span>
+        <span class="item-title ms-2 fw-normal f-12 text-decoration-underline"><?php echo $atts['button_text']; ?></span>
+    </a>
+    <?php
+    endif;
+    echo "</div>";
+
+    return ob_get_clean();
+}
+add_shortcode('courses_display', 'custom_courses_display_shortcode');
+
+function header_ads_banner_shortcode($atts) {
+    $header_ads_banner = get_field('header_ads_banner', 'option');
+    
+    $atts = shortcode_atts(array(
+        'button_text' => '',
+        'button_page_slug' => ''
+    ), $atts);
+    
+    $button_text = sanitize_text_field($atts['button_text']);
+    $button_page_slug  = sanitize_text_field($atts['button_page_slug']);
+
+    if (!$header_ads_banner) return '';
+
+    ob_start();
+    ?> 
+    <div class="addbox">
+        <?php if (!empty($header_ads_banner['title'])) : ?>
+            <h3><?php echo esc_html($header_ads_banner['title']); ?></h3>
+        <?php endif; ?>
+
+        <?php if (!empty($header_ads_banner['sub_title'])) : ?>
+            <p><?php echo esc_html($header_ads_banner['sub_title']); ?></p>
+        <?php endif; ?>
+
+        <?php if (!empty($header_ads_banner['image'])) : ?>
+            <img src="<?php echo esc_url($header_ads_banner['image']); ?>" class="img-fluid" alt="">
+        <?php endif; ?>
+        
+    </div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('header_add_banner', 'header_ads_banner_shortcode');
+
+function grras_grid_display_shortcode($atts) {
+    ob_start();
+    $hoursKey = 'hours';
+    
+    // Shortcode attributes
+    $atts = shortcode_atts(array(
+        'post_type' => 'courses',
+        'taxonomy'  => '',       // accepts 'course_types', 'internship_types', etc.
+        'type_id'   => '',        // term ID to filter,
+        'show_title' => true,
+        'show_desc' => true,
+        'override_title' => '',
+        'override_desc' => '',
+        'button_text' => '',
+        'button_page_slug' => ''
+    ), $atts);
+
+    $post_type = sanitize_text_field($atts['post_type']);
+    $taxonomy  = sanitize_text_field($atts['taxonomy']);
+    $type_id   = intval($atts['type_id']);
+
+    // Prepare query args
+    $args = array(
+        'post_type'      => $post_type,
+        'posts_per_page' => 6,
+    );
+
+    $tax_query = array();
+
+    // Optional: exclude all 'city' terms for post_type 'courses'
+    if ($post_type === 'courses') {
+        $tax_query[] = array(
+            'taxonomy' => 'city',
+            'field'    => 'term_id',
+            'terms'    => get_terms(array(
+                'taxonomy' => 'city',
+                'fields'   => 'ids',
+            )),
+            'operator' => 'NOT IN',
+        );
+        $hoursKey = 'course_hours';
+    }
+
+    // Add custom taxonomy filter if provided
+    if (!empty($taxonomy) && !empty($type_id)) {
+        $tax_query[] = array(
+            'taxonomy' => $taxonomy,
+            'field'    => 'id',
+            'terms'    => $type_id,
+        );
+    }
+
+    if (!empty($tax_query)) {
+        $args['tax_query'] = $tax_query;
+    }
+
+    $query = new WP_Query($args);
+
+    echo "<div class='row'>";
+    ?>
+    <div class="col-12">
+        <?php if(!empty($atts['type_id'])) {
+                $term = get_term($atts['type_id']);
+            ?>
+            <?php if($atts['show_title'] === true) { ?>
+            <h6 class="mb-1"><?php echo !empty($atts['override_title']) ? $atts['override_title'] : esc_html($term->name); ?></h6>
+            <?php } ?>
+            
+            <?php if($atts['show_desc'] === true) { ?>
+            <p class="unstyled f12 mt-0"><?php echo esc_html($term->description); ?></p>
+            <?php } ?>
+        <?php } else { ?>
+            <?php if($atts['show_title'] === true && !empty($atts['override_title'])) { ?>
+            <h6 class="mb-1"><?php echo $atts['override_title']; ?></h6>
+            <?php } ?>
+            <?php if($atts['show_desc'] === true && !empty($atts['override_desc'])) { ?>
+            <p class="unstyled f12 mt-0"><?php echo esc_html($atts['override_desc']); ?></p>
+            <?php } ?>
+        <?php } ?>
+    </div>
+    <?php
+    if ($query->have_posts()) :
+        while ($query->have_posts()) : $query->the_post();
+
+            // Get first term name for display (from provided taxonomy)
+            $terms = get_the_terms(get_the_ID(), $taxonomy);
+            $term_name = !empty($terms) && !is_wp_error($terms) ? $terms[0]->name : '';
+
+            ?>
+            <div class="col-lg-6 col-12">
+                <a href="<?php the_permalink(); ?>">
+                    <div class="cobox">
+                        <div class="imgbox">
+                            <img src="<?php echo esc_url(get_field('mobile_background_image')); ?>" class="img-fluid bigimg" alt="">
+                            <div class="imgcontent">
+                                <div class="icon">
+                                    <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" class="img-fluid" alt="">
+                                </div>
+                            </div>
+                            <?php if (get_field('discount')) : ?>
+                                <div class="offer"><?php echo esc_html(get_field('discount')); ?><span>%</span> OFF</div>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="right-content">
+                            <?php if(!empty(get_field('best_seller'))): ?>
+                            <div class="<?php echo esc_attr(get_field('best_seller_color')); ?>">
+                                <?php echo esc_html(get_field('best_seller')); ?>
+                            </div>
+                            <?php endif; ?>
+                            <h4><small><?php echo esc_html($term_name); ?></small><br><?php the_title(); ?></h4>
+                            <p><?php the_content(); ?></p>
+
+                            <div class="content">
+                                <div class="row align-items-center">
+                                    <div class="col-md-9 col-9 align-self-center">
+                                        <div class="star">
+                                            <?php
+                                            $rating = get_field('rating');
+                                            for ($i = 1; $i <= $rating; $i++) {
+                                                echo '<span class="star star-enabled">★</span>';
+                                            }
+                                            ?>
+                                            &nbsp;<span><?php echo esc_html($rating); ?>/5 (<?php echo esc_html(get_field('review_count')); ?>)</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-3 px-0">
+                                        <div class="day text-start">
+                                            <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/images/hours.svg'); ?>" alt="">
+                                            <span><?php echo esc_html(get_field($hoursKey)); ?> hrs</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <?php
+
+        endwhile;
+        
+    else :
+        // echo '<p>No posts found.</p>';
+    endif;
+    wp_reset_postdata();
+    echo "</div>";
+    if(!empty($atts['button_text']) && !empty($atts['button_page_slug'])):
+        $page = get_page_by_path($atts['button_page_slug']);
+        $page_url = '#';
+        if ( $page ) {
+            $page_url = get_permalink( $page->ID );
+        }
+    ?>
+    
+    <a href="<?php echo $page_url; ?>" class="mt-2" style="color: inherit;">
+        <span class="svg-icon">
+            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="CurrentColor"><path d="m29.71 16.71-9 9a1 1 0 0 1 -1.42 0 1 1 0 0 1 0-1.42l7.3-7.29h-24.59a1 1 0 0 1 0-2h24.59l-7.3-7.29a1 1 0 0 1 1.42-1.42l9 9a1 1 0 0 1 0 1.42z"></path></svg>
+        </span>
+        <span class="item-title ms-2 fw-normal f-12  text-decoration-underline"><?php echo $atts['button_text']; ?></span>
+    </a>
+    <?php
+    endif;
+    return ob_get_clean();
+}
+add_shortcode('grras_grid_display', 'grras_grid_display_shortcode');
+
+function grras_header_listarea($atts) {
+    $atts = shortcode_atts(array(
+        'acf_field' => ''
+    ), $atts);
+    
+    $acf_field = sanitize_text_field($atts['acf_field']);
+    
+    $acf_group = get_field($acf_field, 'option');
+    
+    if (!$acf_group) return '';
+    
+    //$items = $acf_group['content_items'];
+
+    ob_start();
+    ?> 
+    <div class="contextBox">
+        <h6 class="fw-medium"><?php echo $acf_group['title']; ?></h6>
+        <p class="f-12 unstyled"><?php echo $acf_group['tagline']; ?></p>
+        
+        <?php if ( have_rows($acf_field . '_content_items', 'option') ): ?>
+            <ul class="list-unstyled mb-0 mt-4">
+                <?php while ( have_rows($acf_field . '_content_items', 'option') ): the_row(); ?>
+                    <li class="mb-2">
+                        <span class="svg-icon">
+                            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="CurrentColor"><path d="m29.71 16.71-9 9a1 1 0 0 1 -1.42 0 1 1 0 0 1 0-1.42l7.3-7.29h-24.59a1 1 0 0 1 0-2h24.59l-7.3-7.29a1 1 0 0 1 1.42-1.42l9 9a1 1 0 0 1 0 1.42z"></path></svg>
+                        </span>
+                        <span class="item-title ms-2 f-12"><?php echo get_sub_field('item_title'); ?></span>
+                    </li>
+                <?php endwhile; ?>
+            </ul>
+        <?php endif; ?>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('grras_header_listarea', 'grras_header_listarea');
+
+/*add_action('admin_menu', 'grras_custom_admin_menu');
+function grras_custom_admin_menu() {
+    // 1. Create the main "Grras" menu
+    add_menu_page(
+        'Grras Settings',
+        'Grras Settings',
+        'manage_options',
+        'grras-main-menu',
+        '', // No callback, acts as a container
+        'dashicons-admin-site',
+        2 // Position
+    );
+}
+
+add_filter('register_post_type_args', 'grras_override_cpt_menu', 20, 2);
+function grras_override_cpt_menu($args, $post_type) {
+    $grras_cpts = ['course-faq', 'testimonials', 'courses', 'internships', 'projects', 'workshops', 'career_success_story', 'placements', 'redhat_courses', 'faqs']; // Your CPT slugs
+
+    if (in_array($post_type, $grras_cpts)) {
+        $args['show_in_menu'] = 'grras-main-menu'; // Move under "Grras"
+    }
+    return $args;
+}*/
+
+add_filter( 'qsm_display_banner', function( $id, $question, $answers ) {
+
+    // Only show image after every even answer
+    if ( mt_rand(1, 100) <= 30 ) {
+        
+        // List of real Unsplash images
+        $images = [
+            'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800', // Mountains
+            'https://images.unsplash.com/photo-1493244040629-496f6d136cc3?w=800', // Beach
+            'https://images.unsplash.com/photo-1516117172878-fd2c41f4a759?w=800', // Forest road
+            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800', // Ocean wave
+            'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?w=800', // City skyline
+        ];
+
+        // Pick a random one
+        $random_image = $images[ array_rand( $images ) ];
+
+        // Append image HTML
+        $content .= '<div class="qsm-even-image" style="margin:10px 0;text-align:center;">
+                        <img src="' . esc_url( $random_image ) . '" alt="Random" style="max-width:100%;height:auto;border-radius:8px;" />
+                     </div>';
+    }
+
+    return $content;
+
+}, 10, 4 ); // Priority 10, and 4 arguments so we can use $mlw_answer_total
+
+// Fetch quiz instructions
+add_action('wp_ajax_get_quiz_instructions', 'get_quiz_instructions');
+add_action('wp_ajax_nopriv_get_quiz_instructions', 'get_quiz_instructions');
+
+function get_quiz_instructions() {
+    $post_id = intval($_POST['post_id']);
+    $instructions = get_post_meta($post_id, 'quiz_instructions_html', true);
+
+    if (!empty($instructions)) {
+        wp_send_json_success(['instructions' => wp_kses_post($instructions)]);
+    } else {
+        wp_send_json_error(['message' => 'No instructions found.']);
+    }
+}
+
+// Ensure Administrators always see all 'courses' posts
+add_action('pre_get_posts', function($query) {
+    if (
+        is_admin() && 
+        $query->is_main_query() && 
+        (!isset($_GET['author'])) &&
+        current_user_can('administrator')
+    ) {
+        // Remove any author restriction
+        $query->set('author', '');
+    }
+});
+
+
+add_action('wp_ajax_filter_quizzes', 'qsm_filter_quizzes');
+add_action('wp_ajax_nopriv_filter_quizzes', 'qsm_filter_quizzes');
+
+function qsm_filter_quizzes() {
+  $search = isset($_POST['search']) ? sanitize_text_field(wp_unslash($_POST['search'])) : '';
+  $selectedCats = [];
+  if (!empty($_POST['selectedCats'])) {
+    $decoded = json_decode(stripslashes($_POST['selectedCats']), true);
+    if (is_array($decoded)) {
+      $selectedCats = array_map('intval', $decoded);
+    }
+  }
+
+  $args = [
+    'post_type'      => 'qsm_quiz',
+    'post_status'    => 'publish',
+    's'              => $search,
+    'posts_per_page' => 12,         // tweak as needed
+    'orderby'        => 'date',
+    'order'          => 'DESC',
+  ];
+
+  if (!empty($selectedCats)) {
+    $args['tax_query'] = [
+      [
+        'taxonomy' => 'quiz-categories',
+        'field'    => 'term_id',
+        'terms'    => $selectedCats,
+      ],
+    ];
+  }
+
+  $quiz_query = new WP_Query($args);
+
+  ob_start();
+
+  ?>
+  <div class="exam-course-area coursesec d-md-none" id="mobileMcqs">
+    <div class="exam-course-area-item p-2">
+      <div class="row">
+        <?php
+        if ($quiz_query->have_posts()) {
+          while ($quiz_query->have_posts()) {
+            $quiz_query->the_post();
+
+            // ====== Your quiz data block (kept from your template) ======
+            $quizId          = get_field('quiz_id');
+            $questions_count = 0;
+            $quiz_duration   = 0;
+            $firstCatName    = '';
+            global $mlwQuizMasterNext;
+
+            if ($quizId && isset($mlwQuizMasterNext)) {
+              $quiz_data = $mlwQuizMasterNext->pluginHelper->prepare_quiz($quizId);
+              if ($quiz_data) {
+                $qmn_quiz_options = (array) $mlwQuizMasterNext->quiz_settings->get_quiz_options();
+                $question_ids     = $mlwQuizMasterNext->pluginHelper->get_questions_ids($quizId);
+                $questions_count  = is_array($question_ids) ? count($question_ids) : 0;
+                $quiz_duration    = !empty($qmn_quiz_options['timer_limit']) ? intval($qmn_quiz_options['timer_limit']) : 0;
+
+                $terms = wp_get_post_terms(get_the_ID(), 'quiz-categories');
+                if (!empty($terms) && !is_wp_error($terms)) {
+                  $firstCatName = $terms[0]->name;
+                }
+              } else {
+                // Skip if quiz not properly prepared
+                continue;
+              }
+            } else {
+              continue;
+            }
+            ?>
+            <div class="col-12 col-md-12 intcourse pt-0 pb-3 px-2">
+              <div class="cobox">
+                <div class="p-3">
+                  <div class="imgbox">
+                    <small><a class="link fw-medium"><?php echo esc_html($firstCatName); ?></a></small>
+                  </div>
+                  <div class="content p-0">
+                    <h6><a class="fw-semibold"><?php the_title(); ?></a></h6>
+                    <p class="mb-0"><?php echo esc_html(get_field('quiz_tagline')); ?></p>
+                  </div>
+                </div>
+
+                <div class="content line py-2 px-3">
+                  <?php
+                  $terms = get_the_terms(get_the_ID(), 'quiz_tags');
+                  if ($terms && !is_wp_error($terms)) {
+                    echo '<ul>';
+                    foreach ($terms as $term) {
+                      echo '<li>';
+                      echo '<svg xmlns="http://www.w3.org/2000/svg" width="11px" height="11px" viewBox="0 0 24 24" fill="none" transform="matrix(-1, 0, 0, 1, 0, 0)">
+<g clip-path="url(#ef7220clip0_15_213)">  <path d="M9.16894 21.8995L19.4357 11.6327C19.6505 11.4179 19.756 11.1171 19.7225 10.8152L19.1568 5.72404C19.1051 5.2592 18.7382 4.89224 18.2733 4.84059L13.1822 4.27491C12.8802 4.24136 12.5794 4.34687 12.3646 4.56168L2.09787 14.8284C1.70735 15.219 1.70735 15.8521 2.09787 16.2426L7.75472 21.8995C8.14525 22.29 8.77841 22.29 9.16894 21.8995Z" stroke="#000" stroke-linecap="round" stroke-linejoin="round"></path> <circle cx="14.1205" cy="9.88055" r="2" transform="rotate(45 14.1205 9.88055)" stroke="#000" stroke-linejoin="round"></circle> </g>
+</svg> ';
+                      echo '<a href="#">' . esc_html($term->name) . '</a>';
+                      echo '</li>';
+                    }
+                    echo '</ul>';
+                  }
+                  ?>
+                </div>
+
+                <ul class="list-unstyled px-3 question-list">
+                  <li>
+                    <span>Questions</span>
+                    <span class="float-end"><?php echo intval($questions_count); ?></span>
+                  </li>
+                  <li>
+                    <span>Time duration</span>
+                    <span class="float-end"><?php echo intval($quiz_duration); ?> min</span>
+                  </li>
+                </ul>
+
+                <div class="cobox-footer-quiz p-3 pt-0">
+                  <button
+                    data-url="<?php echo esc_url(get_permalink()); ?>"
+                    data-quiz="<?php echo get_the_ID(); ?>"
+                    data-quizname="<?php echo esc_attr(get_the_title()); ?>"
+                    class="btn btn-primary btn-sm p-2 w-100 startQuiz">
+                    Start Quiz
+                  </button>
+                </div>
+              </div>
+            </div>
+            <?php
+          } // while
+          wp_reset_postdata();
+        } else {
+          echo '<div class="col-12 p-3 text-muted">No quizzes matched your filters.</div>';
+        }
+        ?>
+      </div>
+    </div>
+  </div>
+  <?php
+
+  $html = ob_get_clean();
+  wp_send_json(['success' => true, 'html' => $html]);
 }

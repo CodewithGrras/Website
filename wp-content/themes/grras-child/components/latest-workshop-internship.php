@@ -126,7 +126,7 @@ if ($date) {
 
     } else {
 
-        echo 'Invalid date format'; // Handle parsing errors
+        echo 'N/A'; // Handle parsing errors
 
     }
 
@@ -186,7 +186,7 @@ if ($start_time && $end_time) {
 
     } else {
 
-        echo 'Invalid date format'; // Handle parsing errors
+        echo 'N/A'; // Handle parsing errors
 
     }
 

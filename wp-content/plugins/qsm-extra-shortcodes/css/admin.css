@@ -1,0 +1,550 @@
+.qsm-extra-shortcodes-license-container,
+.qsm-license-form-parent {
+    background-color: #FFFFFF;
+    width: 100%;
+    border: 1px solid #B8B8B8;
+    margin-top: 10px;
+    box-sizing: border-box;
+    min-height: 160px;
+    max-width: 650px;
+}
+.qsm-extra-shortcodes-license-container .qsm-license-content {
+    background-color: #FFFFFF;
+    padding: 20px 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.qsm-license-form-parent .qsm-license-header,
+.qsm-extra-shortcodes-license-container .qsm-license-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 15px;
+    border-bottom: 1px solid #B8B8B8;
+    box-sizing: border-box;
+}
+.qsm-license-form-parent .qsm-license-header .qsm-heading,
+.qsm-extra-shortcodes-license-container .qsm-license-header .qsm-heading {
+    font-weight: 600;
+    margin: 0;
+    font-size: 16px;
+}
+.qsm-extra-shortcodes-license-container .qsm-license-header .qsm-toggleButton .dashicons-edit {
+    color: #3C434A;
+}
+.qsm-extra-shortcodes-license-container .qsm-license-header a:focus {
+    outline: none;
+    box-shadow: none;
+}
+.qsm-extra-shortcodes-license-container a {
+    text-decoration: none;
+    color: #0085BA;
+}
+.qsm-license-info {
+    display: flex;
+    align-items: center;
+    padding-left: 7px;
+}
+.qsm-license-info .qsm-valid-msg {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.qsm-license-info .qsm-valid-msg .qsm-msg{
+    line-height: 1.4;
+    margin-right: 10px;
+    font-size: 15px;
+}
+.qsm-license-info .qsm-valid-msg .qsm-warning {
+    height: 16px;
+    width: 16px;
+    margin: 1px 5px 0 0;
+}
+.qsm-license-info .qsm-valid-msg .dashicons-yes-alt {
+    margin-right: 10px;
+    background-color: #00a32a;
+    color: #FFFFFF;
+    border: 0 solid #00a32a;
+    border-radius: 50%;
+}
+.qsm-license-info .qsm-toggleButton {
+    margin: 0 0 0 10px;
+    font-size: 15px;
+    line-height: 1.4;
+}
+.qsm_extra_shortcodes_validate_parent,
+.rq_validata-license,
+#qsm-license_entry {
+    padding: 10px;
+}
+#qsm-license_entry .qsm-validate-msg {
+    margin: 10px 0 0 0;
+    line-height: 1.4;
+}
+#qsm-license_message .qsm_extra_shortcodes_validate_message .dashicons-warning,
+#qsm-license_entry .qsm-validate-msg .dashicons-warning{
+    background: #A83434;
+    border: 0 solid;
+    border-radius: 50%;
+    color: white;
+    margin: 0 5px 0 0;
+}
+.qsm-addon-title {
+    border-right: 1px solid #919191;
+    padding: 0 10px 0 0;
+    max-width: 245px;
+}
+.extra-shortcode-options-field {
+    display: flex;
+    align-items: center;
+    border: 1px solid #DFD4D4;
+    width: fit-content;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    background: #ffffff;
+    color: #F5F5F5;
+    position: relative;
+}
+.extra-shortcode-options-notloop .extra-shortcode-options-group {
+    display: flex;
+    flex-direction: row;
+}
+.extra-shortcode-options-field .extra-shortcode-options-switch .dashicons,
+.extra-shortcode-options-field .extra-shortcode-options-actions .dashicons {
+    font-size: 16px;
+}
+.extra-shortcode-options-field .extra-shortcode-options-switch {
+    border: 1px solid #ddd;
+    border-right: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    box-shadow: rgba(14, 63, 126, 0.06) 0px 0px 0px 1px, rgba(42, 51, 70, 0.03) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 2px 2px -1px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.03) 0px 5px 5px -2.5px, rgba(42, 51, 70, 0.03) 0px 10px 10px -5px, rgba(42, 51, 70, 0.03) 0px 24px 24px -8px;
+}
+.extra-shortcode-options-group.extra-shortcode-options-switch:has(
+.extra-shortcode-generate-shortcode-button[data-name="qsm_calc"]
+) {
+    border: 1px solid #ddd;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: rgba(14, 63, 126, 0.06) 0px 0px 1px,rgba(42, 51, 70, 0.03) 0px 0px 2px, rgba(42, 51, 70, 0.04) 0px 0px 3px, rgba(42, 51, 70, 0.04) 0px 0px 5px, rgba(42, 51, 70, 0.03) 0px 0px 8px, rgba(42, 51, 70, 0.03) 0px 0px 12px, rgba(42, 51, 70, 0.03) 0px 0px 24px;
+}
+.extra-shortcode-options-field .extra-shortcode-options-switch button[data-name="qsm_calc"] {
+    border-radius: 5px;
+}
+.extra-shortcode-options-field .extra-shortcode-options-actions {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-size: 16px;
+    min-height: 30px;
+    box-shadow: rgba(14, 63, 126, 0.06) 0px 0px 0px 1px, rgba(42, 51, 70, 0.03) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 2px 2px -1px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.03) 0px 5px 5px -2.5px, rgba(42, 51, 70, 0.03) 0px 10px 10px -5px, rgba(42, 51, 70, 0.03) 0px 24px 24px -8px;
+}
+.extra-shortcode-options-field .extra-shortcode-options-actions .settings-field img {
+    padding: 2px;
+    height: 20px;
+}
+.extra-shortcode-options-switch button.button:hover,
+.extra-shortcode-options-field .settings-field:hover,
+.extra-shortcode-options-field .extra-shortcode-options-actions-box .settings-field:hover {
+    background: #f8f8f8;
+    color: #000000;
+}
+.extra-shortcode-options-field .extra-shortcode-options-switch button {
+    position: relative;
+    display: flex;
+    align-items: end;
+    padding: 3px 5px;
+    color: #3c434a;
+    border: 0px solid #ddd;
+    cursor: pointer;
+    outline: none;
+    border-radius: 5px 0 0 5px;
+    background: rgb(255, 255, 255);
+    width: 30px;
+}
+.extra-shortcode-options-field .settings-field {
+    display: flex;
+    text-decoration: none;
+    padding: 5px;
+    color: #3c434a;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    outline: none;
+    border-radius: 0 5px 5px 0;
+    background: #ffffff;
+}
+.qsm-extra-shortcode-table {
+    margin-bottom: 200px;
+}
+.qsm-extra-shortcode-table tr td:first-child {
+    width: 350px;
+}
+.qsm-extra-shortcode-table h4,
+.qsm-extra-shortcode-table h3 {
+    margin: 0 0 10px 0;
+}
+
+.qsm-extra-shortcode-table .extra-shortcode-options-field .settings-field {
+    padding: 3px;
+}
+.form-table td p.section-hint,
+.form-table th p.section-hint {
+    color: #72777C;
+    margin-bottom: 5px;
+    display: block;
+    font-size: 13px;
+}
+.extra-shortcode-options-field-settings {
+    position: absolute;
+    z-index: 999;
+    width: 380px;
+    padding: 15px;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid #dfd4d4;
+    left: 170px;
+    color: #1A2432;
+    top: 55px;
+}
+.extra-shortcode-options-field-settings:before {
+    border: solid transparent;
+    content: " ";
+    display: block;
+    position: absolute;
+    pointer-events: none;
+    width: 0;
+    border-width: 15px;
+    border-color: rgba(255, 255, 255, 0);
+    border-right-color: #ffffff;
+    right: 62px;
+    bottom: 100%;
+    rotate: 90deg;
+}
+.extra-shortcode-options-field-settings .extra-shortcode-options-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0 0;
+}
+.qsm-addon-setting-wrap .extra-shortcode-options-field-settings input[type="number"],
+.qsm-addon-setting-wrap .extra-shortcode-options-field-settings input[type="text"],
+.qsm-addon-setting-wrap .extra-shortcode-options-field-settings select {
+    min-width: 198px;
+    width: 220px;
+    border-radius: 5px;
+	border-color: #ccc;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.qsm-addon-setting-wrap .extra-shortcode-options-field-settings input[type="number"] {
+    padding: 1px 0 1px 8px;
+}
+.extra-shortcode-options-field-settings .extra-shortcode-options-group .ms-options-wrap>button {
+    position: relative;
+}
+.extra-shortcode-options-field-settings .extra-shortcode-options-group .ms-options-wrap>.ms-options {
+    width: 220px;
+}
+.ms-options-wrap>button, .ms-options-wrap>button:focus {
+    border-color: #8c8f94;
+    width: 220px;
+}
+input.extra-shortcode-demo {
+    margin-right: 10px;
+    color: #888787;
+    cursor: text;
+    background: #f5f5f5 none repeat scroll 0 0;
+    border: 1px solid #dddddd;
+    border-radius: 1px;
+    box-shadow: none;
+    width: 405px;
+    height: auto;
+    min-width: 300px;
+    padding: 0 8px;
+    line-height: 2;
+    min-height: 30px;
+}
+.extra-shortcode-options-field-settings .wp-picker-holder {
+    position: absolute;
+    z-index: 9999;
+    top: calc(100% + 5px);
+    right: 0;
+    width: 280px;
+}
+.extra-shortcode-options-field-settings .wp-picker-input-wrap {
+    position: absolute;
+    width: 280px;
+    top: 93%;
+    right: 0;
+    z-index: 10000;
+}
+
+/* ---------------------- */
+
+button.button.qsm-extra-shortcode-resultpage-button .dashicons.dashicons-shortcode{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 1;
+    vertical-align: text-top;
+    margin: 0 2px 0 0;
+}
+
+.qsm-extra-shortcodes-license-container,
+.qsm-license-form-parent {
+    background-color: #FFFFFF;
+    width: 100%;
+    border: 1px solid #B8B8B8;
+    margin-top: 10px;
+    box-sizing: border-box;
+    min-height: 160px;
+    max-width: 650px;
+}
+.qsm-extra-shortcodes-license-container .qsm-license-content {
+    background-color: #FFFFFF;
+    padding: 20px 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.qsm-license-form-parent .qsm-license-header,
+.qsm-extra-shortcodes-license-container .qsm-license-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 15px;
+    border-bottom: 1px solid #B8B8B8;
+    box-sizing: border-box;
+}
+.qsm-license-form-parent .qsm-license-header .qsm-heading,
+.qsm-extra-shortcodes-license-container .qsm-license-header .qsm-heading {
+    font-weight: 600;
+    margin: 0;
+    font-size: 16px;
+}
+.qsm-extra-shortcodes-license-container .qsm-license-header .qsm-toggleButton .dashicons-edit {
+    color: #3C434A;
+}
+.qsm-extra-shortcodes-license-container .qsm-license-header a:focus {
+    outline: none;
+    box-shadow: none;
+}
+.qsm-extra-shortcodes-license-container a {
+    text-decoration: none;
+    color: #0085BA;
+}
+.qsm-license-info {
+    display: flex;
+    align-items: center;
+    padding-left: 7px;
+}
+.qsm-license-info .qsm-valid-msg {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.qsm-license-info .qsm-valid-msg .qsm-msg{
+    line-height: 1.4;
+    margin-right: 10px;
+    font-size: 15px;
+}
+.qsm-license-info .qsm-valid-msg .qsm-warning {
+    height: 16px;
+    width: 16px;
+    margin: 1px 5px 0 0;
+}
+.qsm-license-info .qsm-valid-msg .dashicons-yes-alt {
+    margin-right: 10px;
+    background-color: #00a32a;
+    color: #FFFFFF;
+    border: 0 solid #00a32a;
+    border-radius: 50%;
+}
+.qsm-license-info .qsm-toggleButton {
+    margin: 0 0 0 10px;
+    font-size: 15px;
+    line-height: 1.4;
+}
+.qsm_extra_shortcodes_validate_parent,
+.rq_validata-license,
+#qsm-license_entry {
+    padding: 10px;
+}
+#qsm-license_entry .qsm-validate-msg {
+    margin: 10px 0 0 0;
+    line-height: 1.4;
+}
+#qsm-license_message .qsm_extra_shortcodes_validate_message .dashicons-warning,
+#qsm-license_entry .qsm-validate-msg .dashicons-warning{
+    background: #A83434;
+    border: 0 solid;
+    border-radius: 50%;
+    color: white;
+    margin: 0 5px 0 0;
+}
+.qsm-addon-title {
+    border-right: 1px solid #919191;
+    padding: 0 10px 0 0;
+    max-width: 245px;
+}
+
+/* ------------------------------------------------------------- */
+
+#qsm-extra-shortcode-modal .qsm-popup__header {
+    padding: 20px 10px 20px 10px;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    justify-content: left;
+    max-height: 20px;
+    border-bottom: 1px solid #D4D4D4;
+}
+
+#qsm-extra-shortcode-modal .qsm-popup__header img {
+    height: 60px;
+}
+
+#qsm-extra-shortcode-modal .qsm-popup__close {
+    cursor: pointer;
+    font-size: 20px;
+    margin-right: 10px;
+    position: absolute;
+    right: 10px;
+    border: none;
+}
+
+.qsm-extra-shortcode-quiz-section-inside-bottom, .qsm-extra-shortcode-category-section-top, .qsm-extra-shortcode-quiz-section-inside-top {
+    display: flex;
+    gap: 5px;
+    align-items: flex-end;
+    margin-top: 12px;
+}
+
+.qsm-extra-shortcode-result-container .qsm-extra-shortcode-quiz-section-inside-field label {
+    width: 100%;
+    font-size: 14px;
+    display: block;
+    font-weight: 500;
+    margin-bottom: 2px;
+    color: #1E1E1E;
+    margin-left: 2px;
+}
+
+#qsm-extra-shortcode-modal .qsm-extra-shortcode-select-category-multiple {
+    padding: 10px;
+    background: rgb(238, 238, 238);
+    border-radius: 4px;
+    margin-top: 15px;
+}
+
+.qsm-extra-shortcode-result-container select, .qsm-extra-shortcode-result-container input[type="text"] {
+    min-width: auto;
+    width: 100%;
+    border-radius: 5px;
+    border-color: #ccc;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+#qsm-extra-shortcode-modal .qsm-extra-shortcode-select-category label {
+    margin-bottom: 0 !important;
+}
+
+.qsm-extra-shortcode-select-category-multiple .qsm-field-row .ms-options-wrap button{
+    height: 30px;
+    margin-right: 5px;
+}
+
+.qsm-extra-shortcode-select-category .ms-options-wrap>.ms-options>.ms-search input {
+    max-width: calc(100% - 5px) !important;
+}
+
+#qsm-extra-shortcode-modal .qsm-extra-shortcode-select-category-multiple {
+    padding: 10px;
+    background: rgb(238, 238, 238);
+    border-radius: 4px;
+}
+
+#qsm-extra-shortcode-modal .qsm-extra-shortcode-select-category {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+#qsm-extra-shortcode-modal .qsm-popup__title {
+    font-size: 16px;
+    color: #515559;
+    font-weight: bold;
+    margin-left: 5px;
+    padding: 10px 20px 10px 0;
+}
+
+#qsm-extra-shortcode-modal .qsm-popup__container {
+    padding: 0;
+    background: #F5F5F5;
+    max-width: 830px;
+    border-radius: 0;
+    max-height: 90vh;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+#qsm-extra-shortcode-modal .qsm-popup__container main {
+    margin: 0;
+    max-height: 60vh;
+    overflow-y: auto;
+    background: #FFFFFF;
+    padding: 20px;
+}
+#qsm-extra-shortcode-modal .qsm-popup__footer {
+    display: flex;
+    justify-content: end;
+    text-align: right;
+    background: #fff;
+    padding: 15px;
+    border-top: 1px solid #D4D4D4;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.qsm-extra-shortcode-select-category-container .small-text.qsm-small-text {
+    margin: 0 5px;
+}
+
+#qsm-extra-shortcode-modal a.qsm-extra-shortcode-documentation {
+    text-decoration: underline;
+}
+
+button.button.qsm-extra-shortcode-copy {
+    margin-right: 10px;
+}
+
+.qsm-extra-shortcode-description p.section-hint {
+    margin: 0;
+}
+
+#qsm-extra-shortcode-modal .qsm-extra-shortcodes-order-field.qsm-extra-shortcodes-field-inside textarea{
+    max-width: 100% !important;
+}
+.qsm-extra-shortcode-table .extra-shortcode-sub-field {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 218px;
+    margin: 2px 0;
+}
+
+.qsm-extra-shortcode-description {
+    padding: 15px;
+    background-color: #F8F9F9;
+    border-radius: 10px;
+}
+
+.qsm-extra-shortcode-settings {
+    margin-bottom: 15px;
+    background: #F8F9F9;
+    padding: 15px;
+    position: relative;
+    border-radius: 10px;
+}
+p.qsm-extra-shortcode-info {
+    margin-top: 0;
+    font-style: italic;
+}

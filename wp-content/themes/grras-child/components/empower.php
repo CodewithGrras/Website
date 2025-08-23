@@ -29,8 +29,8 @@
                 <div class="row">
                     <div class="col-12 col-lg-12 mb-4">
                         <div class="heading-area text-center">
-                            <h1 class="fw-bold">Academic Partners</h1>
-                            <p class="theme-text-light">At Grras Solutions, we collaborate with 45+ academic institutions and industry leaders to ensure our programs align with real-world demands. By integrating professional training, certifications, and hands-on experiences, we empower students to excel in today’s competitive job market.</p>
+                            <h1 class="fw-bold"><?php echo get_field('academic_partner_title', 'option'); ?> </h1>
+                            <p class="theme-text-light"><?php echo get_field('academic_partner_description', 'option'); ?></p>
                         </div>
                     </div>
 
@@ -43,7 +43,6 @@
                                             <img src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'medium')); ?>" alt="<?php the_title_attribute(); ?>" class="img-fluid">
                                         <?php endif; ?>
                                         <p><?php the_title(); ?></p>
-                                        <button type="button">Verify Authorisation</button>
                                     </div>
                                 </div>
                             <?php endwhile; wp_reset_postdata(); ?>

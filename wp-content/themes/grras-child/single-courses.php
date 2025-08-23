@@ -4,9 +4,7 @@
 ?>
   <style>
 .jobform {
-  
-    background: url(<?php echo get_field('background_image') ?>) no-repeat center bottom;
-
+   background: url(<?php echo get_field('background_image') ?>) no-repeat center bottom;
 }
 </style>
 
@@ -39,7 +37,7 @@
           
           <!-- <div class="btntext"><?php echo get_field("stack_bottom_heading") ?></div> -->
           <!--<a href="<?php echo get_field('download_brochure'); ?>" class="btn btn-dark d-none d-sm-block">Download Brochure</a>-->
-          <a href="#" class="btn btn-primary d-none d-sm-inline-block mt-lg-5" data-bs-toggle="modal" data-bs-target="#exampleModal6">Download Brochures</a>
+          <a href="#" class="btn btn-primary d-none d-sm-inline-block mt-lg-4" data-bs-toggle="modal" data-bs-target="#exampleModal6">Download Brochures</a>
 <!-- Modal -->
 <div class="modal fade" id="otpModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
                 <div class="modal-dialog">
@@ -115,7 +113,7 @@
                 <div class="row justify-content-between align-items-center">
                   <div class="col-lg-6">
                     <?php $course_overview = get_field("course_overview"); ?>
-                    <h2 style="font-weight: 700;"><?php echo $course_overview['title']; ?></h2>
+                    <h2><?php echo $course_overview['title']; ?></h2>
                     <div class="custom_contant" style="display: -webkit-box;">
                       <?php
                         echo $course_overview["content"];
@@ -124,14 +122,18 @@
                       
                     </div>
                     <div class="mt-4 mt-lg-5">
-                      <a href="javascript:void(0)" class="btn btn-dark fw-normal py-2 px-3 mr-2 hide_custom" >Read more</a>
+                      <a href="javascript:void(0)" class="btn btn-dark fw-medium py-2 px-3 mr-2 hide_custom" >Read more</a>
                       <!--<a href="<?php echo get_field('download_brochure'); ?>" class="btn btn-primary">Download Brochure</a>-->
 					            <a href="#" class="btn btn-primary py-2 px-3" data-bs-toggle="modal" data-bs-target="#exampleModal6" >Download Brochure</a>
                     </div>
                   </div>
                   <div class="col-lg-5 overview_view mt-4 mt-lg-0">
                     <div class="videobox">
-                      <iframe width="100%" height="315" src="<?php echo $course_overview["youtube_url"] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                      <?php if(!empty($course_overview["youtube_url"])) { ?>
+                        <iframe width="100%" height="315" src="<?php echo $course_overview["youtube_url"] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                      <?php } elseif(!empty($course_overview["background_image_placeholder"])) { ?>
+                        <img src="<?php echo $course_overview["background_image_placeholder"]; ?>" class="img-responsive w-100" />
+                      <?php } ?>
                     </div>
                   </div>
                 </div>                
@@ -173,7 +175,7 @@
       <div class="container d-none d-md-block">
         <div class="row">
 
-          <div class="col-lg-12 mb-3">
+          <div class="col-lg-12 mb-4">
             <h2 class="text-center"><?php echo get_field("benefit_heading"); ?></h2>
             <p class="text-center"><?php echo get_field("benefit_description"); ?></p>
           </div>
@@ -335,7 +337,7 @@
       
     <div class="container">
       <div class="row">
-        <div class="col-12">
+        <div class="col-12 mb-2">
           <h2><?php echo get_field("why_enrol_for_grras_heading"); ?></h2>
         </div>
         <?php
@@ -343,8 +345,8 @@
 
           while (have_rows('why_enrol')): the_row();
         ?>
-            <div class="col-lg-3 col-sm-6 col-12 g-3">
-              <div class="goalbox text-start">
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="goalbox text-start mb-3 mb-md-0">
                 <div class="goal-row d-flex align-items-center gap-2 mb-2">
                     <img src="<?php echo get_sub_field('icon') ?>" class="img-fluid" alt="">
                     <h4 class="goal-title py-0 ms-3" style="min-height: inherit !important;"><?php echo get_sub_field('tittle') ?></h4>    
@@ -873,7 +875,7 @@ endif;
                   <?php if(isset($tabObj['tab_boxes']) && !empty($tabObj['tab_boxes'])): ?>
                     <?php foreach($tabObj['tab_boxes'] as $boxKey=>$boxObj): ?>
                           <div class="row">
-                            <div class="col-12 col-sm-6 col-lg-6 mb-3">
+                            <div class="col-12 col-sm-6 col-lg-6 mb-4">
                               <div class="card h-100 roadmap-block border-0 bg-theme-light">
                                 <div class="card-body p-lg-4">
                                     <div class="cardicon mb-3 d-flex justify-content-center align-items-center">
@@ -902,7 +904,7 @@ endif;
                 <div class="row">
                   <?php if(isset($tabObj['tab_boxes']) && !empty($tabObj['tab_boxes'])): ?>  
                     <?php foreach($tabObj['tab_boxes'] as $boxKey=>$boxObj): ?>
-                        <div class="col-12 col-sm-6 col-lg-6 mb-3">
+                        <div class="col-12 col-sm-6 col-lg-6 mb-4">
                             <div class="card h-100 roadmap-block border-0 bg-theme-light">
                                 <div class="card-body p-lg-4">
                                     <div class="cardicon mb-3 d-flex justify-content-center align-items-center">

@@ -85,9 +85,10 @@ function qsm_options_emails_tab_content() {
 			<header class="qsm-popup__header" style="display: block;">
 				<h2 class="qsm-popup__title"><?php esc_html_e( 'Template Variables', 'quiz-master-next' ); ?></h2>
 				<span class="description">
-					<?php esc_html_e( 'Use these dynamic variables to customize your quiz or survey. Just copy and paste one or more variables into the content templates and these will be replaced by actual values when user takes a quiz.', 'quiz-master-next' ); ?>
+					<?php esc_html_e( 'Use these dynamic variables to personalize your quiz or survey. Simply copy and paste one or more variables into your content templates—they’ll be automatically replaced with real values when a user takes the quiz.', 'quiz-master-next' ); ?>
 					<br /><strong><?php esc_html_e( 'Note: ', 'quiz-master-next' ); ?></strong>
-					<?php esc_html_e( 'Always use uppercase while using these variables.', 'quiz-master-next' ); ?>
+					<?php esc_html_e( 'Always use uppercase when inserting these variables.', 'quiz-master-next' ); ?>
+					<a href="<?php echo esc_url( 'https://quizandsurveymaster.com/docs/about-quiz-survey-master/intro-to-template-variables/' ); ?>" target="_blank"><?php esc_html_e( 'View Documentation', 'quiz-master-next' ); ?></a>
 				</span>
 			</header>
 			<main class="qsm-popup__content" id="show-all-variable-content">
@@ -314,14 +315,20 @@ function qsm_options_emails_tab_template() {
 									qsm_varaible_list[qsm_variable] = variable_name.slice(0, -2);
 								}
 							}
-							if (qsm_is_substring_in_array(match, qsm_varaible_list)) {
-								return '<qsmvariabletag>' + capturedValue + '</qsmvariabletag>';
-							} else if (/\[qsm[^\]]*\](.*?)\[\/qsm[^\]]*\]/gs.test(match)) {
+							if (/\[qsm[^\]]*\](.*?)\[\/qsm[^\]]*\]/gs.test(match)) {
 								return match.replace(/\[qsm[^\]]*\](.*?)\[\/qsm[^\]]*\]/gs, function(innerMatch, emailcontent) {
 									const openingTag = innerMatch.match(/\[qsm[^\]]*\]/)[0];
 									const closingTag = innerMatch.match(/\[\/qsm[^\]]*\]/)[0];
-									return `<qsmextrashortcodetag>${openingTag}</qsmextrashortcodetag>${emailcontent}<qsmextrashortcodetag>${closingTag}</qsmextrashortcodetag>`;
+									const processedContent = emailcontent.replace(/%([^%]+)%/g, function(varMatch, varName) {
+										if (qsm_is_substring_in_array(varMatch, qsm_varaible_list)) {
+											return '<qsmvariabletag>' + varName + '</qsmvariabletag>';
+										}
+										return varMatch; // Return unchanged if not a valid variable
+									});
+									return `<qsmextrashortcodetag>${openingTag}</qsmextrashortcodetag>${processedContent}<qsmextrashortcodetag>${closingTag}</qsmextrashortcodetag>`;
 								});
+							} else if (qsm_is_substring_in_array(match, qsm_varaible_list)) {
+								return '<qsmvariabletag>' + capturedValue + '</qsmvariabletag>';
 							} else {
 								return match;
 							}

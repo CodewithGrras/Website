@@ -185,7 +185,7 @@ $partner_with_us = get_field('partner_with_us');
 <div class="thegrras">
     <div class="container">
         <div class="col-lg-12">
-            <h2 class="text-center">The Grras’s way to Transform your Career</h2>
+            <h2 class="text-center mb-0 mb-lg-4">The Grras’s way to Transform your Career</h2> 
         </div>
         <?php if (have_rows('the_grras’s_way')):
             $i = 0;

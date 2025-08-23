@@ -55,7 +55,7 @@ $terms = get_terms(array(
             
             <!--<a href="<?php echo get_field('placement_report_url') ?>" class="btn btn-primary">Download our Placement Report</a>-->
             <a href="javascript:void(0)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal6" >Download our Placement Report</a>
-            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#exampleModal5"class="btn btn-dark" >Enquire Now</a>
+            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#exampleModal5"class="btn btn-secondary ms-sm-2 mt-3 mt-sm-0" >Enquire Now</a>
         </div>
     </div>
 </div>

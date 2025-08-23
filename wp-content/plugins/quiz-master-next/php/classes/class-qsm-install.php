@@ -42,6 +42,16 @@ class QSM_Install {
 
 		global $mlwQuizMasterNext;
 		$settings_value = $mlwQuizMasterNext->pluginHelper->get_quiz_setting( 'quiz_options' );
+		$contact_form_fields = $mlwQuizMasterNext->pluginHelper->get_quiz_setting( 'contact_form' );
+		$is_email_field_enabled = false;
+		if ( ! empty( $contact_form_fields ) ) {
+			foreach ( $contact_form_fields as $field ) {
+				if ( 'email' === $field['type'] && 'true' === $field['enable'] ) {
+					$is_email_field_enabled = true;
+					break;
+				}
+			}
+		}
 		$i_tag = '<i class="qsm-font-light">';
 		// Registers require_log_in setting
 		$field_array = array(
@@ -326,6 +336,21 @@ class QSM_Install {
 			'option_tab' => 'general',
 		);
 		$mlwQuizMasterNext->pluginHelper->register_quiz_setting( $field_array, 'quiz_options' );
+		// Registers prevent_reload setting
+		$field_array = array(
+			'id'         => 'prevent_reload',
+			'label'      => __( 'Prevent accidental page reloads', 'quiz-master-next' ),
+			'type'       => 'checkbox',
+			'options'    => array(
+				array(
+					'label' => __( 'Show confirmation alert before reloading or leaving the page', 'quiz-master-next' ),
+					'value' => 1,
+				),
+			),
+			'default'    => 0,
+			'option_tab' => 'general',
+		);
+		$mlwQuizMasterNext->pluginHelper->register_quiz_setting( $field_array, 'quiz_options' );
 		/* ===== Generat tab end ======== */
 		/* ===== Submission tab start ======== */
 		$field_array = array(
@@ -401,6 +426,28 @@ class QSM_Install {
 					'default'     => 0,
 					'placeholder' => __( 'Set Limit', 'quiz-master-next' ),
 					'suffix_text' => __( 'attempts or submissions can be done by a respondent', 'quiz-master-next' ) . '<label class="qsm-opt-desc">' . __( 'Set the limit to 0 or leave it blank to remove the limit on attempts.', 'quiz-master-next' ) . '</label>',
+				),
+				'limit_email_based_submission' => array(
+					'type'        => 'checkbox',
+					'options'     => array(
+						array(
+							'label' => __( 'Limit submissions based on email address', 'quiz-master-next' ),
+							'value' => 1,
+						),
+					),
+					'default'     => 0,
+					'suffix_text' => ( ! $is_email_field_enabled )
+						? '<label class="qsm-opt-desc" style="color: red; display: none;">'
+							. sprintf(
+								__( 'Please enable contact Email field to use this feature. <a href="%s" target="_blank">Go to Contact tab</a>', 'quiz-master-next' ),
+								admin_url(
+									'admin.php?page=mlw_quiz_options'
+									. ( isset( $_GET['quiz_id'] ) ? '&quiz_id=' . $_GET['quiz_id'] : '' )
+									. '&tab=contact'
+								)
+							)
+							. '</label>'
+						: '',
 				),
 				'limit_total_entries'       => array(
 					'type'        => 'number',

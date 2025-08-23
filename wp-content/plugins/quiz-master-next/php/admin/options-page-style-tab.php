@@ -165,8 +165,8 @@ function qsm_options_styling_tab_content() {
 			<div class="themes wp-clearfix">
 				<?php
 				qsm_get_installed_theme( $saved_quiz_theme );
-				qsm_fetch_theme_data();
-				qsm_get_default_wizard_themes();
+				//qsm_fetch_theme_data();
+				//qsm_get_default_wizard_themes();
 				?>
 			</div>
 		</div>

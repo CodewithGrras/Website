@@ -77,7 +77,9 @@
                                     <div class="voicetitle">
                                         <h4><?php the_title(); ?></h4>
                                         <div class="special"><?php echo the_field('post_designation'); ?></div>
+                                        <?php if(!empty(get_field('location'))) { ?>
                                         <div class="location"><?php echo the_field('location'); ?></div>
+                                        <?php } ?>
                                     </div>
                                     <div class="clearfix">
                                     </div>
@@ -97,10 +99,18 @@
                                                 <h3><?php the_title(); ?></h3>
                                                 <div class="degi"><?php echo the_field('post_designation'); ?></div>
                                                 <div class="backend"></div>
+                                                <?php if(!empty(get_field('location'))) { ?>
                                                 <div class="location"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/marker.png" alt=""><?php echo the_field('location'); ?></div>
+                                                <?php } ?>
+                                                <?php if(!empty(get_field('university'))) { ?>
                                                 <div class="uni"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/home.png" alt=""> <?php echo the_field('university'); ?></div>
+                                                <?php } ?>
+                                                <?php if(!empty(get_field('degree'))) { ?>
                                                 <div class="edu"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/cap.png" alt=""> <?php echo the_field('degree'); ?></div>
+                                                <?php } ?>
+                                                <?php if(!empty(get_field('experience_line'))) { ?>
                                                 <div class="exp"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/case.png" alt=""> <?php echo the_field('experience_line'); ?></div>
+                                                <?php } ?>
                                             </div>
                                             <div class="clearfix"></div>
                                             <ul class="pregrass">

@@ -1,0 +1,443 @@
+.circle canvas, .circle-custom-timer canvas {
+    vertical-align: top!important;
+    height: 160px!important;
+    width: 160px!important;
+    margin-top: 5px!important;
+}
+.circle, .circle-custom-timer {
+    width: 170px;
+    height: 170px;
+    background: url(../img/circle-bg.jpg) no-repeat left top;
+    margin: 0px auto 20px auto;
+    display: table;
+    position: relative;
+    text-align: center;
+    line-height: 1.2;
+    border-radius: 50%;
+}
+.circle strong, .circle-custom-timer strong {
+    position: absolute;
+    top: 36%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 28px;
+}
+
+.qsm_big_timer .circle, .qsm_big_timer .circle-custom-timer{
+    position: fixed;
+    right: 20px;
+    bottom: 65px;
+}
+.qsm-stop-timer-enabled .qsm_big_timer .stoptimer-p{
+    right: 40px;
+}
+
+
+
+/*.qsm-stop-timer-enabled .qsm_big_timer .circle{
+    bottom: 108px;
+}*/
+.quiz_section{
+    width: 70%;
+}
+.qsm_ninety_warning{
+    position: fixed;
+    bottom: 10px;
+    background: #ff00008c;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    margin: 0 auto;
+    z-index: 99;
+}
+.stop-timer-submit-the-form{
+    margin-left: 15px !important;
+}
+.qsm-quiz-container .stoptimer-p{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    margin-bottom: 0 !important;
+    min-height: 50px;
+}
+
+body .qsm-stop-timer-enabled .mlw_qmn_timer{
+    right: 180px;
+}
+
+.qsm-quiz-container .stoptimer-p a{ 
+    padding: 16px 20px;
+    border-radius: 50px;
+    background-color: #FFFFFF;
+    color: #000000 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, .15) !important;
+    text-decoration: none;
+    font-size: 15px;
+    display: inline-block;
+}
+
+.qsm-quiz-container .stoptimer-p a .qsm-stop-icon {
+    height: 10px;
+    width: 10px;
+    background-color: #fb4b4b;
+    display: inline-block;
+    margin: 0 15px 0 10px;
+    box-shadow: 0px 0px 0px 8px #fff1f1 !important;
+    border-radius: 2px;
+}
+
+.qsm-quiz-container .stoptimer-p:hover a .qsm-stop-icon {
+    box-shadow: 0px 0px 0px 8px rgba(251, 75, 75, 0.25) !important;
+    transition: 0.2s all ease-in-out;
+}
+
+.qsm-quiz-container .stoptimer-p a:hover{
+    opacity: 0.9;
+    border: none;
+}
+
+@media screen and (max-width: 760px) {
+    .qsm_ninety_warning{
+        position: fixed;
+        top:0px;
+        bottom: inherit;
+        font-size: 12px;
+        z-index: 999;
+        margin-right: 150px;
+    }
+  }
+.entry-content .qsm-popup.qsm-popup-slide
+{
+    display: none;
+}
+
+.custom-mlw_qmn_timer {
+    z-index: 999;
+    display: inline-block;
+    position: fixed;
+    bottom: 20px;
+    right: 180px;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 20px;
+    background: #34495e;
+    color: #fff;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    -webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, .10);
+    -moz-box-shadow: 0 4px 8px rgba(0, 0, 0, .10);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .10);
+  }
+
+
+  
+/* -- - - -- -   New css  -- - - -- -  */
+
+.linear-custom-timer, .qsm-v-line-timer-top {
+    position: fixed;
+    right: 35px;
+    bottom: 75px;
+}
+
+.linear-custom-timer {
+    /* background: red; */
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.linear-custom-timer .linear-timer-span {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.linear-custom-timer .linear-timer-span span {
+    height: 15px;
+    width: 0px;
+    border: 1px solid #9C9C9C;
+    padding: 1.5px;
+    background: #ffffff;
+    display: block;
+    border-radius: 50px;
+}
+
+.linear-custom-timer .linear-timer-text {
+    font-size: 40px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-top: 10px;
+}
+
+.linear-custom-timer .linear-timer-status {
+    letter-spacing: 2.5px;
+}
+
+/* 
+24CF4A green
+FFB800 orange
+FF5555 red
+ */
+.linear-custom-timer .linear-timer-span span.green {
+    background-color: #24CF4A;
+    border: 1px solid #24CF4A;
+}
+
+.linear-custom-timer .linear-timer-span span.orange {
+    background-color: #FFB800;
+    border: 1px solid #FFB800;
+}
+
+.linear-custom-timer .linear-timer-span span.red {
+    background-color: #FF5555;
+    border: 1px solid #FF5555;
+}
+.qsm-v-line-timer-top {
+    display: flex;
+    justify-content: flex-end;
+    border: 1px solid #666666;
+    border-radius: 50px;
+    padding: 10px 3px 5px 5px;
+    width: 110px;
+}
+
+.qsm-v-line-timer-top .qsm-v-line-time-text {
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1;
+}
+
+.qsm-v-line-timer-progressbar {
+    width: 100%;
+    height: 5px;
+    background-color: #fff;
+    position: relative;
+    max-width: 30px;
+    transform: rotate(270deg);
+    transform-origin: left;
+    border: 1px solid #9C9C9C;
+    border-radius: 50px;
+    left: 10px;
+    top: 32px;
+}
+
+.qsm-v-line-timer-percentage-line {
+    height: 100%;
+    background-color: #24CF4A;
+    width: 0; 
+    transition: width 0.3s;
+}
+
+.qsm-v-line-time-status {
+    font-size: 13px;
+    letter-spacing: 0.25px;
+}
+
+.qsm-v-line-timer-top {
+    position: fixed;
+    right: 35px;
+    bottom: 85px;
+}
+
+
+.box-timer-top {
+    border: 1px solid #666666;
+    max-width: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    padding: 10px 2px;
+    min-height: 60px;
+    position: fixed;
+    justify-content: center;
+    right: 45px;
+    bottom: 85px;
+    width: 90px;
+}
+
+.box-timer-top .box-timer-text  {
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1;
+}
+
+.box-timer-status {
+    font-size: 11px;
+    letter-spacing: 0.25px;
+}
+
+.box-timer-progressbar {
+    width: 100%;
+    height: 5px;
+    background-color: #fff;
+    position: relative;
+    max-width: 50px;
+    transform-origin: left;
+    border: 1px solid #9C9C9C;
+    border-radius: 50px;
+}
+
+.box-timer-percentage-line {
+    height: 100%;
+    background-color: #24CF4A;
+    width: 0; 
+    transition: width 0.3s;
+}
+
+
+.oval-timer-top {
+    position: fixed;
+    right: 60px;
+    bottom: 85px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #666666;
+    max-width: 55px;
+    align-items: center;
+    font-size: 14px;
+    border-radius: 50px;
+    padding: 10px 2px 10px 2px;
+    width: 55px;
+    min-height: 150px;
+    justify-content: center;
+}
+
+.oval-timer-top span.minute, .oval-timer-top span.second, .oval-timer-top span.hour {
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 1;
+}
+.oval-timer-top span.oval-timer-label-bottom {
+    margin: 3px 0;
+}
+
+.oval-timer-progressbar {
+    width: 100%;
+    height: 5px;
+    background-color: #fff;
+    position: relative;
+    max-width: 35px;
+    transform-origin: left;
+    border: 1px solid #9C9C9C;
+    border-radius: 50px;
+}
+
+.oval-timer-percentage-line {
+    height: 100%;
+    background-color: #24CF4A;
+    width: 0; 
+    transition: width 0.3s;
+}
+
+.half-circle-timer {
+    position: fixed;
+    right: 95px;
+    bottom: 150px;
+}
+
+
+.half-circle-timer .half-timer_text_label { 
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    top: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    font-weight: bold;
+    left: 10px;
+}
+
+.half-circle-timer .half-timer_label {
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    top: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    left: 10px;
+}
+
+.half-circle-timer .base-timer, .qsm-shade-circle-timer .base-timer {
+	position: relative;
+	height: 48px;
+	width: 48px;
+	margin-top: 8px;
+}
+
+.half-circle-timer .base-timer_circle, .qsm-shade-circle-timer .base-timer_circle {
+	fill: none;
+	stroke: none;
+}
+
+.qsm-shade-circle-timer .base-timer_svg {
+    transform: rotate(90deg);
+    width: 100px;
+}
+
+.half-circle-timer .base-timer_svg {
+    transform: rotate(180deg);
+    width: 100px;
+}
+.half-circle-timer .base-timer_path-elapsed, .qsm-shade-circle-timer .base-timer_path-elapsed {
+	stroke-width: 6px;
+	stroke: #229acd10;
+}
+
+.half-circle-timer .base-timer_path-remaining, .qsm-shade-circle-timer .base-timer_path-remaining {
+	stroke-linecap: round;
+	stroke-width: 6px;
+	stroke: #1dd969;
+	stroke-linecap: round;
+	transform: rotate(0deg);
+	transform-origin: center;
+	transition: 0.9s linear all;
+	fill-rule: nonzero;
+    background: rgb(21,255,0);
+    background: linear-gradient(90deg, rgba(21,255,0,1) 69%, rgba(21,255,0,1) 94%, rgba(0,212,255,0) 100%);
+}
+
+.qsm-shade-circle-timer .qsm-shade-timer-text-label { 
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    left: 10px;
+    top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.qsm-shade-circle-timer .qsm-shade-timer-label {
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    top: 35px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    color: #9C9C9C;
+}
+
+.qsm-shade-circle-timer {
+    position: fixed;
+    right: 90px;
+    bottom: 140px;
+}

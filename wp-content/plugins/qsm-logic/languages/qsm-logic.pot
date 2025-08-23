@@ -1,0 +1,244 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: QSM - Logic\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-25 08:22+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.5.3; wp-5.8\n"
+"X-Domain: qsm-logic"
+
+#: js/qsm-logic-admin.js:556
+msgid " logic rules will be deleted from database. Are you sure?"
+msgstr ""
+
+#: php/quiz-settings-tab-content.php:40
+msgid " You don't have logic rules"
+msgstr ""
+
+#: js/qsm-logic-admin.js:115 js/qsm-logic-admin.js:192
+#: js/qsm-logic-admin.js:424
+msgid "Add additional action"
+msgstr ""
+
+#: js/qsm-logic-admin.js:99 js/qsm-logic-admin.js:169 js/qsm-logic-admin.js:392
+msgid "Add additional condition"
+msgstr ""
+
+#: php/quiz-settings-tab-content.php:46 php/quiz-settings-tab-content.php:59
+msgid "Add Rule"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:117
+msgid "Addon License Key"
+msgstr ""
+
+#: php/quiz-settings-tab-content.php:32
+msgid "All your logic rules will be migrated to new tables"
+msgstr ""
+
+#: js/qsm-logic-admin.js:239
+msgid "All your logic rules will be migrated to new tables. "
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Allows you to show and hide different questions based on previous answers"
+msgstr ""
+
+#: js/qsm-logic-admin.js:152 js/qsm-logic-admin.js:400
+msgid "And "
+msgstr ""
+
+#: js/qsm-logic-admin.js:662
+msgid "Are you sure?"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:82
+msgid "Attempting to activate a bundle's parent license"
+msgstr ""
+
+#: php/quiz-settings-tab-content.php:76
+msgid "Cancel"
+msgstr ""
+
+#: php/quiz-settings-tab-content.php:43
+msgid "Create New Rule"
+msgstr ""
+
+#: php/quiz-settings-tab-content.php:34 js/qsm-logic-admin.js:240
+msgid "database backup"
+msgstr ""
+
+#: js/qsm-logic-admin.js:313
+msgid "Delete"
+msgstr ""
+
+#: php/quiz-settings-tab-content.php:47 php/quiz-settings-tab-content.php:60
+msgid "Delete Rules"
+msgstr ""
+
+#: js/qsm-logic-admin.js:312
+msgid "Edit"
+msgstr ""
+
+#: js/qsm-logic-admin.js:340
+msgid "Error loading data. Please try again"
+msgstr ""
+
+#: js/qsm-logic-admin.js:474 js/qsm-logic-admin.js:531
+msgid ""
+"Error! There was an error encountered when saving your rules. Please try "
+"again."
+msgstr ""
+
+#: js/qsm-logic-admin.js:146 js/qsm-logic-admin.js:584
+msgid "Error! Unable to delete rule, Try again later!"
+msgstr ""
+
+#: js/qsm-logic-admin.js:238
+msgid "From version"
+msgstr ""
+
+#: php/quiz-settings-tab-content.php:31
+msgid "From version 2.0.0 we are upgrading to better database structure."
+msgstr ""
+
+#: php/quiz-settings-tab-content.php:33 js/qsm-logic-admin.js:240
+msgid "Hence we recommend to take a "
+msgstr ""
+
+#. URI of the plugin
+#. Author URI of the plugin
+msgid "https://quizandsurveymaster.com"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:87
+msgid "Invalid Item ID"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:80
+msgid "License doesn't exist"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:85
+msgid "License has expired"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:86 php/addon-settings-tab-content.php:88
+msgid "License is not valid for this product"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:83
+msgid "License key revoked"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:77
+msgid "License validated Succesfully"
+msgstr ""
+
+#: js/qsm-logic-admin.js:35
+msgid "Loading logic rules..."
+msgstr ""
+
+#: php/quiz-settings-tab-content.php:68
+msgid "Logic Rules"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:84
+msgid "No activations left"
+msgstr ""
+
+#: js/qsm-logic-admin.js:257
+msgid "Preparing logic rules..."
+msgstr ""
+
+#. Name of the plugin
+msgid "QSM - Logic"
+msgstr ""
+
+#. Author of the plugin
+msgid "QSM Team"
+msgstr ""
+
+#: php/quiz-settings-tab-content.php:78
+msgid "Save"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:122
+msgid "Save Changes"
+msgstr ""
+
+#: js/qsm-logic-admin.js:482
+msgid "Saving logic rules..."
+msgstr ""
+
+#: php/quiz-settings-tab-content.php:48
+msgid "Search Logic Rules"
+msgstr ""
+
+#: js/qsm-logic-admin.js:109 js/qsm-logic-admin.js:154
+#: js/qsm-logic-admin.js:185
+msgid "Select a question"
+msgstr ""
+
+#: js/qsm-logic-admin.js:95 js/qsm-logic-admin.js:164
+msgid "Select an answer"
+msgstr ""
+
+#: js/qsm-logic-admin.js:144 js/qsm-logic-admin.js:582
+msgid "Success! Your rules have been deleted!"
+msgstr ""
+
+#: js/qsm-logic-admin.js:470 js/qsm-logic-admin.js:529
+msgid "Success! Your rules have been saved!"
+msgstr ""
+
+#: php/quiz-settings-tab-content.php:54 js/qsm-logic-admin.js:402
+msgid "Then"
+msgstr ""
+
+#: js/qsm-logic-admin.js:103
+msgid "Then "
+msgstr ""
+
+#: php/quiz-settings-tab-content.php:35 js/qsm-logic-admin.js:241
+msgid "Upgrade"
+msgstr ""
+
+#: php/quiz-settings-tab-content.php:30 js/qsm-logic-admin.js:236
+#: js/qsm-logic-admin.js:237
+msgid "Upgrade Message"
+msgstr ""
+
+#: js/qsm-logic-admin.js:448
+msgid "Upgrading database..."
+msgstr ""
+
+#: php/addon-settings-tab-content.php:81
+msgid "URL not provided"
+msgstr ""
+
+#: js/qsm-logic-admin.js:238
+msgid "we are upgrading to better database structure."
+msgstr ""
+
+#: php/quiz-settings-tab-content.php:53
+msgid "When"
+msgstr ""
+
+#: js/qsm-logic-admin.js:83
+msgid "When answer to"
+msgstr ""
+
+#: js/qsm-logic-admin.js:368
+msgid "When answer to "
+msgstr ""

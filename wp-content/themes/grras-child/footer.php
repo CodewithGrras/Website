@@ -1,1482 +1,3325 @@
 
+
 <?php
+
 include 'components/enquire-now.php';
+
 include 'components/download-brochure.php';
+
 ?>
+
 <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
 <!-- Thank you -->
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const locationLinks = document.querySelectorAll(".location-link");
+  const mapContainer = document.getElementById("mapContainer");
+
+  locationLinks.forEach(link => {
+    link.addEventListener("click", function () {
+      const newMap = this.getAttribute("data-map");
+      if (newMap && mapContainer) {
+        mapContainer.innerHTML = newMap;
+      }
+
+      // Optional: Add active class handling
+      document.querySelectorAll(".location-link").forEach(el => el?.classList.remove("active"));
+      this?.classList.add("active");
+    });
+  });
+
+  // Optional: auto-load first map
+  if (locationLinks.length > 0) {
+    locationLinks[0].click();
+  }
+});
+</script>
+
+<script>
+function getSelectedFilterValues(name) {
+    return Array.from(document.querySelectorAll(`[name="${name}[]"]:checked`)).map(el => el.value);
+}
+
+function performRedhatSearch(device = 'desktop') {
+    const search = device === 'mobile'
+        ? document.getElementById('redhat-course-search-mobile').value
+        : document.getElementById('redhat-course-search').value;
+
+    const data = new FormData();
+    data.append('action', 'redhat_filter_courses');
+    data.append('search', search);
+    data.append('device', device);
+    data.append('offering', getSelectedFilterValues('offering'));
+    data.append('certification', getSelectedFilterValues('certification'));
+    data.append('productline', getSelectedFilterValues('productline'));
+    data.append('product', getSelectedFilterValues('product'));
+
+    const target = device === 'mobile'
+        ? document.querySelector('#mobileCourses')
+        : document.getElementById('row-container');
+
+    target.innerHTML = '<p>Loading...</p>';
+
+    fetch('<?php echo admin_url("admin-ajax.php"); ?>', {
+        method: 'POST',
+        body: data,
+    })
+    .then(res => res.text())
+    .then(html => {
+        target.innerHTML = html;
+    })
+    .catch(err => {
+        console.error(err);
+        target.innerHTML = '<p>Something went wrong. Please try again.</p>';
+    });
+}
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Desktop
+    document.getElementById('redhat-course-search')?.addEventListener('input', () => performRedhatSearch('desktop'));
+    document.querySelectorAll('input[name^="offering"], input[name^="certification"], input[name^="productline"], input[name^="product"]').forEach(el => {
+        el.addEventListener('change', () => performRedhatSearch('desktop'));
+    });
+
+    // Mobile
+    document.getElementById('redhat-course-search-mobile')?.addEventListener('input', () => performRedhatSearch('mobile'));
+    document.querySelectorAll('.course-mobile input[type="checkbox"]').forEach(el => {
+        el.addEventListener('change', () => performRedhatSearch('mobile'));
+    });
+});
+</script>
+
 
 
 
 <script>
+  jQuery(document).ready(function() {
+    // On button click, show next div and hide the previous one
+    jQuery('.insidetabarea a').click(function() {
+    
+      
+      var currentDiv = jQuery('.content-box:visible'); // Find the currently visible div
+      var nextDiv = currentDiv.next('.content-box'); // Get the next div
+      
+      if (nextDiv.length > 0) {
+        currentDiv.hide(); // Hide current div
+        nextDiv.show(); // Show next div
+      }
+    });
+  });
+  
+  jQuery(document).ready(function () {
+      jQuery('.insidetabarea a').on('click', function () {
+        jQuery('.insidetabarea a').removeClass('active'); // remove from all
+        jQuery(this).addClass('active'); // add to clicked one
+      });
+    });
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOVYRIgupAurZup5y1PRh8Ismb1A3lLao&libraries=places&callback=initMap" async defer></script>
+<script>
+
+
 
  var closeBtn = document.getElementById('close-btnsh');
+
             if (closeBtn) {
+
                 closeBtn.addEventListener('click', function() {
-                    exampleModal3sd.classList.remove('show');
+
+                    exampleModal3sd?.classList.remove('show');
+
                     exampleModal3sd.style.display = 'none';
+
                 });
+
             }
 
+
+
     jQuery(document).ready(function($) {
+
         // Trigger search when the button is clicked
+
         $('#search-button').on('click', function() {
+
             let searchinput = $('#search-input').val();
+
           
+
             return window.location.href = '/search?q=' + encodeURIComponent(searchinput);
+
         });
 
+
+
         // Trigger search when Enter key is pressed
+
         $('#search-input').on('keypress', function(e) {
+
             if (e.which === 13) { // 13 is the Enter key code
+
                 let searchinput = $('#search-input').val();
+
                 return window.location.href = '/search?q=' + encodeURIComponent(searchinput);
+
             }
+
         });
+
         
+
         var $sticky = $('.make-me-sticky');
+
         var $section = $('.trainplace');
+
         
+
         // Only run if the section exists
+
         if ($section.length && $sticky.length) {
+
           $(window).on('scroll', function () {
+
             var scrollTop = $(window).scrollTop();
+
             var sectionTop = $section.offset().top;
+
             var sectionBottom = sectionTop + $section.outerHeight();
+
         
+
             if (scrollTop >= sectionBottom || scrollTop + $sticky.outerHeight() < sectionTop) {
+
               $sticky.addClass('un-stuck');
+
             } else {
+
               $sticky.removeClass('un-stuck');
+
             }
+
           });
+
         }
+
         
+
         $('#load-more-partners').on('click', function() {
+
             var $button = $(this);
+
             var offset = parseInt($button.attr('data-offset'));
+
             var total = parseInt($button.attr('data-total'));
+
             var slug = $button.attr('data-slug');
+
         
+
             $.ajax({
+
               url: '<?php echo admin_url("admin-ajax.php"); ?>',
+
               type: 'POST',
+
               data: {
+
                 action: 'load_more_academic_partners',
+
                 offset: offset,
+
                 slug: slug
+
               },
+
               beforeSend: function() {
+
                 $button.text('Loading...');
+
               },
+
               success: function(response) {
+
                 if (response) {
+
                   $('#academic-partners').append(response);
+
                   offset += 8;
+
                   $button.attr('data-offset', offset);
+
                   $button.text('Load More');
+
         
+
                   // Update remaining count
+
                   var remaining = total - offset;
+
                   if (remaining > 0) {
+
                     $('#remaining-count').text(remaining + ' more academic partners available');
+
                   } else {
+
                     $('#load-more-partners, #remaining-count').remove();
+
                   }
+
                 } else {
+
                   $('#load-more-partners, #remaining-count').remove();
+
                 }
+
               }
+
             });
-        });
-    });
-    jQuery(document).ready(function($) {
-        // Trigger search when the button is clicked
-        $('#button-addon2').on('click', function() {
-            let searchinput = $('#mobile-search').val();
-          
-            return window.location.href = '/search?q=' + encodeURIComponent(searchinput);
+
         });
 
-        // Trigger search when Enter key is pressed
-        $('#search-input').on('keypress', function(e) {
-            if (e.which === 13) { // 13 is the Enter key code
-                let searchinput = $('#search-input').val();
-                return window.location.href = '/search?q=' + encodeURIComponent(searchinput);
+        
+
+        $('#load-more-corporate').on('click', function() {
+
+        let button = $(this);
+
+        let page = parseInt(button.data('page')) + 1;
+
+
+
+        $.ajax({
+
+            url: ajaxurl, // or "<?php echo admin_url('admin-ajax.php'); ?>" if inline
+
+            type: "POST",
+
+            data: {
+
+                action: "load_more_corporate_partners",
+
+                page: page
+
+            },
+
+            beforeSend: function() {
+
+                button.text('Loading...');
+
+            },
+
+            success: function(res) {
+
+                if (res.success) {
+
+                    // Append new items
+
+                    $('#corporate-partner-wrapper').append(res.data.html);
+
+
+
+                    // Update the page number
+
+                    button.data('page', page);
+
+
+
+                    // Update remaining count
+
+                    if (typeof res.data.remaining !== 'undefined') {
+
+                        if (res.data.remaining > 0) {
+
+                            $('#remaining-count-corporate').text(res.data.remaining + ' more corporate partners available');
+
+                        } else {
+
+                            $('#remaining-count-corporate').remove();
+
+                        }
+
+                    }
+
+
+
+                    // Remove button if no more posts
+
+                    if (!res.data.has_more) {
+
+                        button.remove();
+
+                    } else {
+
+                        button.text('Load More');
+
+                    }
+
+                }
+
             }
+
         });
+
     });
-</script>
-<script>
-function hideProShow(name, btn_name, curBtn) {
-    const exploreBtns = document.getElementById(btn_name); // Corrected 'getElementsById' to 'getElementById'
-    const custom_contant = document.getElementById(name); // Corrected 'getElementsById' to 'getElementById'
-    console.log(`display : ${custom_contant.style.display}`);
-    if (custom_contant.style.display == '-webkit-box') { // Corrected the comparison operator to '==='
-        custom_contant.style.display = 'block';
-        //exploreBtns.textContent = 'Show Less';
-        jQuery(curBtn).html('Show Less1');
-    } else {
-        custom_contant.style.display = '-webkit-box'; // Fixed the unclosed quote in '-webkit-box'
-        //exploreBtns.textContent = 'Read More';
-        jQuery(curBtn).html('Read More1');
-    }
+
     
+
+        $('#load-more-awards').on('click', function() {
+
+            let button = $(this);
+
+            let page = parseInt(button.data('page')) + 1;
+
+            let year = button.data('year');
+
+    
+
+            $.ajax({
+
+                url: '<?php echo admin_url("admin-ajax.php"); ?>',
+
+                type: 'POST',
+
+                data: {
+
+                    action: 'load_more_awards',
+
+                    page: page,
+
+                    year: year
+
+                },
+
+                beforeSend: function() {
+
+                    button.text('Loading...');
+
+                },
+
+                success: function(res) {
+
+                    if (res.success) {
+
+                        $('#award-wrapper').append(res.data.html);
+
+                        button.data('page', page);
+
+    
+
+                        if (res.data.remaining > 0) {
+
+                            $('#award-remaining-count').text(res.data.remaining + ' more awards available');
+
+                        } else {
+
+                            $('#award-remaining-count').remove();
+
+                        }
+
+    
+
+                        if (!res.data.has_more) {
+
+                            button.remove();
+
+                        } else {
+
+                            button.text('Load More');
+
+                        }
+
+                    }
+
+                }
+
+            });
+
+        });
+
+    });
+
+    jQuery(document).ready(function($) {
+
+        // Trigger search when the button is clicked
+
+        $('#button-addon2').on('click', function() {
+
+            let searchinput = $('#mobile-search').val();
+
+          
+
+            return window.location.href = '<?php echo get_site_url(); ?>?s=' + encodeURIComponent(searchinput);
+
+        });
+
+
+
+        // Trigger search when Enter key is pressed
+
+        $('#search-input').on('keypress', function(e) {
+
+            if (e.which === 13) { // 13 is the Enter key code
+
+                let searchinput = $('#search-input').val();
+
+                return window.location.href = '/search?q=' + encodeURIComponent(searchinput);
+
+            }
+
+        });
+
+    });
+
+</script>
+
+<script>
+
+function hideProShow(name, btn_name, curBtn) {
+
+    const exploreBtns = document.getElementById(btn_name); // Corrected 'getElementsById' to 'getElementById'
+
+    const custom_contant = document.getElementById(name); // Corrected 'getElementsById' to 'getElementById'
+
+    console.log(`display : ${custom_contant.style.display}`);
+
+    if (custom_contant.style.display == '-webkit-box') { // Corrected the comparison operator to '==='
+
+        custom_contant.style.display = 'block';
+
+        //exploreBtns.textContent = 'Show Less';
+
+        jQuery(curBtn).html('Show Less');
+
+    } else {
+
+        custom_contant.style.display = '-webkit-box'; // Fixed the unclosed quote in '-webkit-box'
+
+        //exploreBtns.textContent = 'Read More';
+
+        jQuery(curBtn).html('Read More');
+
+    }
+
+    
+
 }
 
+
+
   document.addEventListener("DOMContentLoaded", function() {
+
     const exploreBtns = document.getElementsByClassName('hide_custom');
+
     const contents = document.getElementsByClassName('custom_contant');
 
+
+
     // Iterate over all buttons and add click event listeners
+
     for (let i = 0; i < contents.length; i++) {
-        exploreBtns[i].addEventListener('click', function(e) {
-      
-            e.preventDefault();
-            if (contents[i].style.display == '-webkit-box') {
-                contents[i].style.display = 'block';
-                exploreBtns[i].textContent = 'Show Less2';
-            } else {
-                contents[i].style.display = '-webkit-box';
-                <?php if (is_page('home')): ?>
-                    exploreBtns[i].textContent = 'Read More3';
-                <?php else: ?>
-                    exploreBtns[i].textContent = 'Read More4';
-                <?php endif; ?>
-            }
-        });
-    }
-});
-  document.addEventListener("DOMContentLoaded", function() {
-    const exploreBtns = document.getElementsByClassName('placement_show');
-    const contents = document.getElementsByClassName('placement_contant');
-    // Iterate over all buttons and add click event listeners
-    for (let i = 0; i < contents.length; i++) {
+
         exploreBtns[i].addEventListener('click', function(e) {
 
+      
+
             e.preventDefault();
-            if (contents[i].style.display === '-webkit-box') {
-                contents[i].style.display = 'block !important';
+
+            if (contents[i].style.display == '-webkit-box') {
+
+                contents[i].style.display = 'block';
+
                 exploreBtns[i].textContent = 'Show Less';
+
             } else {
+
                 contents[i].style.display = '-webkit-box';
-                exploreBtns[i].textContent = 'Explore';
+
+                <?php if (is_page('home')): ?>
+
+                    exploreBtns[i].textContent = 'Read More';
+
+                <?php else: ?>
+
+                    exploreBtns[i].textContent = 'Read More';
+
+                <?php endif; ?>
+
             }
+
+        });
+
+    }
+
+});
+
+  document.addEventListener("DOMContentLoaded", function() {
+
+    const exploreBtns = document.getElementsByClassName('placement_show');
+
+    const contents = document.getElementsByClassName('placement_contant');
+
+    // Iterate over all buttons and add click event listeners
+
+    for (let i = 0; i < contents.length; i++) {
+
+        exploreBtns[i].addEventListener('click', function(e) {
+
+
+
+            e.preventDefault();
+
+            if (contents[i].style.display === '-webkit-box') {
+
+                contents[i].style.display = 'block !important';
+
+                exploreBtns[i].textContent = 'Show Less';
+
+            } else {
+
+                contents[i].style.display = '-webkit-box';
+
+                exploreBtns[i].textContent = 'Explore';
+
+            }
+
+        });
+
+    }
+
+});
+
+// for the show more 
+
+function showItems(button, mainRow,rowContainerClass, countClass) {
+    if(document.getElementById(button)) {
+        document.getElementById(button).addEventListener('click', function() {
+    
+            // Get the row container
+    
+            var rowContainer = document.querySelector(mainRow);
+    
+           
+    
+            // Count the number of divs inside the row
+    
+            var divCount = rowContainer.querySelectorAll(rowContainerClass).length;
+    
+            // Display the count
+    
+            document.getElementById(countClass).textContent = '';
+    
+            // alert('Number of divs: ' + divCount);
+    
         });
     }
-});
-// for the show more 
-function showItems(button, mainRow,rowContainerClass, countClass) {
-    document.getElementById(button).addEventListener('click', function() {
-        // Get the row container
-        var rowContainer = document.querySelector(mainRow);
-       
-        // Count the number of divs inside the row
-        var divCount = rowContainer.querySelectorAll(rowContainerClass).length;
-        // Display the count
-        document.getElementById(countClass).textContent = '';
-        // alert('Number of divs: ' + divCount);
-    });
+
 }
+
 function showDefault(button,courseItem ,mainRow,rowContainerClass, countClass, showCount){
+
      var courseViewButton = document.getElementById(button);
+
   var courseItems = document.querySelectorAll(courseItem);
+
   var rowContainer = document.querySelector(mainRow);
+
   var itemsToShow = showCount;
+
   var divCount = rowContainer.querySelectorAll(rowContainerClass).length - showCount;
+
         // Display the count
+
+
 
 if(divCount <= 0){
+
     courseViewButton.style.display = 'none'
+
 }
+
   // Hide items beyond the initial display count
+
   courseItems.forEach(function(item, index) {
+
     if (index >= itemsToShow) {
+
       item.style.display = 'none';
+
     }
+
   });
+
+
 
   courseViewButton.addEventListener('click', function(e) {
+
     e.preventDefault();
+
     courseItems.forEach(function(item) {
 
+
+
       item.style.display = 'block';
+
           jQuery(document).ready(function($) {
+
               $('.grid').isotope({
+
   itemSelector: '.grid-item',
+
 });
+
           });
+
     });
+
     if(courseViewButton.textContent == 'Show Less'){
+
     courseViewButton.textContent = 'Show More';
+
       // Hide items beyond the initial display count
+
   courseItems.forEach(function(item, index) {
+
     if (index >= itemsToShow) {
+
       item.style.display = 'none';
+
     }
+
   });
+
     }else{
+
     courseViewButton.textContent = 'Show Less'; 
+
     }
+
         document.getElementById(countClass).textContent = divCount + ' more programs available';
+
   }); 
+
 }
+
+
 
 </script>
 
+
+
     <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
       <div class="modal-dialog reqcallback">
+
         <div class="modal-content">
+
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
           <div class="modal-body">
+
             <div class="row">
+
               <div class="col-lg-6">
+
                 <div class="imgbox"><img src="<?php 
+
                 $request_call_back_images = get_field('request_call_back_images','option');
+
                 echo $request_call_back_images['desktop_image']; ?>" class="img-fluid d-none d-lg-block" alt=""></div>
+
                 <div class="imgbox"><img src="<?php echo $request_call_back_images['mobile_image']; ?>" class="img-fluid d-block d-lg-none" alt=""></div>
+
               </div>
+
               <div class="col-lg-6">
+
               <div class="formbox">
+
                   <h3>Talk to Our Advisor!</h3>
-                  <?php echo do_shortcode('[gravityform id="17" title="false" ajax="true"]'); ?>
+
+                  <?php echo do_shortcode('[gravityform id="1" title="false" ajax="true"]'); ?>
+
               </div>
+
               </div>
+
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
+
 <!--<div class="chetimg"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/talk.png" class="img-fluid" alt=""></div>-->
+
 <div class="footerfix">
 
+
+
       <div class="container d-none d-md-block"> 
+
         <?php
+
             $modalTarget = null;
+
             if (is_singular('internships')) {
+
                 $modalTarget = 'exampleModal5'; // Default form ID for internships
+
             } else {
+
                 $modalTarget = 'exampleModal2'; // Default form ID for other pages 
+
             }
+
         ?>
-        <strong>Need Help?</strong> Talk to us at +91 90019 97178 or <a href="#" class="callback" data-bs-toggle="modal" data-bs-target="#<?php echo $modalTarget; ?>">REQUEST CALLBACK</a> 
+
+        <strong>Need Help?</strong> Talk to us at <a class="text-white text-decoration-none" href="tel:<?php echo str_replace([' ','-'], ['', ''], get_field('grras_phone_number', 'option')); ?>"><?php echo get_field('grras_phone_number', 'option'); ?></a> or WhatsApp us at <a class="text-white text-decoration-none" href="https://wa.me/<?php echo str_replace(['+', '-', ' '], ['', '', ''], get_field('grras_whatsapp_number', 'option')); ?>"><?php echo get_field('grras_whatsapp_number', 'option'); ?></> or <a href="#" class="callback" data-bs-toggle="modal" data-bs-target="#<?php echo 'exampleModal2'; ?>">REQUEST CALLBACK</a> 
+
       </div>
+
         <div class="container d-block d-md-none">
+
           <div class="btn-group">
+
           <button type="button" class="btn btn-talk dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
             <img src="<?php echo get_stylesheet_directory_uri();?>/images/talktous.svg" alt="">  Talk to us
+
           </button>
+
           <div class="dropdown-menu">
-            <li><a class="dropdown-item" href="#"><img src="<?php echo get_stylesheet_directory_uri();?>/images/wp.svg" alt="">  Whatsapp us</a></li>
-            <li><a class="dropdown-item" href="#"><img src="<?php echo get_stylesheet_directory_uri();?>/images/callus.svg" alt="">  Call us</a></li>
+
+            <li><a class="dropdown-item" href="https://wa.me/<?php echo str_replace(['+', '-', ' '], ['', '', ''], get_field('grras_whatsapp_number', 'option')); ?>"><img src="<?php echo get_stylesheet_directory_uri();?>/images/wp.svg" alt="">  Whatsapp us</a></li>
+
+            <li><a class="dropdown-item" href="tel:<?php echo get_field('grras_phone_number', 'option'); ?>"><img src="<?php echo get_stylesheet_directory_uri();?>/images/callus.svg" alt="">  Call us</a></li>
+
           </div>
+
         </div>
+
         <a href="#" class="btn btn-enquire" data-bs-toggle="modal" data-bs-target="#exampleModal2"><img src="<?php echo get_stylesheet_directory_uri();?>/images/chat-icon.svg" alt=""> Enquire Now</a>
+
       </div>
+
     </div>
+
    
+
 <div class="footer wow fadeInUp">
+
 <?php
+
 include 'components/city-footer.php';
+
 include 'components/city-footer-courses.php';
+
 ?>
+
       <div class="container">
+
         <div class="row">
+
           <div class="col-md-2">
+
             <div class="footlogo"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/footer-logo.png" class="img-fluid" alt=""></div>
+
             <ul class="social">
+
               <li><a href="#"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/facebook.svg" alt=""></a></li>
+
               <li><a href="#"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/twtter.svg" alt=""></a></li>
+
               <li><a href="#"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/linkedin.svg" alt=""></a></li>
+
               <li><a href="#"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/instagram.svg" alt=""></a></li>
+
               <li><a href="#"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/youtube.svg" alt=""></a></li>
+
             </ul>
+
             <!--<h5>Quora Reivew</h5>-->
+
             <!--<div class="mb-3"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/quote-review.png" class="img-fluid" alt=""></div>-->
+
             <div class="mb-3"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/google-review.png" class="img-fluid" alt=""></div>
+
           </div>
+
           <div class="col-md-10">
+
             <div class="row">
+
       <?php 
+
     // Predefined parent menu items
+
     $menus = [
+
         'Popular Courses' => 'popular-courses',
+
         'Internship Courses' => 'internship-courses',
+
         'Career Oriented Courses' => 'career-oriented-courses',
+
         'Popular Workshops' => 'popular-workshops',
+
     ];
+
             $i=0;
 
+
+
     foreach ($menus as $title => $slug) :
+
         // Get all menu items (parent + children) for each menu
+
         $menu_items = wp_get_nav_menu_items('Footer Menu');  // Use the name of the registered menu here
 
+
+
         // Filter the parent item
+
         $parent_item = null;
+
         foreach ($menu_items as $item) {
+
             if ($item->title === $title) {
+
                 $parent_item = $item;
+
                 break;  // Found the parent item
+
             }
+
         }
+
+
 
         if ($parent_item) {
+
             // Now filter out the child items for this parent item
+
             $children = [];
+
             foreach ($menu_items as $item) {
+
                 if ($item->menu_item_parent == $parent_item->ID) {  // Child items have menu_item_parent set to the parent's ID
+
                     $children[] = $item;
+
                 }
+
             }
 
+
+
             // If there are child items, display them
+
             if (!empty($children)) :
+
 ?>
+
     <div class="col-md-3 col-sm-6 d-none d-sm-block">
+
         <h4><?php echo esc_html($title); ?></h4>
+
         <ul class="footmenu">
+
             <?php
+
             // Loop through child items and display them
+
             foreach ($children as $child) :
+
                 // Output the child item
+
                 ?>
+
                 <li><a href="<?php echo esc_url($child->url); ?>"><?php echo esc_html($child->title); ?></a></li>
+
                 <?php
+
             endforeach;
+
             ?>
+
         </ul>
+
     </div>
+
      <div class="accordion d-block d-sm-none" id="accordionExample">
+
               <div class="accordion-item">
+
                 <h4 class="accordion-header">
+
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $i ?>" aria-expanded="false" aria-controls="collapse<?php echo $i ?>">
+
                     <?php echo esc_html($title); ?>
+
                   </button>
+
                 </h4>
+
                 <div id="collapse<?php echo $i;
+
                 $i++;
+
                 ?>" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+
                   <div class="accordion-body">
+
                     <ul class="footmenu">
+
                       <?php
+
             // Loop through child items and display them
+
             foreach ($children as $child) :
+
                 // Output the child item
+
                 ?>
+
                 <li><a href="<?php echo esc_url($child->url); ?>"><?php echo esc_html($child->title); ?></a></li>
+
                 <?php
+
             endforeach;
+
             ?>
+
                     </ul>
+
                   </div>
+
                 </div>
+
               </div>
+
              
+
             </div>
+
 <?php 
+
             endif; // End check for children
+
         }
+
     endforeach;
+
 ?>
+
+
 
     </div>         
+
           </div>
+
           
+
           
+
         </div>
 
+
+
         <!-- copyright -->
+
         <div class="copyright">
+
           <div class="row">
-            <div class="col-lg-10">
+
+            <div class="col-lg-12">
+
               <ul>
+
                 <li><a href="<?php get_link_custom('aboutus') ?>">About Us</a></li>
+
                 <li><a href="<?php get_link_custom('services') ?>">Services</a></li>
+
                 <li><a href="<?php get_link_custom('hire-from-us') ?>">Hire From Us</a></li>
+
                 <li><a href="<?php get_link_custom('careers') ?>">Careers</a></li>
+
                 <!--<li><a href="<?php get_link_custom('blog') ?>">Become a Mentor</a></li>-->
+
                 <li><a href="<?php get_link_custom('blog') ?>">Blogs</a></li>
+
                 <li><a href="<?php get_link_custom('review-rating') ?>">Sucess Stories</a></li>
+
                 <li><a href="<?php get_link_custom('contact-us') ?>">Contact Us</a></li>
+
                 <li><a href="/gallery">Gallery</a></li>
+                
+                <li><a href="<?php get_link_custom('mcq') ?>">Skill Up</a></li>
+
               </ul>
+
               <p>Copyright © <?php echo date('Y'); ?> GRRAS Solutions Pvt. Ltd.</p>
+
             </div>
+
             <div class="col-lg-2">
+
               <!--<div class="mt-4 text-right"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/qrcode.png" class="img-fluid" alt=""></div>-->
+
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </div>
+
+
+
 
 
 <?php wp_footer(); ?>
+
 <script>
+
       wow = new WOW(
+
         {
+
           animateClass: 'animated',
+
           offset:       100,
+
           callback:     function(box) {
+
             console.log("WOW: animating <" + box.tagName.toLowerCase() + ">")
+
           }
+
         }
+
       );
+
       wow.init();
+
       console.log(typeof jQuery); // This should log "function"
 
+
+
     </script><?php if(!is_home() || !is_front_page()): ?>
+
     <script type="text/javascript">
+
   /*document.getElementById('workshop-filter').addEventListener('change', function() {
+
     var filterValue = this.value; // Get selected value
+
  
+
     // Get the current URL and add the selected filter as a query parameter
+
     var url = new URL(window.location.href);
+
     url.searchParams.set('workshop_filter', filterValue); // Add filter to the URL
+
     window.location.href = url; // Redirect to the updated URL
+
   });*/
+
 //   document.getElementById('loader-workshop').addEventListener('click', function() {
+
     
 
+
+
 //     var url = new URL(window.location.href);
+
 //     url.searchParams.set('loader', true); // Add filter to the URL
+
 //     window.location.href = url; // Redirect to the updated URL
+
 //   });
+
   function placement_viewmore() {
+
     var url = new URL(window.location.href);
+
     url.searchParams.set('loader', true); // Add filter to the URL
+
     window.location.href = url; // Redirect to the updated URL
+
   }
+
   function gallary_loader() {
+
     var url = new URL(window.location.href);
+
     url.searchParams.set('loader', 1000); // Add filter to the URL
+
     window.location.href = url; // Redirect to the updated URL
+
   }
+
 </script><?php endif; ?>
 
 
+
+
+
     <!--featured-course -->
+
     <script>      
+
     jQuery(document).ready(function($) {
-        
-        
-      $('.review-slid').owlCarousel({
-        items: 4,
+      $('.mcq-banner-slider').owlCarousel({
+        items: 1,
         autoplay: true,
+        autoplayHoverPause: true,
         margin: 0,
         nav: false,
-        dots: false,
+        dots: true,
         loop: true,
         smartSpeed: 450,
+      });  
+
+      $('.review-slid').owlCarousel({
+
+        items: 4,
+
+        autoplay: true,
+        autoplayHoverPause: true,
+
+        margin: 0,
+
+        nav: false,
+
+        dots: false,
+
+        loop: true,
+
+        smartSpeed: 450,
+
         navText : ["<img src='<?php echo get_stylesheet_directory_uri();?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri();?>/images/fe-arrow-right.png' alt=''>"],
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:1,
+
             },
+
             500:{
+
                 items:2,
+
             },
+
             768:{
+
                 items:2,
+
             },
+
             1100:{
+
                 items:2,
+
             },
+
             1400:{
+
                 items:2,
+
             }
+
         }
+
       });
+
+
+      $('.our_global').owlCarousel({
+        autoplay: true,
+        autoplayHoverPause: true,
+        margin: 0,
+        nav: false,
+        dots: true,
+        loop: false,
+        smartSpeed: 450,
+        responsiveClass:true,
+
+        responsive:{
+
+            0:{
+
+                items:1,
+
+            },
+
+            500:{
+
+                items:2,
+
+            },
+
+            768:{
+
+                items:3,
+
+            },
+
+            1100:{
+
+                items:3,
+
+            },
+
+            1400:{
+
+                items:4,
+
+            }
+
+        }
+
+      });
+
      
+
 $('.custom-coursal-internship').owlCarousel({
+
   autoplay: true,
+  autoplayHoverPause: true,
+
   margin: 5,
+
   nav: false,
+
   dots: false,
+
   loop: true,
+
   smartSpeed: 450,
+
   slideTransition: 'linear',
+
   autoplaySpeed: 5000,
+
   responsiveClass: true,
+
   responsive: {
+
     0: {
+
       items: 3
+
     },
+
     768: {
+
       items: 2
+
     }
+
   },
+
   animateOut: 'fadeOut',
+
   animateIn: 'fadeIn',
+
   onInitialized: highlightItem,
+
   onTranslated: highlightItem,
+
   rtl: true,
+
   center: true
+
 });
 
+
+
 function highlightItem() {
+
   const $allItems = $('.custom-coursal-internship .owl-item');
+
   $allItems.removeClass('highlight');
 
+
+
   const $activeItems = $('.custom-coursal-internship .owl-item.active');
+
   $activeItems.removeClass('highlight');
+
   const isMobile = $(window).width() < 768;
 
+
+
   if (isMobile && $activeItems.length >= 3) {
+
     // Highlight only the middle (2nd) item of 3 active items
+
     $activeItems.eq(1).addClass('highlight');
+
     $('.custom-coursal-internship .owl-item.active.center').addClass('highlight');
+
   } else if (!isMobile && $activeItems.length >= 2) {
+
     // Highlight the 2nd visible item on desktop
+
     $activeItems.eq(1).addClass('highlight');
+
   }
+
 }
 
+
+
      
+
       $('.mobile-review').owlCarousel({
+
         items: 4,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         margin: 0,
+
         nav: true,
+
         dots: false,
+
         loop: true,
+
         smartSpeed: 450,
+
         navText : ["<img src='./images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='./images/fe-arrow-right.png' alt=''>"],
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:1.5,
+
             },
+
             500:{
+
                 items:2,
+
             },
+
             768:{
+
                 items:3,
+
             },
+
             1100:{
+
                 items:4,
+
             },
+
             1400:{
+
                 items:4,
+
             }
+
         }
+
       });
+
       
+
       
+
       $('.realimpect').owlCarousel({
+
         items: 4,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         margin: 30,
+
         nav: true,
+
         dots: false,
+
         loop: true,
+
         smartSpeed: 250,
+
         navText : false,
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:1.2,
+
             },
+
             500:{
+
                 items:2,
+
             },
+
             768:{
+
                 items:3,
+
             },
+
             1100:{
+
                 items:3,
+
             },
+
             1400:{
+
                 items:3,
+
             }
+
         }
+
       });
+
+
 
     
+
   $('.success-story').owlCarousel({
+
         items: 3,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         margin: 5,
+
         nav: true,
+
         dots: false,
+
         loop: true,
+
         smartSpeed: 450,
 
+
+
         slideTransition: 'linear',
+
         autoplaySpeed: 5000,
+
         // autoplayTimeout:1e3,
+
         autoplayHoverPause: false,
 
+
+
         navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:1.5,
+
             },
+
             500:{
+
                 items:2,
+
             },
+
             768:{
+
                 items:3,
+
             },
+
             1100:{
+
                 items:4,
+
             },
+
             1400:{
+
                 items:4,
+
             }
+
         }
+
       });
+
+
+
 
 
       $('.hire-partner').owlCarousel({
+
         items: 4,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         margin: 0,
+
         nav: true,
+
         dots: false,
+
         loop: true,
+
         smartSpeed: 450,
+
         navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:1.5,
+
             },
+
             500:{
+
                 items:2,
+
             },
+
             768:{
+
                 items:3,
+
             },
+
             1100:{
+
                 items:4,
+
             },
+
             1400:{
+
                 items:4,
+
             }
+
         }
+
       });
+
+
+
 
 
       $('.partner-logo').owlCarousel({
+
         items: 4,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         margin: 0,
+
         nav: true,
+
         dots: false,
+
         loop: true,
+
         smartSpeed: 450,
+
         navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:2,
+
             },
+
             500:{
+
                 items:3,
+
             },
+
             768:{
+
                 items:4,
+
             },
+
             1100:{
+
                 items:5,
+
             },
+
             1400:{
+
                 items:6,
+
             }
+
         }
+
       });
 
+
+
    
+
       $('.exclusive-course').owlCarousel({
+
         items: 3,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         margin: 0,
-        nav: true,
-        dots: false,
+
+        nav: false,
+
+        dots: true,
+
         loop: true,
+
         smartSpeed: 450,
+
           navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+
       responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:1.4,
+
             },
+
             500:{
+
                 items:2,
+
             },
+
             768:{
+
                 items:3,
+
             },
+
             1100:{
+
                 items:3,
+
             },
+
             1400:{
+
                 items:3,
+
             }
+
         }
+
       });
+
+
 
       $('.elate-slid').owlCarousel({
+
         items: 1,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         margin: 0,
+
         nav: true,
+
         dots: false,
+
         loop: true,
+
         smartSpeed: 450,
+
         navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:1,
+
             },
+
             500:{
+
                 items:1,
+
             },
+
             768:{
+
                 items:1,
+
             },
+
             1100:{
+
                 items:1,
+
             },
+
             1400:{
+
                 items:1,
+
             }
+
         }
+
       });
 
+
+
     
+
       $('.featured-course').owlCarousel({
+
         items: 4,
+
         autoplay: false,
+
         margin: 0,
+
         nav: true,
+
         dots: false,
+
         loop: true,
+
         smartSpeed: 250,
+
         navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:1.2,
+
             },
+
             500:{
+
                 items:2,
+
             },
+
             768:{
+
                 items:3,
+
             },
+
             1100:{
+
                 items:4,
+
             },
+
             1400:{
+
                 items:4,
+
             }
+
         }
-      });
-      $('.our_placement').owlCarousel({
-        items: 4,
-        margin: 0,
-        nav: true,
-        dots: false,
-        loop: true,
-        autoplay: false,
-      
-        // autoplaySpeed: 5000,
-        // autoplayTimeout:1e3,
-        // autoplayHoverPause: false,
-       navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
-        responsiveClass:true,
-        responsive:{
-            0:{
-                items:1.5,
-            },
-            500:{
-                items:2,
-            },
-            768:{
-                items:4,
-            },
-            1100:{
-                items:4,
-            },
-            1400:{
-                items:4,
-            }
-        }
+
       });
 
+      $('.our_placement').owlCarousel({
+
+        items: 4,
+
+        margin: 0,
+
+        nav: true,
+
+        dots: false,
+
+        loop: true,
+
+        autoplay: false,
+
+      
+
+        // autoplaySpeed: 5000,
+
+        // autoplayTimeout:1e3,
+
+        // autoplayHoverPause: false,
+
+       navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+
+        responsiveClass:true,
+
+        responsive:{
+
+            0:{
+
+                items:1.5,
+
+            },
+
+            500:{
+
+                items:2,
+
+            },
+
+            768:{
+
+                items:4,
+
+            },
+
+            1100:{
+
+                items:4,
+
+            },
+
+            1400:{
+
+                items:4,
+
+            }
+
+        }
+
+      });
+
+
+
     
+
+
 
   
+
       $('.blog-slid').owlCarousel({
+
         items: 4,
+
         autoplay: false,
+
         margin: 16,
+
         nav: true,
+
         dots: true,
+
         loop: true,
+
         smartSpeed: 450,
+
         navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:2,
+
                 margin: 6,
+
             },
+
             500:{
+
                 items:2,
+
             },
+
             768:{
+
                 items:3,
+
             },
+
             1100:{
+
                 items:3,
+
             },
+
             1400:{
+
                 items:3,
+
             }
+
         }
+
       });
+
       
+
       $('.award-reco').owlCarousel({
+
         items: 3,
+
         margin: 0,
+
         nav: true,
+
         dots: false,
+
         loop: true,
+
         autoplay: true,
+        
+        autoplayHoverPause: true,
+
         slideTransition: 'linear',
+
         autoplaySpeed: 5000,
+
         // autoplayTimeout:1e3,
+
         autoplayHoverPause: false,
+
        navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:1.5,
+
             },
+
             500:{
+
                 items:2,
+
             },
+
             768:{
+
                 items:4,
+
             },
+
             1100:{
+
                 items:4,
+
             },
+
             1400:{
+
                 items:4,
+
             }
+
         }
+
       });
+
+
 
    
+
       $('.workshop-course').owlCarousel({
+
         items: 3,
+
         autoplay: false,
+
         margin: 0,
+
         nav: true,
+
         dots: false,
+
         loop: true,
+
         smartSpeed: 450,
+
        navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:1.5,
+
             },
+
             500:{
+
                 items:2,
+
             },
+
             768:{
+
                 items:3,
+
             },
+
             1100:{
+
                 items:3,
+
             },
+
             1400:{
+
                 items:3,
+
             }
+
         }
+
       });
+
+
 
     jQuery('.top-company').owlCarousel({
+
         items: 2,
+
         loop: true,
+
         margin: 20,
-        autoplay: true,             lazyLoad: true,
+
+        autoplay: true,
+        autoplayHoverPause: true,
+        lazyLoad: true,
+
         slideTransition: 'linear',
+
         autoplaySpeed: 5000,
+
         // autoplayTimeout:1e3,
+
         autoplayHoverPause: false,
 
+
+
         navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:3,
+
             },
+
             500:{
+
                 items:3,
+
             },
+
             768:{
+
                 items:4,
+
             },
+
             1100:{
+
                 items:6,
+
             },
+
             1400:{
+
                 items:8,
+
             }
+
         }
+
       });
+
       
+
       
+
       jQuery('.about-banner').owlCarousel({
+
         items: 1,
+
         loop: true,
+
         margin: 20,
+
         nav: false,
+
         dots: true,
+
         loop: true,
+
         smartSpeed: 450,
+
         animateOut: 'fadeOut',
+
         animateIn: 'fadeIn',
+
         responsiveClass:true,
+
         navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+
         responsive:{
+
             0:{
+
                 items:1,
+
             },
+
             500:{
+
                 items:1,
+
             },
+
             768:{
+
                 items:1,
+
             },
+
             1100:{
+
                 items:1,
+
             },
+
             1400:{
+
                 items:1,
+
             }
+
         }
+
       });
+
+
+
 
 
       $('.choice-course').owlCarousel({
+
         items: 4,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         margin: 15,
-        nav: true,
-        dots: true,
-        loop: true,
-        smartSpeed: 450,
-        navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
-        responsiveClass:true,
-        responsive:{
-            0:{
-                items:1.4,
-            },
-            500:{
-                items:2,
-            },
-            768:{
-                items:3,
-            },
-            1100:{
-                items:4,
-            },
-            1400:{
-                items:4,
-            }
-        }
-      });
-      
-      
-      $('.rec-certi').owlCarousel({
-        items: 3,
-        autoplay: true,
-        margin: 15,
-        //nav: true,
-        dots: true,
-        loop: true,
-        smartSpeed: 450,
-        //navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
-        responsiveClass:true,
-        responsive:{
-            0:{
-                items:1.3,
-            },
-            500:{
-                items:2,
-            },
-            768:{
-                items:3,
-            },
-            1100:{
-                items:3,
-            },
-            1400:{
-                items:3,
-            }
-        }
-      });
-     
-     
-         
-      $('.ourpartner').owlCarousel({
-        items: 6,
-        autoplay: true,
-        margin: 0,
+
         nav: false,
-        dots: false,
+
+        dots: true,
+
         loop: true,
+
         smartSpeed: 450,
-        navText : false,
+
+        navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
-                items:3,
+
+                items:1.4,
+
             },
+
             500:{
-                items:3,
+
+                items:2,
+
             },
+
             768:{
-                items:4,
+
+                items:3,
+
             },
+
             1100:{
-                items:6,
+
+                items:4,
+
             },
+
             1400:{
-                items:6,
+
+                items:4,
+
             }
+
         }
+
       });
+
+      
+
+      
+
+      $('.rec-certi').owlCarousel({
+
+        items: 3,
+
+        autoplay: true,
+        autoplayHoverPause: true,
+
+        margin: 15,
+
+        //nav: true,
+
+        dots: true,
+
+        loop: true,
+
+        smartSpeed: 450,
+
+        //navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+
+        responsiveClass:true,
+
+        responsive:{
+
+            0:{
+
+                items:1.3,
+
+            },
+
+            500:{
+
+                items:2,
+
+            },
+
+            768:{
+
+                items:3,
+
+            },
+
+            1100:{
+
+                items:3,
+
+            },
+
+            1400:{
+
+                items:3,
+
+            }
+
+        }
+
+      });
+
+     
+
+     
+
+         
+
+      $('.ourpartner').owlCarousel({
+
+        items: 6,
+
+        autoplay: true,
+        autoplayHoverPause: true,
+
+        margin: 0,
+
+        nav: false,
+
+        dots: false,
+
+        loop: true,
+
+        smartSpeed: 450,
+
+        navText : false,
+
+        responsiveClass:true,
+
+        responsive:{
+
+            0:{
+
+                items:3,
+
+            },
+
+            500:{
+
+                items:3,
+
+            },
+
+            768:{
+
+                items:4,
+
+            },
+
+            1100:{
+
+                items:6,
+
+            },
+
+            1400:{
+
+                items:6,
+
+            }
+
+        }
+
+      });
+
+
+
+
 
 
 
       $('.project-work').owlCarousel({
+
         items: 3,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         margin: 20,
+
         nav: true,
+
         dots: false,
+
         loop: true,
+
         smartSpeed: 450,
+
         navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:1.5,
+
                 margin: 5,
+
             },
+
             500:{
+
                 items:2,
+
             },
+
             768:{
+
                 items:3,
+
             },
+
             1100:{
+
                 items:3,
+
             },
+
            
+
         }
+
       });
 
 
-    
+
+
 
     
+
+
+
+    
+
         $('.top-company-course').owlCarousel({
+
   
+
           items: 2,
+
         loop: true,
+
         margin: 20,
+
         autoplay: true,
-        autoplay: true,
+        autoplayHoverPause: true,
+
         slideTransition: 'linear',
+
         autoplaySpeed: 5000,
+
         // autoplayTimeout:1e3,
+
         autoplayHoverPause: false,
 
+
+
         navText : false,
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:4,
+
             },
+
             500:{
+
                 items:4,
+
             },
+
             768:{
+
                 items:4,
+
             },
+
             1100:{
+
                 items:5,
+
             },
+
             1400:{
+
                 items:5,
+
             }
+
         }
+
         
+
       });
+
   
+
+
+
+
 
 
 
          $('.homeslid').owlCarousel({
+
         items: 1,
+
         loop: true,
+
         margin: 0,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         slideTransition: 'linear',
+
         autoplaySpeed: 5000,
+
         autoplayHoverPause: false,
+
         autoplayTimeout:2e3,
+
         animateOut: 'fadeOut',
+
         animateIn: 'fadeIn',
+
         // animateOut: 'slideOutUp',
+
         // animateIn: 'slideInUp',
+
         navText : false,
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:1,
+
             },
+
             500:{
+
                 items:1,
+
             },
+
             768:{
+
                 items:1,
+
             },
+
             1100:{
+
                 items:1,
+
             },
+
             1400:{
+
                 items:1,
+
             }
+
         }
+
       });
 
+
+
       $('.student-carousel').owlCarousel({
+
         items: 1,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         margin: 0,
+
         nav: false,
+
         dots: false,
+
         loop: true,
+
         smartSpeed: 650,
+
         navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:1,
+
             },
+
             500:{
+
                 items:1,
+
             },
+
             768:{
+
                 items:1,
+
             },
+
             1100:{
+
                 items:1,
+
             },
+
             1400:{
+
                 items:1,
+
             }
+
         }
+
       });
+
+
+
 
 
       $('.intslid').owlCarousel({
+
         items: 1,
+
         loop: true,
+
         margin: 0,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         slideTransition: 'linear',
+
         autoplaySpeed: 5000,
+
         autoplayHoverPause: false,
+
         autoplayTimeout:4e3,
+
         animateOut: 'fadeOut',
+
         animateIn: 'fadeIn',
+
         // animateOut: 'slideOutUp',
+
         // animateIn: 'slideInUp',
+
         navText : false,
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:1,
+
             },
+
             500:{
+
                 items:1,
+
             },
+
             768:{
+
                 items:1,
+
             },
+
             1100:{
+
                 items:1,
+
             },
+
             1400:{
+
                 items:1,
+
             }
+
         }
+
       });
+
+
 
       $('.project-works').owlCarousel({
+
         items: 4,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         margin: 20,
+
         nav: true,
+
         dots: true,
+
         loop: true,
+
         smartSpeed: 450,
+
         navText : ["<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-left.png' class='fa-flip-horizontal' alt=''>","<img src='<?php echo get_stylesheet_directory_uri() ?>/images/fe-arrow-right.png' alt=''>"],
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:1.5,
+
                 margin: 5,
+
             },
+
             500:{
+
                 items:2,
+
             },
+
             768:{
+
                 items:3,
+
             },
+
             1100:{
+
                 items:3,
+
             },
+
             1400:{
+
                 items:3,
+
             }
+
         }
+
       });
 
+
+
       $('.red-logo').owlCarousel({
+
         items: 6,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         margin: 0,
+
         nav: true,
+
         dots: false,
+
         loop: true,
+
         smartSpeed: 450,
+
         navText : false,
+
         responsiveClass:true,
+
         slideTransition: 'linear',
+
         autoplaySpeed: 5000,
+
         autoplayHoverPause: false,
+
         responsive:{
+
             0:{
+
                 items:4,
+
             },
+
             500:{
+
                 items:4,
+
             },
+
             768:{
+
                 items:5,
+
             },
+
             1100:{
+
                 items:6,
+
             },
+
             1400:{
+
                 items:6,
+
             }
+
         }
+
       });
+
+
+
 
 
       $('.across-slid1').owlCarousel({
+
         items: 4,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         margin: 0,
+
         nav: true,
+
         dots: false,
+
         loop: true,
+
         smartSpeed: 450,
+
         navText : false,
+
         responsiveClass:true,
+
         slideTransition: 'linear',
+
         autoplaySpeed: 5000,
+
         autoplayHoverPause: false,
+
         responsive:{
+
             0:{
+
                 items:4,
+
             },
+
             500:{
+
                 items:4,
+
             },
+
             768:{
+
                 items:8,
+
             },
+
             1100:{
+
                 items:13,
+
             },
+
             1400:{
+
                 items:13,
+
             }
+
         }
+
       });
 
+
+
       $('.across-slid2').owlCarousel({
+
         items: 4,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         margin: 0,
+
         nav: true,
+
         dots: false,
+
         loop: true,
+
         rtl: true,
+
         smartSpeed: 450,
+
         navText : false,
+
         responsiveClass:true,
+
         slideTransition: 'linear',
+
         autoplaySpeed: 5000,
+
         autoplayHoverPause: false,
+
         responsive:{
+
             0:{
+
                 items:4,
+
             },
+
             500:{
+
                 items:4,
+
             },
+
             768:{
+
                 items:8,
+
             },
+
             1100:{
+
                 items:13,
+
             },
+
             1400:{
+
                 items:13,
+
             }
+
         }
+
       });
+
+
+
 
 
       $('.video-review').owlCarousel({
+
         items: 3,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         margin: 20,
+
         nav: false,
+
         dots: false,
+
         loop: true,
-        smartSpeed: 450,
+
+        //smartSpeed: 450,
+
         navText : false,
+
         responsiveClass:true,
+
         responsive:{
+
             0:{
+
                 items:1,
+
                 stagePadding: 50 // shows part of the next item
+
             },
+
             500:{
+
                 items:2,
+
             },
+
             768:{
+
                 items:2,
+
             },
+
             1100:{
+
                 items:3,
+
             },
+
             1400:{
+
                 items:3,
+
             }
+
         }
+
       });
 
+
+
     
-    $('.owl-carousel').owlCarousel({
+
+    $('.owl-carousel:not(.innovation-slider-area1)').owlCarousel({
+
         items: 4, // Adjust the number of items
+
         loop: true,
+
         margin: 10,
+
         nav: true,
+
         autoplay: true,
+        autoplayHoverPause: true,
+
         autoplayTimeout: 3000,
+
         autoplayHoverPause: true
+
     });
+
+
 
     $('.innovation-slider-area').owlCarousel({
-            autoplay: true,
-            margin: 20,
-            nav: false,
-            dots: true,
-            loop: true,
-            items:1,
-            smartSpeed: 450,
-            navText : false,        
-    });
 
-    $("#toggle").click(function() {
-          
-            var elem = $("#toggle").text();
-            if (elem == "Read More") {
-              //Stuff to do when btn is in the read more state
-              $("#toggle").text("Read Less");
-              $("#text").slideDown();
-            } else {
-              //Stuff to do when btn is in the read less state
-              $("#toggle").text("Read More");
-              $("#text").slideUp();
-            }
+            autoplay: true,
+            autoplayHoverPause: true,
+
+            margin: 20,
+
+            nav: false,
+
+            dots: true,
+
+            loop: true,
+
+            items:1,
+
+            smartSpeed: 450,
+
+
+    });
+    
+    $('.innovation-slider-area1').owlCarousel({
+
+            autoplay: true,
+            autoplayHoverPause: true,
+
+            margin: 20,
+
+            nav: false,
+
+            dots: true,
+
+            loop: true,
+
+            items:1,
+
+            smartSpeed: 450,
+
+
     });
 
     
+
+
+    $("#toggle").click(function() {
+
+          
+
+            var elem = $("#toggle").text();
+
+            if (elem == "Read More") {
+
+              //Stuff to do when btn is in the read more state
+
+              $("#toggle").text("Read Less");
+
+              $("#text").slideDown();
+
+            } else {
+
+              //Stuff to do when btn is in the read less state
+
+              $("#toggle").text("Read More");
+
+              $("#text").slideUp();
+
+            }
+
+    });
+
+
+
+    
+
+
 
           $(document).ready( function() {   
 
+
+
 $('.grid').isotope({
+
   itemSelector: '.grid-item',
+
 });
 
+
+
 // filter items on button click
+
 $('.filter-button-group').on( 'click', 'li', function() {
+
   var filterValue = $(this).attr('data-filter');
+
   $('.grid').isotope({ filter: filterValue });
+
   $('.filter-button-group li').removeClass('active');
+
   $(this).addClass('active');
+
 });
+
   $('.navtab a').on('click', function() {
+
       var scrollAnchor = $(this).attr('data-scroll'),
-          scrollPoint = $('div[data-anchor="' + scrollAnchor + '"], section[data-anchor="' + scrollAnchor + '"], footer[data-anchor="' + scrollAnchor + '"]')?.offset()?.top-1;
+
+          scrollPoint = $('div[data-anchor="' + scrollAnchor + '"], section[data-anchor="' + scrollAnchor + '"], footer[data-anchor="' + scrollAnchor + '"]')?.offset()?.top-80;
+
           // scrollPoint = $().offset().top - 28;    
+
       $('body,html').animate({
+
             scrollTop: scrollPoint
+
         }, 500);
+
+
 
         return false;
 
+
+
       })
 
+
+
       $(window).on('scroll', function () {
+
         var windscroll = $(window).scrollTop();
+
         var windowHeight = $(window).height();
+
         console.log('scroll is going on');
+
     
+
         $('.scroller').each(function () {
+
             var $this = $(this);
+
             var scroll = $this.attr('data-anchor');
+
             var elementTop = $this.offset().top;
+
             var elementBottom = elementTop + $this.outerHeight();
+
     
+
             // Check if this element is in viewport
+
             if (elementTop <= windscroll + windowHeight / 2 && elementBottom > windscroll + windowHeight / 2) {
+
                 $('.navtab a').removeClass('active');
+
                 $(`.navtab a[data-scroll="${scroll}"]`).addClass('active');
+
                 return false; // stop loop once the current section is found
+
             }
+
         });
+
        }).scroll(); // Trigger once on load
 
 
+
+
+
 })
+
 });
+
     
+
    
 
+
+
     </script>
+
+
+
+
+
 
 
 
@@ -1485,205 +3328,631 @@ $('.filter-button-group').on( 'click', 'li', function() {
 
 
 
+
+
+
+
     <!-- tabs link scroll-->
+
    
 
+
+
     <!-- header fix -->
+
     <script>
+
       // cache the element
+
       var $navBar = jQuery('.nav');
 
+
+
       // find original navigation bar position
+
       var navPos = $navBar.offset().top;
 
+
+
       // on scroll
+
       jQuery(window).scroll(function() {
 
+
+
           // get scroll position from top of the page
+
           var scrollPos = jQuery(this).scrollTop();
 
+
+
           // check if scroll position is >= the nav position
+
           if (scrollPos >= navPos) {
+
               $navBar.addClass('fixed');
+
           } else {
+
               $navBar.removeClass('fixed');
+
           }
 
+
+
       });
+
     </script>
+
+
 
     <!-- tab change to acordian -->
+
     <script>
+
         jQuery(document).ready(function($) {
+
             tabControl();
 
+
+
             /*
+
             We also apply the switch when a viewport change is detected on the fly
+
             (e.g. when you resize the browser window or flip your device from 
+
             portrait mode to landscape). We set a timer with a small delay to run 
+
             it only once when the resizing ends. It's not perfect, but it's better
+
             than have it running constantly during the action of resizing.
+
             */
+
             var resizeTimer;
+
             $(window).on('resize', function(e) {
+
             clearTimeout(resizeTimer);
+
             resizeTimer = setTimeout(function() {
+
                 tabControl();
+
             }, 250);
+
             });
 
+
+
             /*
+
             The function below is responsible for switching the tabs when clicked.
+
             It switches both the tabs and the accordion buttons even if 
+
             only the one or the other can be visible on a screen. We prefer
+
             that in order to have a consistent selection in case the viewport
+
             changes (e.g. when you esize the browser window or flip your 
+
             device from portrait mode to landscape).
+
             */
+
             function tabControl() {
+
                 var tabs = $('.tabbed-content').find('.tabs');
+
                 if(tabs.is(':visible')) {
+
                     tabs.find('a').on('click', function(event) {
+
                         event.preventDefault();
+
                         var target = $(this).attr('href'),
+
                             tabs = $(this).parents('.tabs'),
+
                             buttons = tabs.find('a'),
+
                             item = tabs.parents('.tabbed-content').find('.item');
+
                         buttons.removeClass('active');
+
                         item.removeClass('active');
+
                         $(this).addClass('active');
+
                         $(target).addClass('active');
+
                     });
+
                 } else {
+
                     $('.item').on('click', function() {
+
                         var container = $(this).parents('.tabbed-content'),
+
                         currId = $(this).attr('id'),
+
                         items = container.find('.item');
+
                         container.find('.tabs a').removeClass('active');
+
                         items.removeClass('active');
+
                         $(this).addClass('active');
+
                         container.find('.tabs a[href$="#'+ currId +'"]').addClass('active');
+
                     });
+
                 } 
+
             }
+
         });
+
     </script>
 
+
+
 <script>
+
 document.addEventListener("DOMContentLoaded", (event) => {
+
   document.querySelectorAll('#custom-showsjdfk').forEach(function(element) {
+
     element.style.setProperty('display', 'block', 'important');
+
   });
+
 });
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
+
   //Desktop
+
   const menu = document.getElementById('collapseExample');
 
+
+
   document.addEventListener('click', function(event) {
-    const isClickInside = menu.contains(event.target);
+
+    const isClickInside = menu?.contains(event.target);
+
     const isButton = event.target.closest('[data-bs-toggle="collapse"]');
 
+
+
     // Check if click is outside the menu and not on the toggle button
-    if (!isClickInside && !isButton && menu.classList.contains('show')) {
+
+    if (!isClickInside && !isButton && menu?.classList?.contains('show')) {
+
       const bsCollapse = bootstrap.Collapse.getInstance(menu);
+
       if (bsCollapse) {
+
         bsCollapse.hide();
+
       }
+
     }
+
   });
+
+
 
   //Mobile
+
   const mobileMenu = document.getElementById('navbarSupportedContentForMobile');
 
+
+
   document.addEventListener('click', function(event) {
-    const isClickInside = mobileMenu.contains(event.target);
+
+    const isClickInside = mobileMenu?.contains(event.target);
+
     const isButton = event.target.closest('[data-bs-toggle="collapse"]');
 
+
+
     // Check if click is outside the menu and not on the toggle button
+
     console.log(`isClickInside: ${isClickInside}, isButton: ${isButton} mobileClass: ${jQuery("#navbarSupportedContentForMobile").attr('class')}`);
-    if (!isClickInside && !isButton && mobileMenu.classList.contains('show')) {
+
+    if (!isClickInside && !isButton && mobileMenu?.classList?.contains('show')) {
+
         const mobCollapse = bootstrap.Collapse.getInstance(mobileMenu);
+
         if (mobCollapse) {
+
             mobCollapse.hide();
+
         }
+
     }
+
   });
+
 });
+
+
 
 // When modal is fully shown
+
 jQuery('.youtubeModal').on('shown.bs.modal', function () {
+
     console.log('Modal is open');
+
     var carousel = jQuery(this).attr('data-owl-carousel');
+
     if(carousel) {
+
         jQuery(carousel).trigger('stop.owl.autoplay');
+
     }
+
 });
+
+
 
 // When modal is fully hidden
+
 jQuery('.youtubeModal').on('hidden.bs.modal', function () {
+
     var ele = jQuery(this);
+
     var iframeLink = ele.find(".youtubeIframe").attr('src');
+
     ele.find(".youtubeIframe").attr('src', '');
+
     setTimeout(() => {
+
         ele.find(".youtubeIframe").attr('src', iframeLink);
+
     }, 100);
+
     var carousel = jQuery(this).attr('data-owl-carousel');
+
     if(carousel) {
+
         jQuery(carousel).trigger('play.owl.autoplay', [3000]);
+
     }
+
 });
+
+
 
 const menuItems = document.querySelectorAll('.menu li');
+
 const contents = document.querySelectorAll('.contentarea');
 
+
+
 menuItems.forEach(item => {
+
     item.addEventListener('click', () => {
+
         // Remove active from all menu items
-        menuItems.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
+
+        menuItems.forEach(i => i?.classList.remove('active'));
+
+        item?.classList.add('active');
+
+
 
         // Hide all content
-        contents.forEach(c => c.classList.remove('active'));
+
+        contents.forEach(c => c?.classList.remove('active'));
+
+
 
         // Show target content
+
         const targetId = item.getAttribute('data-target');
-        document.getElementById(targetId).classList.add('active');
+
+        document.getElementById(targetId)?.classList.add('active');
+
     });
+
 });
 
+const menuContainer = document.getElementById('scrollingMenu');
+if(menuContainer)  {
+    const wrapper = menuContainer.querySelector('ul'); //
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    
+    let scrollAmount = 0;
+    
+    function getScrollStep() {
+    const firstItem = wrapper.querySelector('.menu-item');
+    return firstItem ? firstItem.offsetWidth + 10 : 100; // Adjust 10 if your gap is different
+    }
+    
+    nextBtn.addEventListener('click', () => {
+    scrollAmount += getScrollStep();
+    wrapper.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+    });
+    
+    prevBtn.addEventListener('click', () => {
+    scrollAmount = Math.max(0, scrollAmount - getScrollStep());
+    wrapper.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+    });
+}
+
+
 jQuery(document).ready(function ($) {
+
   const $toggleLink = $(".toggle-more");
+
   
+
+
 
   //if ($toggleLink.length === 0) return;
 
+
+
   $toggleLink.on("click", function () {
+
     const $moreText = $(this).parents(".readmoretext").find(".more-text");
+
     const $dots = $(this).parents(".readmoretext").find(".dots");
 
+
+
     if ($moreText.hasClass("d-none")) {
+
       $moreText.removeClass("d-none");
+
       $dots.css("display", "none");
+
       $(this).text("Read less");
+
     } else {
+
       $moreText.addClass("d-none");
+
       $dots.css("display", "inline");
+
       $(this).text("Read more");
+
     }
+
   });
+
+});
+
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  function handleSearch(inputId, isMobile = false, action = 'search_courses') {
+    const input = document.getElementById(inputId);
+    const loader = isMobile
+      ? document.getElementById('search-loader-mobile')
+      : document.getElementById('search-loader');
+
+    input.addEventListener('input', function () {
+      const query = this.value.trim();
+
+      //if (query.length < 2) return;
+
+      loader.style.display = 'block'; // Show "Loading..." text
+
+      fetch('<?php echo admin_url("admin-ajax.php"); ?>?action=' + action + '&term=' + encodeURIComponent(query))
+        .then(response => response.text())
+        .then(html => {
+          // Activate "All" tab
+          document.querySelector('#all-tab')?.classList.add('active');
+          document.querySelectorAll('.left-tab .nav-link').forEach(el => {
+            if (el.id !== 'all-tab') el?.classList.remove('active');
+          });
+
+          const tabPanes = document.querySelectorAll('.tab-pane');
+          tabPanes.forEach(p => p?.classList.remove('active', 'show'));
+          document.querySelector('#all-tab-pane')?.classList.add('active', 'show');
+
+          const target = isMobile
+            ? document.getElementById('course-container-mobile')
+            : document.getElementById('row-container');
+
+          target.innerHTML = html;
+
+          if (!isMobile) {
+            document.getElementById('program-count').textContent = '';
+            document.getElementById('course-view').style.display = 'none';
+          } else {
+            document.getElementById('pagination-container').innerHTML = '';
+          }
+        })
+        .finally(() => {
+          loader.style.display = 'none'; // Hide after loading
+        });
+    });
+  }
+  
+  function handleSearchMobile(inputId, isMobile = false, action = 'search_courses') {
+    const input = document.getElementById(inputId);
+    const loader = isMobile
+      ? document.getElementById('search-loader-mobile')
+      : document.getElementById('search-loader');
+
+    input.addEventListener('input', function () {
+      const query = this.value.trim();
+
+      if (query.length < 2) return;
+
+      loadCoursesForMobile(query);
+    });
+  }
+  
+  function handleRedhatSearch(inputId, isMobile = false, action = 'search_courses') {
+    const input = document.getElementById(inputId);
+    const loader = isMobile
+      ? document.getElementById('search-loader-mobile')
+      : document.getElementById('search-loader');
+
+    input.addEventListener('input', function () {
+      const query = this.value.trim();
+
+      if (query.length < 2) return;
+
+      loader.style.display = 'block'; // Show "Loading..." text
+
+      fetch('<?php echo admin_url("admin-ajax.php"); ?>?action=' + action + '&term=' + encodeURIComponent(query))
+        .then(response => response.text())
+        .then(html => {
+          
+          const target = isMobile
+            ? document.getElementById('course-container-mobile')
+            : document.getElementById('row-container');
+
+          target.innerHTML = html;
+
+          if (!isMobile) {
+            document.getElementById('program-count').textContent = '';
+            document.getElementById('course-view').style.display = 'none';
+          } else {
+            document.getElementById('pagination-container').innerHTML = '';
+          }
+        })
+        .finally(() => {
+          loader.style.display = 'none'; // Hide after loading
+        });
+    });
+  }
+  
+  function loadCoursesForMobile(src, category = '', page = 1) {
+    const courseContainer = document.getElementById('course-container-mobile');
+    const paginationContainer = document.getElementById('pagination-container');
+    
+    const data = new FormData();
+    data.append('action', 'load_courses');
+    data.append('category', category);
+    data.append('src', src);
+    data.append('page', page);
+
+    fetch('<?php echo admin_url("admin-ajax.php"); ?>', {
+      method: 'POST',
+      body: data,
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Inject the courses HTML into the container
+        if(courseContainer) {
+          courseContainer.innerHTML = data.courses;
+        }
+        
+
+        // Inject the pagination HTML into the container
+        if(paginationContainer) {
+          paginationContainer.innerHTML = data.pagination;
+        }
+        
+      })
+      .catch(error => console.error('Error:', error));
+  }
+ 
+  if(document.getElementById('course-search')) {
+    handleSearch('course-search');      
+  }
+  
+  if(document.getElementById('redhat-course-search')) {
+    //handleRedhatSearch('redhat-course-search', false, 'search_redhat_courses');      
+  }
+  
+  jQuery('#course-search-mobile').keyup(function() {
+     loadCoursesForMobile(jQuery(this).val());
+  });
+  
+  
+  
 });
 </script>
 
 
+<script>
+jQuery(document).ready(function($) {
+
+    // Numbers only (phone)
+    $(document).on('input', '.phoneNumInputField input', function() {
+        let val = this.value;
+
+        // Remove all invalid characters
+        val = val.replace(/[^0-9+\-\s]/g, '');
+    
+        // Ensure '+' only at start
+        val = val.replace(/\+/g, ''); // remove all '+'
+        if (this.value.startsWith('+')) {
+            val = '+' + val;
+        }
+    
+        // Update the input value
+        this.value = val;
+    });
+    
+    $(document).on('input', '.forPhone', function() {
+        let val = this.value;
+
+        // Remove all invalid characters
+        val = val.replace(/[^0-9+\-\s]/g, '');
+    
+        // Ensure '+' only at start
+        val = val.replace(/\+/g, ''); // remove all '+'
+        if (this.value.startsWith('+')) {
+            val = '+' + val;
+        }
+    
+        // Update the input value
+        this.value = val;
+    });
+
+    // Alphabets + spaces only (name)
+    $(document).on('input', '.nameInputField input', function() {
+        this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+    });
+    
+    $(document).on('input', '.forName', function() {
+        this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+    });
+
+    // Basic email pattern check (allows common email chars)
+    $(document).on('input', '.emailInputField input', function() {
+        this.value = this.value.replace(/[^a-zA-Z0-9@._-]/g, '');
+    });
+    
+    $(document).on('input', '.forEmail', function() {
+        this.value = this.value.replace(/[^a-zA-Z0-9@._-]/g, '');
+    });
+
+});
+</script>
 
 
  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
    
+
     <!-- Option 2: Separate Popper and Bootstrap JS -->
+
     <!--
+
     <script src="<?php echo get_stylesheet_directory_uri() ?>/https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+
     <script src="<?php echo get_stylesheet_directory_uri() ?>/https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
     -->
+
   </body>
+
 </html>
+

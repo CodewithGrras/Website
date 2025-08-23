@@ -6,7 +6,7 @@
 
         <div class="col-lg-12 text-center">
 
-          <h2 class="mb-0"><?php echo get_field('course_project_heading_and_tags_heading')['tags_heading']; ?></h2>
+          <h2 class="mb-3"><?php echo get_field('course_project_heading_and_tags_heading')['tags_heading']; ?></h2>
 
         </div>
 

@@ -6,7 +6,7 @@
 
         <div class="row">
 
-          <div class="col-12 col-md-8 d-none d-sm-block">
+          <div class="col-12 col-md-8">
 
              <?php if(is_front_page()): ?>
 
@@ -31,7 +31,7 @@
           </div>
           <div class="col-12 col-md-4">
               <form class="Exam-form d-md-flex d-none">
-                <input type="text" class="form-control" value="Find courses &amp; exams">
+                <input type="text" class="form-control" id="course-search" placeholder="Find courses &amp; exams">
                 <button type="button" class="btn btn-dark btn-sm py-1 px-3 rounded-1 fw-normal ms-2">Search</button>
               </form>
           </div>
@@ -360,8 +360,8 @@
         <!-- course mobile -->
 
     <div class="course-mobile d-block d-sm-none">
-
-  <h6>Domains</h6>
+<div class="align-items-center d-flex justify-content-between">
+  <h6 class="mb-0 fw-semibold">Domains</h6>
 
   <div class="btn-group">
 
@@ -400,9 +400,10 @@
     </ul>
 
   </div>
+  </div>
 
-      <form class="Exam-form d-md-none d-flex mt-3">
-          <input type="text" class="form-control fw-normal" value="Find courses &amp; exams">
+      <form class="Exam-form d-md-flex d-none mt-3">
+          <input type="text" class="form-control fw-normal" id="course-search-mobile" placeholder="Find courses &amp; exams">
           <button type="button" class="btn btn-dark btn-sm py-1 px-3 rounded-1 fw-normal ms-2">Search</button>
         </form>
 
@@ -527,3 +528,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 </script>
+

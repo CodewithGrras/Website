@@ -1,0 +1,249 @@
+.qsm-advance-timer-input td {
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+
+.qsm-advance-timer-input td fieldset input[type="number"] {
+    min-width: 60px;
+    width: 60px;
+}
+
+.form-table input[type="text"][name="qsm_custome_timer_warning"] {
+    font-size: 12px;
+    margin-left: 25px;
+}
+
+.qsm_auto_paging_span {
+    font-style: italic;
+    color: #000000;
+    line-height: 1.8;
+}
+
+.advance-timer-settings.form-table tr td {
+    line-height: 2.3;
+}
+
+.advance-timer-settings td>input[type=text] {
+    border-radius: 4px;
+    box-shadow: 0 0 0 transparent;
+    border-radius: 4px;
+    border: 1px solid #8c8f94;
+    background-color: #fff;
+    color: #2c3338;
+}
+
+.advance-timer-settings td>input[type=text]:focus {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+    outline: 2px solid transparent;
+}
+
+.qsm_auto_paging_span.custom_warning {
+    margin-left: 25px;
+}
+
+.orher_timer_options {
+    display: flex;
+    max-width: 480px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.orher_timer_options >div.active{
+    border: 3px solid #0073AF;
+}
+
+.other_timers {
+    height: 90px;
+    width: 140px;
+    text-align: center;
+    padding: 15px 0;
+    border: 3px solid #DDDDDD;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 7px 14px 7px 0px;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+
+.other_timers:hover {
+    cursor: pointer;
+    float: left;
+    opacity: 0.7.5;
+    box-shadow: 0 1px 1px -1px rgba(0,0,0,0.1);
+    background-color: #ffffff;
+    border: 3px solid #dcdcde;
+}
+
+.advance-timer-settings-btn {
+    justify-content: end;
+}
+
+.advance-timer-settings-btn .button-secondary {
+    margin-right: 10px;
+}
+
+.advance-timer-settings #other_timer_design input[type="radio"] {
+    display: none;
+}
+
+.advance-timer-settings .advance-color-span {
+    color: #9C9C9C;
+    display: inline-block;
+    width: 130px;
+    margin-bottom: 10px;
+}
+
+#other_timer_design h4 {
+    margin-top: 0;
+}
+
+.advance-timer-settings .qsm-opt-tr .qsm-tooltips-icon {
+    margin: -2px 0px 0px 0px;
+}
+
+.advance-timer-custom-notice {
+    max-width: 500px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+    line-height: 1.5;
+    font-size: 12px;
+}
+
+.qsm-custom-tooltiop {
+    padding-top: 6px;
+}
+
+.qsm-license-container,
+.qsm-license-form-parent {
+    background-color: #FFFFFF;
+    width: 100%;
+    border: 1px solid #B8B8B8;
+    margin-top: 10px;
+    box-sizing: border-box;
+    min-height: 160px;
+    max-width: 650px;
+}
+.qsm-license-container .qsm-license-content {
+    background-color: #FFFFFF;
+    padding: 20px 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.qsm-license-form-parent .qsm-license-header,
+.qsm-license-container .qsm-license-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 15px;
+    border-bottom: 1px solid #B8B8B8;
+    box-sizing: border-box;
+}
+.qsm-license-form-parent .qsm-license-header .qsm-heading,
+.qsm-license-container .qsm-license-header .qsm-heading {
+    font-weight: 600;
+    margin: 0;
+    font-size: 16px;
+}
+.qsm-license-container .qsm-license-header .qsm-toggleButton .dashicons-edit {
+    color: #3C434A;
+}
+.qsm-license-container .qsm-license-header a:focus {
+    outline: none;
+    box-shadow: none;
+}
+.qsm-license-container a {
+    text-decoration: none;
+    color: #0085BA;
+}
+.qsm-license-info {
+    display: flex;
+    align-items: center;
+    padding-left: 7px;
+}
+.qsm-license-info .qsm-valid-msg {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.qsm-license-info .qsm-valid-msg .qsm-msg{
+    line-height: 1.4;
+    margin-right: 10px;
+    font-size: 15px;
+}
+.qsm-license-info .qsm-valid-msg .qsm-warning {
+    height: 16px;
+    width: 16px;
+    margin: 1px 5px 0 0;
+}
+.qsm-license-info .qsm-valid-msg .dashicons-yes-alt {
+    margin-right: 10px;
+    background-color: #00a32a;
+    color: #FFFFFF;
+    border: 0 solid #00a32a;
+    border-radius: 50%;
+}
+.qsm-license-info .qsm-toggleButton {
+    margin: 0 0 0 10px;
+    font-size: 15px;
+    line-height: 1.4;
+}
+.qsm_advanced_t_validate_parent,
+.rq_validata-license,
+#qsm-license_entry {
+    padding: 10px;
+}
+#qsm-license_entry .qsm-validate-msg {
+    margin: 10px 0 0 0;
+    line-height: 1.4;
+}
+#qsm-license_message .qsm_advanced_t_validate_message .dashicons-warning,
+#qsm-license_entry .qsm-validate-msg .dashicons-warning{
+    background: #A83434;
+    border: 0 solid;
+    border-radius: 50%;
+    color: white;
+    margin: 0 5px 0 0;
+}
+.qsm-addon-title {
+    border-right: 1px solid #919191;
+    padding: 0 10px 0 0;
+    max-width: 230px;
+}
+
+td.qsm-timers-settings-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.qsm-timers-settings-row #timer_limit_hour,
+.qsm-timers-settings-row #timer_limit,
+.qsm-timers-settings-row #timer_limit_seconds {
+    flex: 0 0 80px;
+    margin-right: 10px;
+}
+
+.qsm-timers-settings-row #enable_result_after_timer_end,
+.qsm-timers-settings-row #timers_labels,
+.qsm-timers-settings-row #skip_validation_time_expire {
+    flex: 1 1 100%;
+    margin-top: 10px;
+}
+
+.qsm-timers-settings-row #timers_labels {
+    margin: 0;
+}
+
+body .qsm_tab_content .qsm-small-input-field .qsm-timers-settings-row input[type="number"] {
+    width: 80px;
+}
+span.qsm-time-overdue {
+    padding: 3px 7px;
+    background: #ff5e5e;
+    color: #ffffff;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 300;
+    left: 10px;
+    position: relative;
+    cursor: auto;
+}

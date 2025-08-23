@@ -3,12 +3,17 @@
 get_header();
 $banner = get_field('banner');
 ?>
+<style>
+    input#gform_submit_button_18 {
+    background: #ee0000;
+}
+</style>
     <!-- banner -->
     <div class="redbanner-detail">
       <div class="container">
         <div class="row">
           <div class="col-lg-8 relative">
-            <div class="share"><span>Red Hat Certification</span> <a href="#"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/red-share.svg" alt=""></a></div>
+            <!--<div class="share"><span><?php echo $banner['red_hat_certifcation_tag_text']; ?></span> <a href="#"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/red-share.svg" alt=""></a></div>-->
             <h1><?php echo $banner['title']; ?></h1>
             <ul>
                 <?php foreach($banner['points'] as $item): ?>
@@ -18,15 +23,14 @@ $banner = get_field('banner');
             <div class="subtext"><?php echo $banner['sub_text']; ?></div>
             <p><?php echo $banner['short_description']; ?></p>
             <div class="btndiv">
-              <a href="#" class="btn btn-outline-dark">Download Brochure</a>
-              <a href="#" class="btn btn-red">Red hat Verify</a>
+              <a href="<?php echo $banner['download_brochure_url']; ?>" target="_blank" download="true" class="btn btn-outline-dark">Download Brochure</a>
+              <a href="<?php echo $banner['verify_url']; ?>" target="_blank" class="btn btn-red">Red hat Verify</a>
               <img src="<?php echo $banner['red_hat_image'] ?>" class="img-fluid hatimg" alt="">
             </div>
           </div>
           <div class="col-lg-4">
             <div class="whbox">
-              <h4>Need help finding the right training?</h4>
-              <form>
+              <?php /* ?><form>
                 <div class="row">
                   <div class="col">
                     <div class="mb-3">
@@ -61,7 +65,9 @@ $banner = get_field('banner');
                   <textarea name="message" cols="10" rows="5" class="form-control" placeholder="Your Message"></textarea>
                 </div>
                 <a href="#" class="btn btn-outline-primary d-block">Enquire Now</a>
-              </form>
+              </form><?php */ ?>
+              <?php echo do_shortcode('[gravityform id="18" title="true"]'); ?>
+              
             </div>
           </div>
         </div>
@@ -72,22 +78,14 @@ $banner = get_field('banner');
     <div class="turnover grabg">
       <div class="container">
         <div class="row">
+           <?php if(have_rows('after_banner_rows', 'option')):
+            while(have_rows('after_banner_rows', 'option')): the_row();
+           ?>
           <div class="col-md-3 col-6 g-3">
-            <div class="icon"><img src="https://webnew.grras.com/wp-content/themes/grras-child/images/t1-red.png" class="img-fluid" alt=""></div>
-            <p><big><span id="count1">3</span>K+</big>Successfully Trained</p>
+            <div class="icon"><img src="<?php echo get_sub_field('icon'); ?>" class="img-fluid" alt=""></div>
+            <p><big><?php echo get_sub_field('count_text'); ?></big><?php echo get_sub_field('title'); ?></p>
           </div>
-          <div class="col-md-3 col-6 g-3">
-            <div class="icon"><img src="https://webnew.grras.com/wp-content/themes/grras-child/images/t2-red.png" class="img-fluid" alt=""></div>
-            <p><big><span id="count2">15</span>K+</big>Classes Completed</p>
-          </div>
-          <div class="col-md-3 col-6 g-3">
-            <div class="icon"><img src="https://webnew.grras.com/wp-content/themes/grras-child/images/t3-red.png" class="img-fluid" alt=""></div>
-            <p><big><span id="count3">97</span>K+</big>Satisfaction Rate</p>
-          </div>
-          <div class="col-md-3 col-6 g-3">
-            <div class="icon"><img src="https://webnew.grras.com/wp-content/themes/grras-child/images/t1-red.png" class="img-fluid" alt=""></div>
-            <p><big><span id="count4">102</span>K+</big>Students Community</p>
-          </div>
+          <?php endwhile; endif; ?>
         </div>
       </div>
     </div>
@@ -95,24 +93,20 @@ $banner = get_field('banner');
     <!-- Available Delivery -->
     <div class="container wow fadeInLeft">
       <div class="available-del">
-        <h2>Available<br> Delivery<br> Methods</h2>
+        <h2><?php echo get_field('available_delivery_methods_title', 'option'); ?></h2>
         <ul>
+            <?php if(have_rows('available_delivery_methods_rows', 'option')):
+            while(have_rows('available_delivery_methods_rows', 'option')): the_row();
+           ?>
+          <!--<li>
+            <div class="icon"><img src="<?php echo get_sub_field('icon'); ?>" class="img-fluid" alt=""></div>
+            <h5><?php echo get_sub_field('title'); ?></h5>
+          </li>-->
           <li>
-            <div class="icon"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/m1.png" class="img-fluid" alt=""></div>
-            <h5>Classroom<br>Training</h5>
+            <div class="icon"><img src="<?php echo get_sub_field('icon'); ?>" class="img-fluid" alt=""></div>
+            <h5><?php echo get_sub_field('title'); ?></h5>
           </li>
-          <li>
-            <div class="icon"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/m2.png" class="img-fluid" alt=""></div>
-            <h5>Online Instructor-Led<br>Training</h5>
-          </li>
-          <li>
-            <div class="icon"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/m3.png" class="img-fluid" alt=""></div>
-            <h5>Online Self-Paced<br>Training</h5>
-          </li>
-          <li>
-            <div class="icon"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/m4.png" class="img-fluid" alt=""></div>
-            <h5>Onsite<br>Training</h5>
-          </li>          
+          <?php endwhile; endif; ?>
         </ul>
       </div>
     </div>
@@ -133,7 +127,7 @@ $banner = get_field('banner');
             </ul>
           </nav>
         </div>
-        <div class="overbg redhatbg">
+        <div class="overbg redhatbg section-padding">
           <div class="container">
             <section class="scroller" id="overview" data-anchor="overview">
               <div class="item-content">
@@ -142,14 +136,20 @@ $banner = get_field('banner');
                     <h2><?php $over_view = get_field('over_view');
               echo $over_view['title'];
               ?></h2>
-                    <p>15+ Years of Transforming Careers xxxx Students aced their interviews and landed dream roles at top companies XXX LPA Highest CTC after completing our course.By 2026, the Indian Data and Business Analytics industry is expected to grow to US$118.7 billion. This big increase shows how important data analytics will be for different parts of India’s economy.This also means that if you gain skills and comprehensive knowledge ofAnalytics today, you can be part of this growing job market. You canfast-track your career and be the most in-demand data or business analyst that companies are looking for!<br><a href="#">Explore more</a></p>
-                    <div class="my-5">
+                    <?php /* ?><p>15+ Years of Transforming Careers xxxx Students aced their interviews and landed dream roles at top companies XXX LPA Highest CTC after completing our course.By 2026, the Indian Data and Business Analytics industry is expected to grow to US$118.7 billion. This big increase shows how important data analytics will be for different parts of India’s economy.This also means that if you gain skills and comprehensive knowledge ofAnalytics today, you can be part of this growing job market. You canfast-track your career and be the most in-demand data or business analyst that companies are looking for!<br><a href="#">Explore more</a></p>
+                    <div class="mt-5">
                       <a href="#" class="btn btn-red">Enquire Now</a>
                     </div>
+                    <?php */ ?>
+                    <div class="readmoretext looklikep"><?php echo limitTextHtml($over_view['description'], 650); ?></div>
                   </div>
                   <div class="col-lg-5">
                     <div class="videobox">
-                      <iframe width="100%" height="315" src="https://www.youtube.com/embed/zR8aEcEVInM?si=xj5_ZoscnuaxvgyX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <?php if(!empty($over_view["youtube_url"])) { ?>
+                        <iframe width="100%" height="315" src="<?php echo $over_view["youtube_url"] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <?php } elseif(!empty($over_view["background_image_placeholder"])) { ?>
+                        <img src="<?php echo $over_view["background_image_placeholder"]; ?>" class="img-responsive w-100" />
+                    <?php } ?>
                     </div>
                   </div>
                 </div>                
@@ -174,41 +174,148 @@ $banner = get_field('banner');
                 <li class="nav-item" role="presentation">
                   <a class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview-tab-pane" role="tab" aria-controls="overview-tab-pane" aria-selected="true">Overview</a>
                 </li>
+                <?php if (have_rows('course_curriculum_curriculum_sections')): ?>
                 <li class="nav-item" role="presentation">
                   <a class="nav-link" id="curriculum-tab" data-bs-toggle="tab" data-bs-target="#curriculum-tab-pane" role="tab" aria-controls="curriculum-tab-pane" aria-selected="false">Curriculum</a>
                 </li>
+                <?php endif; ?>
               </ul>
               <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="overview-tab-pane" role="tabpanel" aria-labelledby="overview-tab" tabindex="0">
                   <h3>Course Description</h3>
-                  <p><strong>What is RHCSA -Red Hat Certified System Administrator</strong></p>
-                  <p><strong>The Red Hat Certified System Administrator (RHCSA)</strong> is a foundational certification exam for those looking to start a career in Linux system administration. <strong>RHCSA certification</strong> is offered by Red Hat that validates essential skills in Red Hat Enterprise Linux (RHEL 9 ) systems administration.To prepare for this certification, Red Hat offers two official training courses: <strong>RH124</strong> and <strong>RH134</strong>.</p>
-                  <p><strong>RH124 (Red Hat System Administration I):</strong></p>
-                  <ul>
-                    <li>This is the foundational course in the RHCSA track.</li>
-                    <li>It covers the basics of Linux system administration, including command-line basics, managing files and directories, configuring simple network settings, and basic user administration.</li>
-                    <li>The course is aimed at absolute beginners to Linux or those with minimal experience in Linux administration.</li>
-                  </ul>
-                  <p><strong>RH134 (Red Hat System Administration II):</strong></p>
-                  <ul>
-                    <li>RH134 is generally taken after completing RH124, as it builds directly on the foundational knowledge from that course.</li>
-                    <li>This course builds on the knowledge acquired in RH124 and delves into more advanced topics necessary for RHCSA.</li>
-                    <li>It covers more complex tasks like storage management (including LVM and filesystem configurations), advanced networking configurations, basic firewall management, and system maintenance tasks.</li>
-                  </ul>
-                  <p>The performance-based Red Hat Certified System Administrator (RHCSA) exam (EX200) tests your knowledge in areas of system administration common across a wide range of environments and deployment scenarios. The skills tested in this exam are the foundation for system administration across all Red Hat® products.</p>
-                  <p><strong>Who Should Enroll in the RHCSA EX200 Training?</strong></p>
-                  <p>The Red Hat Certified System Administrator (RHCSA) Exam EX200 training is an associate-level course tailored for junior system administrators. This course is designed for IT professionals with around a year of experience in any Linux distribution. This course is also beneficial for junior system admins who want to validate and expand their Linux skills.</p>
-                  <p>By passing this exam, you become a Red Hat Certified System Administrator. If you choose to continue your learning journey beyond RHCSA, the credential can also serve as a foundational step on your path toward our highest level of certification—Red Hat Certified Architect.</p>
-                  <h3>What you’ll learn</h3>
-                  <ul>
-                    <li>Use essential tools for Linux system administration.</li>
-                    <li>Manage basic networking, security, containers, and user groups.</li>
-                    <li>Deploy, configure, and maintain systems effectively.</li>
-                    <li>Configure and manage local storage options.</li>
-                    <li>Set up and maintain various file systems.</li>
-                  </ul>
+                  <?php echo get_field('course_curriculum_overview_description'); ?>
                 </div>
-                <div class="tab-pane fade" id="curriculum-tab-pane" role="tabpanel" aria-labelledby="curriculum-tab" tabindex="0">...</div>
+                <div class="tab-pane fade" id="curriculum-tab-pane" role="tabpanel" aria-labelledby="curriculum-tab" tabindex="0">
+                    <div class="accordion" id="accordionExample2">
+                    <?php
+                    $count = 0;
+                    if (have_rows('course_curriculum_curriculum_sections')):
+                        while (have_rows('course_curriculum_curriculum_sections')): the_row();
+                            $count++;
+                            $title = get_sub_field('title');
+                            $slug = create_slug($title) . '-' . $count;
+                            $is_multiple = get_sub_field('is_multiple') == 'True';
+                            $multiple = get_sub_field('multiple');
+                            $has_video = false;
+
+                            // Check if any item has a YouTube video link
+                            if ($is_multiple) {
+                                foreach ($multiple as $item) {
+                                    if (!empty($item['youtube_video_link'])) {
+                                        $has_video = true;
+                                        break;
+                                    }
+                                }
+                            }
+                    ?>
+                    <div class="accordion-item<?php echo ($count > 14) ? ' hidden-item' : ''; ?>">
+                        <h4 class="accordion-header d-flex justify-content-between align-items-center" id="heading-<?php echo $slug; ?>">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<?php echo $slug; ?>" aria-expanded="false" aria-controls="collapse-<?php echo $slug; ?>">
+                                <?php echo $title; ?>
+                            </button>
+                            <?php if ($has_video): ?>
+                                <span class="small text-theme-orange me-3">Preview</span>
+                            <?php endif; ?>
+                        </h4>
+                        <div id="collapse-<?php echo $slug; ?>" class="accordion-collapse collapse" aria-labelledby="heading-<?php echo $slug; ?>" data-bs-parent="#accordionExample2">
+                            <div class="accordion-body">
+                                <?php echo wpautop(get_sub_field('content')); ?>
+                                <?php if ($is_multiple): ?>
+                                    <div class="accordion" id="accordionExample4">
+                                        <?php foreach ($multiple as $i => $item):
+                                            $item_slug = $slug . '-' . $i;
+                                            $youtube_link = $item['youtube_video_link'];
+                                            preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/', $youtube_link, $matches);
+                                            $youtube_id = $matches[1] ?? '';
+                                        ?>
+                                        <div class="accordion-item">
+                                            <h4 class="accordion-header d-flex justify-content-between align-items-center" id="heading-<?php echo $item_slug; ?>">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<?php echo $item_slug; ?>" aria-expanded="false" aria-controls="collapse-<?php echo $item_slug; ?>">
+                                                    <?php echo $item["title"]; ?>
+                                                </button>
+                                                <?php if (!empty($youtube_id)): ?>
+                                                <div class="d-flex align-items-center">
+                                                    <button class="btn btn-link p-0 me-2 play-video-btn" data-video-id="<?php echo $youtube_id; ?>">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#ef721f" viewBox="0 0 16 16">
+                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.271 5.055a.5.5 0 0 0-.771.423v5.044a.5.5 0 0 0 .771.423l4.276-2.522a.5.5 0 0 0 0-.846L6.271 5.055z"/>
+                                                        </svg>
+                                                    </button>
+                                                    <span class="text-theme-orange fw-medium small f-14" id="duration-<?php echo $youtube_id; ?>">Loading...</span>
+                                                </div>
+                                                <?php endif; ?>
+                                            </h4>
+                                            <div id="collapse-<?php echo $item_slug; ?>" class="accordion-collapse collapse" aria-labelledby="heading-<?php echo $item_slug; ?>" data-bs-parent="#accordionExample4">
+                                                <div class="accordion-body">
+                                                    <?php echo $item['content']; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endwhile; endif; ?>
+                </div>
+                    <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const API_KEY = 'AIzaSyDp6GjV0wmZ2IXdTADrQ2m3ix7eIZ8PrY8';
+                    const playButtons = document.querySelectorAll('.play-video-btn');
+
+                    playButtons.forEach(btn => {
+                        const videoId = btn.getAttribute('data-video-id');
+                        if (videoId) {
+                            fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoId}&key=${API_KEY}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    const isoDuration = data.items[0].contentDetails.duration;
+                                    const duration = iso8601DurationToTime(isoDuration);
+                                    document.getElementById(`duration-${videoId}`).textContent = duration;
+                                })
+                                .catch(() => {
+                                    document.getElementById(`duration-${videoId}`).textContent = 'N/A';
+                                });
+                        }
+                    });
+
+                    function iso8601DurationToTime(duration) {
+                        const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+                        const hours = (parseInt(match[1]) || 0);
+                        const minutes = (parseInt(match[2]) || 0);
+                        const seconds = (parseInt(match[3]) || 0);
+                        return [hours, minutes, seconds]
+                            .map(v => v < 10 ? "0" + v : v)
+                            .filter((v, i) => i > 0 || v !== "00")
+                            .join(':');
+                    }
+
+                    // Play video on click
+                    playButtons.forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const videoId = this.getAttribute('data-video-id');
+                            const modalBody = document.getElementById('videoModalBody');
+                            modalBody.innerHTML = `<iframe class="youtubeIframe" width="100%" height="400" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allowfullscreen></iframe>`;
+                            const modal = new bootstrap.Modal(document.getElementById('videoModal'));
+                            modal.show();
+                        });
+                    });
+                });
+                </script>
+
+                <div class="youtubeModal modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="videoModalLabel">Video Preview</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body" id="videoModalBody">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
               </div>
             </div>
           </div>
@@ -234,76 +341,62 @@ $banner = get_field('banner');
 
 
     <!-- Our Certification Holders -->
+    <?php 
+    $cert_data = get_field('our_certification_holders');
+    ?>
+
     <div class="redcartiholder scroller" id="certification" data-anchor="certification">
-      <div class="container">
-        <h2>Our Certification Holders </h2>
-        <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard .</p>
-          <div class="owl-carousel rec-certi">
-            <div class="item"><img src="https://webnew.grras.com/wp-content/uploads/2024/04/redhat-certificate.webp" class="img-fluid bigimg" alt=""> </div>
-            <div class="item"><img src="https://webnew.grras.com/wp-content/uploads/2024/04/redhat-certificate.webp" class="img-fluid bigimg" alt=""> </div>
-            <div class="item"><img src="https://webnew.grras.com/wp-content/uploads/2024/04/redhat-certificate.webp" class="img-fluid bigimg" alt=""> </div>
-            <div class="item"><img src="https://webnew.grras.com/wp-content/uploads/2024/04/redhat-certificate.webp" class="img-fluid bigimg" alt=""> </div>
-            <div class="item"><img src="https://webnew.grras.com/wp-content/uploads/2024/04/redhat-certificate.webp" class="img-fluid bigimg" alt=""> </div>
-            <div class="item"><img src="https://webnew.grras.com/wp-content/uploads/2024/04/redhat-certificate.webp" class="img-fluid bigimg" alt=""> </div>
-            <div class="item"><img src="https://webnew.grras.com/wp-content/uploads/2024/04/redhat-certificate.webp" class="img-fluid bigimg" alt=""> </div>
-          </div>
-      </div>
+        <div class="container">
+
+            <?php if (!empty($cert_data['title'])): ?>
+              <h2><?php echo esc_html($cert_data['title']); ?></h2>
+            <?php endif; ?>
+        
+            <?php if (!empty($cert_data['short_description'])): ?>
+              <p><?php echo esc_html($cert_data['short_description']); ?></p>
+            <?php endif; ?>
+
+            <?php if (!empty($cert_data) && !empty($cert_data['images'])): ?>
+              <div class="owl-carousel rec-certi">
+                <?php foreach ($cert_data['images'] as $image): ?>
+                  <div class="item">
+                    <img 
+                      src="<?php echo esc_url($image); ?>" 
+                      class="img-fluid bigimg"
+                    />
+                  </div>
+                <?php endforeach; ?>
+              </div>
+            <?php endif; ?>
+
+  </div>
     </div>
+
 
     <!-- Why enrol for GRRAS -->
     <div class="yourgoal whyenroll ">
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <h2>Why Enrol for GRRAS Red Hat Course?</h2>
+            <?php 
+            $whyEnrolSection = get_field('why_enrol_for_grras_red_hat_course');
+            ?>
+            <h2><?php echo $whyEnrolSection['title']; ?></h2>
           </div>
-          <div class="col-lg-3 col-sm-6 col-6 g-3">
-            <div class="goalbox">
-              <img src="<?php echo get_stylesheet_directory_uri() ?>/images/course1.jpg" class="img-fluid" alt="">
-              <h4>Industry Co-Created<br> Curriculum</h4>
-              <ul>
-                <li>Get set for success with our full-</li>
-                <li>stack MERN web development</li>
-                <li>course, equipping you with critical</li>
-                <li>problem-solving skills.</li>
-              </ul>
-            </div>
+          
+          <?php if(have_rows('why_enrol_for_grras_red_hat_course_points')): ?>
+            <?php while(have_rows('why_enrol_for_grras_red_hat_course_points')): the_row(); ?>
+                  <div class="col-lg-3 col-sm-6 col-6 g-3">
+                    <div class="goalbox">
+                      <img src="<?php echo get_sub_field('icon') ?>" class="img-fluid" alt="">
+                      <h4><?php echo get_sub_field('title') ?></h4>
+                      <?php echo get_sub_field('content') ?>
+                    </div>
+                  </div>
+          <?php endwhile; endif; ?>
           </div>
-          <div class="col-lg-3 col-sm-6 col-6 g-3">
-            <div class="goalbox">
-              <img src="<?php echo get_stylesheet_directory_uri() ?>/images/course2.jpg" class="img-fluid" alt="">
-              <h4>Versatile <br>Expertise</h4>
-              <ul>
-                <li>Acquire versatile skills, mastering</li>
-                <li>both front-end and back-end</li>
-                <li>frameworks for dynamic career</li>
-                <li>opportunities.</li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-3 col-sm-6 col-6 g-3">
-            <div class="goalbox">
-              <img src="<?php echo get_stylesheet_directory_uri() ?>/images/course3.jpg" class="img-fluid" alt="">
-              <h4>In-Demand <br>Jobs</h4>
-              <ul>
-                <li>Tech sector to offer 65M jobs by</li>
-                <li>2025 with top-demand for full-stack</li>
-                <li>web developers. Average salary</li>
-                <li>starts from ₹6LPA.</li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-3 col-sm-6 col-6 g-3">
-            <div class="goalbox">
-              <img src="<?php echo get_stylesheet_directory_uri() ?>/images/course4.jpg" class="img-fluid" alt="">
-              <h4>Flexibility and<br>Adaptability</h4>
-              <ul>
-                <li>This course will teach you the ins</li>
-                <li>and outs of both front-end</li>
-                <li>frameworks and backend.</li>
-              </ul>
-            </div>
-          </div>
+          
+          
         </div>
       </div>
     </div>
@@ -322,51 +415,46 @@ $banner = get_field('banner');
         </div>
         <div class="row">
           <div class="col-lg-6">
-            <div class="owl-carousel student-carousel">
-              <div class="item">
-                <div class="whbox">
-                  <img src="<?php echo get_stylesheet_directory_uri() ?>/images/student.jpg" class="img-fluid" alt="">
-                  <div class="student">
-                    <h5>Rohan Tiwari</h5>
-                    <div class="subtext">Cloudops Engineer @NUTANIX</div>
-                  </div>
-                  <p class="more">Well, when I first heard about the Full stack MERN development from of my friends , I had no idea what exactly this is, what were the prerequisites but then God has some other plans for me. I searched alot about it and eventually after trying I landed up enrolling myself with GRRAS SOLUTIONS. I had questions like anything in my mind</p>
-                </div>
-              </div>
-              <div class="item">
-                <div class="whbox">
-                  <img src="<?php echo get_stylesheet_directory_uri() ?>/images/student.jpg" class="img-fluid" alt="">
-                  <div class="student">
-                    <h5>Rohan Tiwari</h5>
-                    <div class="subtext">Cloudops Engineer @NUTANIX</div>
-                  </div>
-                  <p class="more">Well, when I first heard about the Full stack MERN development from of my friends , I had no idea what exactly this is, what were the prerequisites but then God has some other plans for me. I searched alot about it and eventually after trying I landed up enrolling myself with GRRAS SOLUTIONS. I had questions like anything in my mind</p>
-                </div>
-              </div>
-              <div class="item">
-                <div class="whbox">
-                  <img src="<?php echo get_stylesheet_directory_uri() ?>/images/student.jpg" class="img-fluid" alt="">
-                  <div class="student">
-                    <h5>Rohan Tiwari</h5>
-                    <div class="subtext">Cloudops Engineer @NUTANIX</div>
-                  </div>
-                  <p class="more">Well, when I first heard about the Full stack MERN development from of my friends , I had no idea what exactly this is, what were the prerequisites but then God has some other plans for me. I searched alot about it and eventually after trying I landed up enrolling myself with GRRAS SOLUTIONS. I had questions like anything in my mind</p>
-                </div>
-              </div>
-              <div class="item">
-                <div class="whbox">
-                  <img src="<?php echo get_stylesheet_directory_uri() ?>/images/student.jpg" class="img-fluid" alt="">
-                  <div class="student">
-                    <h5>Rohan Tiwari</h5>
-                    <div class="subtext">Cloudops Engineer @NUTANIX</div>
-                  </div>
-                  <p class="more">Well, when I first heard about the Full stack MERN development from of my friends , I had no idea what exactly this is, what were the prerequisites but then God has some other plans for me. I searched alot about it and eventually after trying I landed up enrolling myself with GRRAS SOLUTIONS. I had questions like anything in my mind</p>
-                </div>
-              </div>
-            </div>
+            <?php
+$args = array(
+  'post_type'      => 'testimonials',
+  'posts_per_page' => -1,
+  'post_status'    => 'publish'
+);
+
+$testimonials = new WP_Query($args);
+
+if ($testimonials->have_posts()) :
+?>
+<div class="owl-carousel student-carousel">
+  <?php while ($testimonials->have_posts()) : $testimonials->the_post(); 
+    $designation = get_field('title');
+    $company     = get_field('company');
+    $content     = get_field('testimonial_content'); // optional field, else use get_the_content()
+    $image_url   = get_the_post_thumbnail_url(get_the_ID(), 'medium');
+    if (!$image_url) {
+      $image_url = get_stylesheet_directory_uri() . '/images/student.jpg'; // fallback image
+    }
+  ?>
+  <div class="item">
+    <div class="whbox">
+      <img src="<?php echo esc_url($image_url); ?>" class="img-fluid" alt="<?php echo esc_attr(get_the_title()); ?>">
+      <div class="student">
+        <h5><?php echo esc_html(get_the_title()); ?></h5>
+        <div class="subtext"><?php echo esc_html($designation); ?> @<?php echo esc_html($company); ?></div>
+      </div>
+      <p class="more"><?php echo esc_html($content ? $content : get_the_content()); ?></p>
+    </div>
+  </div>
+  <?php endwhile; wp_reset_postdata(); ?>
+</div>
+<?php endif; ?>
+
           </div>
           <div class="col-lg-6">
-            <div class="videobox"><iframe width="100%" height="315" src="https://www.youtube.com/embed/b5VOVNHtIe0?si=PGieEgzxPrPW15U6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+            <?php if(!empty(get_field('testimonial_youtube_url'))) { ?>
+            <div class="videobox"><iframe width="100%" height="315" src="<?php echo get_field('testimonial_youtube_url'); ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+            <?php } ?>
           </div>
         </div>
       </div>

@@ -14,21 +14,20 @@ get_header();
 
 <!-- career banner -->
 
-<!--<style>
-
+<style>
     .career-banner {
-
-    background: url(<?php echo get_field('banner_image') ?>)
-
-}
-
-</style>-->
+        background: url(<?php echo get_field('banner_image') ?>);
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-position: bottom;
+    }
+</style>
 
 <div class="career-banner">
 
       <div class="container">
 
-        <div class="bcontent">
+        <div class="bcontent px-2">
 
           <h2><?php echo get_field('banner_title') ?></h2>
 

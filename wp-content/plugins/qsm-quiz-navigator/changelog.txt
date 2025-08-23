@@ -1,0 +1,8 @@
+<h3>1.0.1 (January 05, 2024)</h3>
+<ul>
+ 	<li>Bug: Fixed issue with license key</li>
+</ul>
+<h3>1.0.0 (January 05, 2024)</h3>
+<ul>
+ 	<li>Initial Release</li>
+</ul>

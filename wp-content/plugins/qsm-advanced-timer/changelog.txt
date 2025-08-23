@@ -1,0 +1,96 @@
+<h3>2.3.0 (December 31, 2024)</h3>
+<ul>
+    <li>Feature: Added support to resume quiz after timer expires</li>
+</ul>
+<h3>2.2.0 (December 12, 2024)</h3>
+<ul>
+    <li>Feature: Added support for timers to start from zero and count forward</li>
+</ul>
+<h3>2.1.1 (May 15, 2024)</h3>
+<ul>
+    <li>Enhancement: Improved quiz timer UI</li>
+</ul>
+<h3>2.1.0 (April 09, 2024)</h3>
+<ul>
+    <li>Feature: Added option to set hours and seconds in quiz timer</li>
+</ul>
+<h3>2.0.3 (February 12, 2024)</h3>
+<ul>
+    <li>Bug: Fixed php warning on activating the add-on</li>
+    <li>Fixed issue with reset timer feature</li>
+</ul>
+<h3>2.0.2 (January 30, 2024)</h3>
+<ul>
+    <li>Bug: Added option to refresh timers on reload page</li>
+</ul>
+<h3>2.0.1 (January 10, 2024)</h3>
+<ul>
+    <li>Bug: Fixed issue of per page timer with decimal values</li>
+</ul>
+<h3>2.0.0 (December 15, 2023)</h3>
+<ul>
+    <li>Feature: Added six new timer face designs</li>
+    <li>Feature: Added button to reset default setting</li>
+    <li>Feature: Set duration in seconds for page timers</li>
+    <li>Feature: Set time warning duration in seconds for page timers</li>
+    <li>Feature: Added option to show or hide warning message</li>
+    <li>Feature: Added option to customize timer colors (background, text, progress).</li>
+    <li>Feature: Added option to show dual timer on the page option </li>
+    <li>Enhancement: New UI for page setting</li>
+    <li>Enhancement: New UI for advance timer quiz setting</li>
+    <li>Bug: Fixed issue where Timer continues after closing browser window/tab</li>
+</ul>
+<h3>1.2.0 (September 21, 2023)</h3>
+<ul>
+    <li>Added per page timer with auto pagination</li>
+</ul>
+<h3>1.1.0 (June 13, 2023)</h3>
+<ul>
+	<li>Enhancement: Optimized script and CSS loading for relevant pages only</li>
+</ul>
+<h3>1.0.9 (May 22, 2023)</h3>
+<ul>
+	<li>Feature: Added option to continue timer even after closing browser window/tab</li>
+</ul>
+<h3>1.0.8 (February 06, 2023)</h3>
+<ul>
+	<li>Bug: Fixed issue while stopping the timer</li>
+</ul>
+<h3>1.0.7 (August 01, 2022)</h3>
+<ul>
+	<li>Bug: Fixed issue with update notifications while saving settings.</li>
+</ul>
+<h3>1.0.6 (March 17, 2022)</h3>
+<ul>
+    <li>Bug : Fixed issue with license key</li>
+    <li>Feature: Added new template variables to show time spent on individual pages</li>
+</ul>
+<h3>1.0.5 (October 11, 2021)</h3>
+<ul>
+    <li>Bug: Fixed the issue with invisible time with manual pagination.</li>
+</ul>
+<h3>1.0.4 (September 10, 2021)</h3>
+<ul>
+    <li>Added translation support.</li>
+</ul>
+<h3>1.0.3 - (June 21, 2021)</h3>
+<ul>
+	<li>Bug: Fixed the issue with popup being visible after pausing timer.</li>
+</ul>
+<h3>1.0.2 - (April 29, 2021)</h3>
+<ul>
+	<li>Bug: Fixed warning message overlapping submit button</li>
+	<li>Bug: Fixed license validation logic.</li>
+	<li>Feature: Added translation support.</li>
+</ul>
+<h3>1.0.1 - (May 08, 2020)</h3>
+<ul>
+ 	<li>Bug: Fixed the admin notice for minimum required version</li>
+</ul>
+<h3>1.0.0 - (April 22, 2020)</h3>
+<ul>
+ 	<li>Feature: Added option to start timer from selected page</li>
+ 	<li>Feature: Added a button to stop timer at any point in time</li>
+ 	<li>Feature: Added option to choose between different timers</li>
+ 	<li>Feature: Added option to show a warning when timer reaches 90%</li>
+</ul>

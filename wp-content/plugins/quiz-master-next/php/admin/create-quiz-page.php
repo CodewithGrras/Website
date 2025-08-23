@@ -146,7 +146,7 @@ function qsm_dashboard_display_theme_section( $all_themes, $installer_option, $i
 				<p><?php echo esc_html__('Pick a Free or Premium theme to personalize your quiz experience.', 'quiz-master-next'); ?></p>
 			</div>
 			<?php
-			if ( ! empty( $all_themes ) && is_array( $all_themes ) ) { ?>
+			//if ( ! empty( $all_themes ) && is_array( $all_themes ) ) { ?>
 				<div class="qsm-quiz-theme-steps-container qsm-dashboard-page-common-style">
 					<div class="qsm-quiz-steps-card qsm-quiz-steps-default-theme qsm-quiz-theme-activated" data-id="" data-slug="">
 						<div class="qsm-quiz-steps-image">
@@ -163,87 +163,89 @@ function qsm_dashboard_display_theme_section( $all_themes, $installer_option, $i
 						</div>
 					</div>
 					<?php
-					foreach ( $all_themes as $theme_key => $theme_value ) {
+					if ( ! empty( $all_themes ) && is_array( $all_themes ) ) {
+						foreach ( $all_themes as $theme_key => $theme_value ) {
 
-						$theme_name = $theme_value['name'];
+							$theme_name = $theme_value['name'];
 
-						// Find matching theme details in $filtered_themes by theme_name
-						$matching_theme = array_filter($filtered_themes, function ( $filtered_theme ) use ( $theme_name ) {
-							return isset($filtered_theme['theme_name']) && $filtered_theme['theme_name'] == $theme_name;
-						});
+							// Find matching theme details in $filtered_themes by theme_name
+							$matching_theme = array_filter($filtered_themes, function ( $filtered_theme ) use ( $theme_name ) {
+								return isset($filtered_theme['theme_name']) && $filtered_theme['theme_name'] == $theme_name;
+							});
 
-						$matching_theme = ! empty($matching_theme) ? array_shift($matching_theme) : array();
-						foreach ( $all_addons as $addon ) {
-							if ( $addon['id'] == $theme_value['id'] ) {
-								// Merge the additional keys into the theme array
-								$theme_value = array_merge($theme_value, [
-									'path'         => $addon['path'],
-									'icon'         => $addon['icon'],
-									'settings_tab' => $addon['settings_tab'],
-									'option'       => $addon['option'],
-								]);
-								break; // Stop looping once a match is found
+							$matching_theme = ! empty($matching_theme) ? array_shift($matching_theme) : array();
+							foreach ( $all_addons as $addon ) {
+								if ( $addon['id'] == $theme_value['id'] ) {
+									// Merge the additional keys into the theme array
+									$theme_value = array_merge($theme_value, [
+										'path'         => $addon['path'],
+										'icon'         => $addon['icon'],
+										'settings_tab' => $addon['settings_tab'],
+										'option'       => $addon['option'],
+									]);
+									break; // Stop looping once a match is found
+								}
 							}
-						}
-						$theme_id = $theme_value['id']; // download id
-						$database_theme_id = isset($matching_theme['id']) ? $matching_theme['id'] : '';
-						$theme_screenshot = $theme_value['img'];
-						$theme_link = qsm_get_utm_link($theme_value['link'], 'new_quiz', 'themes', 'quizsurvey_buy_' . sanitize_title($theme_name));
-						$theme_demo = qsm_get_utm_link($theme_value['demo'], 'new_quiz', 'themes', 'quizsurvey_preview_' . sanitize_title($theme_name));
-						$theme_path = isset($theme_value['path']) ? $theme_value['path'] : '';
-						$theme_slug = isset($theme_value['slug']) ? $theme_value['slug'] : '';
-						$is_activated = in_array( $theme_path, $activated_plugins, true );
-						$is_installed = array_key_exists( $theme_path, $installed_plugins );
-						$card_class = $is_activated ? "qsm-quiz-theme-activated" : "";
+							$theme_id = $theme_value['id']; // download id
+							$database_theme_id = isset($matching_theme['id']) ? $matching_theme['id'] : '';
+							$theme_screenshot = $theme_value['img'];
+							$theme_link = qsm_get_utm_link($theme_value['link'], 'new_quiz', 'themes', 'quizsurvey_buy_' . sanitize_title($theme_name));
+							$theme_demo = qsm_get_utm_link($theme_value['demo'], 'new_quiz', 'themes', 'quizsurvey_preview_' . sanitize_title($theme_name));
+							$theme_path = isset($theme_value['path']) ? $theme_value['path'] : '';
+							$theme_slug = isset($theme_value['slug']) ? $theme_value['slug'] : '';
+							$is_activated = in_array( $theme_path, $activated_plugins, true );
+							$is_installed = array_key_exists( $theme_path, $installed_plugins );
+							$card_class = $is_activated ? "qsm-quiz-theme-activated" : "";
 
-						?>
-						<div class="qsm-quiz-steps-card <?php echo esc_attr($card_class); ?>"  data-id="<?php echo esc_attr( $theme_id ); ?>" data-slug="<?php echo esc_attr( $theme_slug ); ?>" data-path="<?php echo esc_attr( $theme_path ); ?>">
-							<div class="qsm-quiz-steps-image">
-								<img src="<?php echo esc_url($theme_screenshot); ?>" alt="<?php echo esc_attr( $theme_name ); ?>">
-							</div>
-							<div class="qsm-quiz-steps-content">
-								<div class="qsm-quiz-steps-info">
-									<h3 class="qsm-quiz-steps-title"><?php echo esc_html($theme_name); ?></h3>
-									<p class="qsm-dashboard-addon-status">
-									<?php
-									if ( $is_activated || $is_installed ) {
-										echo esc_html__( 'Version: ', 'quiz-master-next' ) . esc_html( $all_plugins[ $theme_path ]['Version'] );
-									}
-									?>
-									</p>
+							?>
+							<div class="qsm-quiz-steps-card <?php echo esc_attr($card_class); ?>"  data-id="<?php echo esc_attr( $theme_id ); ?>" data-slug="<?php echo esc_attr( $theme_slug ); ?>" data-path="<?php echo esc_attr( $theme_path ); ?>">
+								<div class="qsm-quiz-steps-image">
+									<img src="<?php echo esc_url($theme_screenshot); ?>" alt="<?php echo esc_attr( $theme_name ); ?>">
 								</div>
-								<?php if ( 0 == $installer_activated ) { ?>
-									<div class="qsm-quiz-steps-action-buttons">
-										<?php if ( ! $is_activated && ! $is_installed ) { ?>
-											<a href="<?php echo esc_url($theme_link); ?>" class="button button-primary" target="_blank">
-												<?php echo esc_html__( 'Upgrade', 'quiz-master-next' ); ?>
-											</a>
+								<div class="qsm-quiz-steps-content">
+									<div class="qsm-quiz-steps-info">
+										<h3 class="qsm-quiz-steps-title"><?php echo esc_html($theme_name); ?></h3>
+										<p class="qsm-dashboard-addon-status">
 										<?php
-										} elseif ( $is_activated || $is_installed ) { ?>
-											<a href="javascript:void(0)" class="qsm-theme-action-btn button button-secondary">
-												<?php if ( $is_activated ) {
-													echo esc_html__( 'Select', 'quiz-master-next' );
-												} elseif ( $is_installed ) {
-													echo esc_html__( 'Activate', 'quiz-master-next' );
-												}
-												?>
-											</a>
-										<?php } ?>
-										<a href="<?php echo esc_url($theme_demo); ?>" class="button button-secondary demo" target="_blank">
-											<?php echo esc_html__( 'Demo', 'quiz-master-next' ); ?>
-										</a>
+										if ( $is_activated || $is_installed ) {
+											echo esc_html__( 'Version: ', 'quiz-master-next' ) . esc_html( $all_plugins[ $theme_path ]['Version'] );
+										}
+										?>
+										</p>
 									</div>
-								<?php }
-								do_action('qsm_create_quiz_theme_option_buttons', $installer_activated, $invalid_and_expired, $addon_lookup, $theme_slug, $selected_bundle, $is_installed, $is_activated, $theme_demo ); ?>
+									<?php if ( 0 == $installer_activated ) { ?>
+										<div class="qsm-quiz-steps-action-buttons">
+											<?php if ( ! $is_activated && ! $is_installed ) { ?>
+												<a href="<?php echo esc_url($theme_link); ?>" class="button button-primary" target="_blank">
+													<?php echo esc_html__( 'Upgrade', 'quiz-master-next' ); ?>
+												</a>
+											<?php
+											} elseif ( $is_activated || $is_installed ) { ?>
+												<a href="javascript:void(0)" class="qsm-theme-action-btn button button-secondary">
+													<?php if ( $is_activated ) {
+														echo esc_html__( 'Select', 'quiz-master-next' );
+													} elseif ( $is_installed ) {
+														echo esc_html__( 'Activate', 'quiz-master-next' );
+													}
+													?>
+												</a>
+											<?php } ?>
+											<a href="<?php echo esc_url($theme_demo); ?>" class="button button-secondary demo" target="_blank">
+												<?php echo esc_html__( 'Demo', 'quiz-master-next' ); ?>
+											</a>
+										</div>
+									<?php }
+									do_action('qsm_create_quiz_theme_option_buttons', $installer_activated, $invalid_and_expired, $addon_lookup, $theme_slug, $selected_bundle, $is_installed, $is_activated, $theme_demo ); ?>
+								</div>
+								<div class="qsm-dashboard-theme-recommended"><?php echo esc_html__('Recommended', 'quiz-master-next'); ?></div>
+								<input style="display: none" type="radio" name="quiz_theme_id" value="<?php echo intval( $database_theme_id ); ?>" >
 							</div>
-							<div class="qsm-dashboard-theme-recommended"><?php echo esc_html__('Recommended', 'quiz-master-next'); ?></div>
-							<input style="display: none" type="radio" name="quiz_theme_id" value="<?php echo intval( $database_theme_id ); ?>" >
-						</div>
-						<?php
+							<?php
+						}
 					} ?>
 				</div>
 				<?php
-			}
+			//}
 			?>
 		</div>
 	</div><!-- qsm-dashboard-choose-theme-wrap  -->

@@ -1,0 +1,217 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: QSM - User Dashboard\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-07-29 06:41+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.5.3; wp-5.8\n"
+"X-Domain: qsm-user-dashboard"
+
+#: templates/user-dashboard.php:62 templates/user-dashboard.php:66
+msgid " or "
+msgstr ""
+
+#: templates/user-dashboard.php:62 templates/user-dashboard.php:66
+msgid " out of "
+msgstr ""
+
+#: templates/user-dashboard.php:64 templates/user-dashboard.php:66
+msgid " Points"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:131
+msgid "Addon License Key"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:105 php/shortcode.php:106
+msgid "Certificate Link"
+msgstr ""
+
+#: templates/user-dashboard.php:122
+msgid "Download Certificate"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:126
+#, php-format
+msgid ""
+"For users with access to the dashboard, they can visit their results with "
+"the new My Results page. For those without access to the dashboard, create a "
+"new post or page and insert the shortcode %s into it."
+msgstr ""
+
+#: php/addon-settings-tab-content.php:106 php/shortcode.php:104
+msgid "Go Back"
+msgstr ""
+
+#: templates/user-dashboard.php:82 templates/user-dashboard.php:85
+msgid "Hour"
+msgstr ""
+
+#: templates/user-dashboard.php:82
+msgid "Hours"
+msgstr ""
+
+#. URI of the plugin
+#. Author URI of the plugin
+msgid "http://www.quizandsurveymaster.com/"
+msgstr ""
+
+#: templates/user-dashboard.php:90 templates/user-dashboard.php:93
+msgid "Minute"
+msgstr ""
+
+#: templates/user-dashboard.php:90
+msgid "Minutes"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:113
+msgid "Next 10 Results"
+msgstr ""
+
+#: templates/user-dashboard.php:59
+msgid "Not Graded"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:168
+msgid "Note: QSM Certificate addon must be enable."
+msgstr ""
+
+#: php/addon-settings-tab-content.php:114
+msgid "Previous 10 Results"
+msgstr ""
+
+#. Name of the plugin
+msgid "QSM - User Dashboard"
+msgstr ""
+
+#: qsm-user-dashboard.php:157
+msgid ""
+"QSM - User Dashboard requires Quiz And Survey Master. Please install and "
+"activate the Quiz And Survey Master plugin."
+msgstr ""
+
+#. Author of the plugin
+msgid "QSM Team"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:97
+msgid "Quiz Name"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:197
+msgid "Results Template"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:201
+msgid "Save Changes"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:99
+msgid "Score"
+msgstr ""
+
+#: templates/user-dashboard.php:97
+msgid "Second"
+msgstr ""
+
+#: templates/user-dashboard.php:97
+msgid "Seconds"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:167
+msgid "Show Certificate link?"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:135
+msgid "Show Quiz Name?"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:143
+msgid "Show Score?"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:151
+msgid "Show Time Taken?"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:159
+msgid "Show Time to Complete?"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:177
+msgid "Text For Back Button"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:173
+msgid "Text For Certificate Link"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:181
+msgid "Text For Next Button"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:185
+msgid "Text For Previous Button"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:139
+msgid "Text For Quiz Name Column"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:147
+msgid "Text For Score Column"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:155
+msgid "Text For Time Taken Column"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:163
+msgid "Text For Time to Complete"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:189
+msgid "Text For View Link"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:193
+msgid "Text For When User Is Not Logged In"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:101
+msgid "Time Taken"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:104 php/shortcode.php:105
+msgid "Time to Complete"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Use this plugin to add a dashboard for users to see and review their results"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:125
+msgid "User Dashboard Settings"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:115
+msgid "View"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:116
+msgid "You must be logged in to see your results."
+msgstr ""
+
+#: php/addon-settings-tab-content.php:90
+msgid "Your settings has been saved successfully!"
+msgstr ""

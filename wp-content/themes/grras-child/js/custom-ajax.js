@@ -5,9 +5,11 @@ function capitalize(str) {
        return str.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     }
   function loadCourses(category = '', page = 1) {
+    const src = jQuery('#course-search-mobile').val();
     const data = new FormData();
     data.append('action', 'load_courses');
     data.append('category', category);
+    data.append('src', src);
     data.append('page', page);
 
     fetch(ajaxurl, {

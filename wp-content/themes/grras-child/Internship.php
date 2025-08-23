@@ -4,6 +4,8 @@
  * Template Name: Internship
  */
 get_header();
+$downloadBrochure = get_field('banner_download_brochure');
+$downloadBrochureUrl = !empty($downloadBrochure) ? wp_get_attachment_url($downloadBrochure) : null;
 ?>
 <!-- Learn today -->
 <div class="intern-banner">
@@ -17,7 +19,7 @@ get_header();
                 <?php echo $banner["short_description"] ?>
                 </p>
                 <a href="javascript:void(0)" class="btn btn-dark"  data-bs-toggle="modal" data-bs-target="#exampleModal590" class="btn btn-dark">Apply Now</a>
-                <a href="<?php echo $banner["brochore_url"] ?>" class="btn btn-primary">Download Brochrue</a>
+                <a href="<?php echo $downloadBrochureUrl; ?>" target="_blank" downlaod="true" class="btn btn-primary">Download Brochure</a>
                 
             </div>
         </div>

@@ -298,7 +298,7 @@ if ($start_date && $end_date) {
     <div class="container">
         <div class="row justify-content-between">
           <div class="col-lg-6">
-            <div class="leftcontent" style="visibility: hidden;">
+            <div class="leftcontent">
           <?php echo $banner['content'] ?>
               <div class="bluebar">
                 <ul>
@@ -604,13 +604,13 @@ if ($start_date && $end_date) {
                     <?php the_content(); ?>
                 </div>
 
- </div>
+ </div> </div>
                 <!-- Upcoming Workshop -->
                 <?php include 'components/upcomingworkshop.php'; ?>
                 <!-- Discover -->
                 <!-- Discover -->
-                <div class="recentplacement recentarrow wow fadeInLeft">
-                    <h2>Discover successful alumni who had the same profile as you before joining Scaler</h2>
+                <div class="recentplacement recentarrow wow fadeInLeft section-padding ">
+                    <h2 class="px-3">Discover successful alumni who had the same profile as you before joining Scaler</h2>
                     <div class="owl-carousel featured-course owl-loaded owl-drag">
                      <?php
 $args = array(

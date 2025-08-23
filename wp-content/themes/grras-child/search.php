@@ -15,7 +15,9 @@ get_header();
 // Get the search query
 
 $search = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
-
+if(empty($search)) {
+    $search = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
+}
 
 
 // Redirect to the home page if no search query is provided
@@ -95,6 +97,18 @@ if (empty($search)) {
         );
 
         $courses_query4 = new WP_Query($args4);
+        
+        $args5 = array(
+
+             's' => $search,
+
+            'post_type' => 'redhat_courses',
+
+          
+
+        );
+
+        $redhatCourseQry = new WP_Query($args5);
 
 
 
@@ -157,31 +171,35 @@ echo count($courses_query->posts) + count($courses_query1->posts) + count($cours
 
             <ul class="nav left-tab mt-5">
 
+              <?php if(count($courses_query->posts) > 0): ?>
+                  <li class="nav-item">
+                   <a href="#courses" class="nav-link active">courses (<?php echo count($courses_query->posts); ?>)</a>
+                  </li>
+              <?php endif; ?>
+              
+              <?php if(count($redhatCourseQry->posts) > 0): ?>
               <li class="nav-item">
-
-               <a href="#courses" class="nav-link active">courses (<?php echo count($courses_query->posts); ?>)</a>
-
-
-
+                <a href="#redhat" class="nav-link">Redhat Courses (<?php echo count($redhatCourseQry->posts); ?>)</a>
               </li>
+              <?php endif; ?>
 
+              <?php if(count($courses_query1->posts) > 0): ?>
+                  <li class="nav-item">
+                    <a href="#internship" class="nav-link">Internship courses (<?php echo count($courses_query1->posts); ?>)</a>
+                  </li>
+              <?php endif; ?>
+
+              <?php if(count($courses_query2->posts) > 0): ?>
+                  <li class="nav-item">
+                    <a href="#workshop" class="nav-link">Workshop/ Webinars (<?php echo count($courses_query2->posts); ?>)</a>
+                  </li>
+              <?php endif; ?>
+
+              <?php if(count($courses_query3->posts) > 0): ?>
               <li class="nav-item">
-
-                <a href="#internship" class="nav-link">Internship courses (<?php echo count($courses_query1->posts); ?>)</a>
-
-              </li>
-
-              <li class="nav-item">
-
-                <a href="#workshop" class="nav-link">Workshop/ Webinars (<?php echo count($courses_query2->posts); ?>)</a>
-
-              </li>
-
-              <li class="nav-item">
-
                 <a href="#blogs" class="nav-link">Blogs/ Articles (<?php echo count($courses_query3->posts); ?>)</a>
-
               </li>
+              <?php endif; ?>
 
               <!--<li class="nav-item">-->
 
@@ -189,11 +207,15 @@ echo count($courses_query->posts) + count($courses_query1->posts) + count($cours
 
               <!--</li>-->
 
-              <li class="nav-item">
-
-                <a href="#placement" class="nav-link">Placement (<?php echo count($courses_query4->posts); ?>)</a>
-
-              </li>
+              <?php if(count($courses_query4->posts) > 0): ?>
+                  <li class="nav-item">
+                    <a href="#placement" class="nav-link">Placement (<?php echo count($courses_query4->posts); ?>)</a>
+                  </li>
+              <?php endif; ?>
+              
+              
+              
+              
 
             </ul>
 
@@ -435,7 +457,245 @@ echo count($courses_query->posts) + count($courses_query1->posts) + count($cours
 
             </div>
 
- <?php
+            <?php
+
+             endif; 
+
+             ?>
+             
+             <?php
+
+             if ($redhatCourseQry->have_posts()) : 
+
+             ?>
+
+            <div class="d-none d-sm-block">
+
+              <div class="row serach-course intcourse coursesec p-0" id="redhat">
+
+                <div class="col-md-12">
+
+                  <h4>Redhat Courses</h4>
+
+                </div>
+
+                  <div class="row" id="row-container">
+
+         <?php
+
+
+
+        if ($redhatCourseQry->have_posts()) :
+
+          while ($redhatCourseQry->have_posts()) : $redhatCourseQry->the_post();
+
+            $course_terms = get_the_terms(get_the_ID(), 'course_types');
+
+            $term_classes = '';
+
+            $term_names = [];    
+
+            if ($course_terms) {
+
+              foreach ($course_terms as $term) {
+
+                $term_classes .= ' ' . esc_attr($term->slug);
+
+                $term_names[] = $term->name;    
+
+              }
+
+            }
+
+            ?>
+
+                  <div class="col-lg-4 col-md-6 col-sm-6 col-6 g-3">
+
+                    <?php get_template_part('template-parts/details', 'course');  ?>
+
+                  </div>
+
+                  <?php endwhile;
+
+        else :
+
+          echo '<p>No courses found.</p>';
+
+        endif;
+
+
+
+        wp_reset_postdata();
+
+        ?>
+
+                  <div class="col-md-12 g-3 text-center">
+
+                    <p><span id="program-count"></span></p>
+
+                    <!--<a href="#" class="btn btn-outline-primary mt-3 rounded-pill" id="course-view">View More</a>-->
+
+                  </div>
+
+                </div>
+
+               
+
+              </div>
+
+            </div>
+
+
+
+            <!-- course mobile -->
+
+            <div class="intcourse coursesec d-block d-sm-none p-0">
+
+              <div class="course-mobile search-mobile">
+
+                <h4>Redhat Courses</h4>
+
+                <div id="row-container-5">
+
+                     <?php
+
+
+
+        if ($redhatCourseQry->have_posts()) :
+
+          while ($redhatCourseQry->have_posts()) : $redhatCourseQry->the_post();
+
+            $course_terms = get_the_terms(get_the_ID(), 'course_types');
+
+            $term_classes = '';
+
+            $term_names = [];    
+
+            if ($course_terms) {
+
+              foreach ($course_terms as $term) {
+
+                $term_classes .= ' ' . esc_attr($term->slug);
+
+                $term_names[] = $term->name;    
+
+              }
+
+            }
+
+            ?>
+
+                 <a href="<?php the_permalink(); ?>" class="course-mobile search-mobile-s">
+
+             <div class="cobox">
+
+                    <div class="imgbox">
+
+                      <img src="<?php echo get_field('mobile_background_image')?>" class="img-fluid bigimg" alt="">
+
+                      <div class="imgcontent">
+
+                        <div class="icon"><img src="<?php the_post_thumbnail_url(); ?>" class="img-fluid" alt=""></div>
+
+                      </div>
+
+                      <?php if (get_field('discount')) : ?>
+
+                          <div class="offer"><?php echo get_field('discount'); ?><span>%</span> OFF</div>               
+
+                        <?php endif; ?>
+
+                    </div>
+
+                    <div class="right-content">
+
+                        <?php if(get_field('best_seller_color') != "--Choose--"): ?>
+
+                      <div class="<?php echo get_field('best_seller_color'); ?>">Best Seller</div>
+
+                      <?php endif; ?>
+
+                      <h4> <small><?php echo $term_names[0]?></small><br><?php the_title(); ?></h4>
+
+                      <p><?php the_content()?></p>
+
+                      <div class="content">
+
+                        <div class="row">
+
+                          <div class="col-md-6 col-6">
+
+                            <div class="star">
+
+                                <?php 
+
+                                $rating = get_field('rating');
+
+                                for($i = 1; $i <= $rating; $i++){
+
+?>
+
+                                <span class="star star-enabled">★</span>
+
+<?php
+
+                                }
+
+                                ?>
+
+
+
+                                &nbsp; <?php echo $rating?>/5 <span>(<?php echo get_field('review_count')?>)</span>
+
+                              </div>
+
+                          </div>
+
+                          <div class="col-md-6 col-6">
+
+                            <div class="day"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/days.svg" alt=""> <?php echo get_field('days'); ?> Day</div>
+
+                          </div>
+
+                        </div>
+
+                      </div>              
+
+                    </div>
+
+                  </div>
+
+            </a>
+
+             <?php endwhile;
+
+        else :
+
+          echo '<p>No courses found.</p>';
+
+        endif;
+
+
+
+        wp_reset_postdata();
+
+        ?>
+
+            </div>
+
+                <div class="col-md-12 g-3 text-center serach-course">
+
+                  <p><span id="program-count-5"></span></p>
+
+                  <a href="#" class="btn btn-outline-primary my-3 rounded-pill" id="view-more-5">View More</a>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <?php
 
              endif; 
 

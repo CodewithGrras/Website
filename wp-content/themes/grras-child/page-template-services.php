@@ -73,18 +73,30 @@ get_header();
         </div>
         <div id="scrollingMenu" class="menu bg-white p-2">
             <ul class="list-unstyled mb-0  d-flex position-relative justify-content-center">
-              <li class="menu-item active" data-target="overviewsection" >Corporate Trainings</li>
-              <li class="menu-item" data-target="solutionsection">Training Programs</li>
-              <li class="menu-item" data-target="partnerssection">Internship</li>
-              <li class="menu-item" data-target="industrysection">Academic Collaborations</li>
-              <li class="menu-item" data-target="awardsection">Masterclasses</li>
-              <!-- <li id="lastdiv" class="menu-item" data-target="eventssection">Industry Certification</li> -->
+              <li class="menu-item <?php echo (!isset($_GET['tab']) || $_GET['tab'] === 'corporatetrainings') ? 'active' : ''; ?>" data-target="corporatetrainings">Corporate Trainings</li>
+              <li class="menu-item <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'training-programs') ? 'active' : ''; ?>" data-target="training-programs">Training Programs</li>
+              <li class="menu-item <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'internshipsection') ? 'active' : ''; ?>" data-target="internshipsection">Internship</li>
+              <li class="menu-item <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'academic-collaborations') ? 'active' : ''; ?>" data-target="academic-collaborations">Academic Collaborations</li>
+              <li class="menu-item <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'masterclasses') ? 'active' : ''; ?>" data-target="masterclasses">Masterclasses</li>
+              <?php if (have_rows('additional_tabs')): ?>
+                <?php $count = 1; ?>
+                <?php while (have_rows('additional_tabs')): the_row(); 
+                    $tab_name = get_sub_field('tab_name');
+                    $unique_key = get_sub_field('unique_tab_key');
+                    $is_active = (isset($_GET['tab']) && $_GET['tab'] === $unique_key) ? 'active' : '';
+                ?>
+                    <li class="menu-item <?php echo esc_attr($is_active); ?>" data-target="additional-tab-<?php echo $count; ?>">
+                        <?php echo esc_html($tab_name); ?>
+                    </li>
+                    <?php $count++; ?>
+                <?php endwhile; ?>
+              <?php endif; ?>
             </ul>
         </div>
       </div>
       
       <div class="menu-area">
-        <div id="overviewsection" class="contentarea active">
+        <div id="corporatetrainings" class="contentarea <?php echo (!isset($_GET['tab']) || $_GET['tab'] === 'corporatetrainings') ? 'active' : ''; ?>">
 
             
             <!-- company logo -->
@@ -110,13 +122,13 @@ get_header();
             <!-- End company logo -->
 
             <!-- Turnover -->
-            <div class="turnover wow fadeInUp">
+            <div class="turnover wow fadeInUp py-0">
               <div class="container">
                 <div class="rounded-4 p-4 p-lg-5 bg-theme-light-gradient">
                   <div class="row">
                     <div class="col-12 col-lg-5  text-center text-md-start">
                       <h2 class="mb-3"><?php echo get_field('corporate_training_that_drives_success_heading'); ?></h2>
-                      <p><?php echo get_field('corporate_training_that_drives_success_description'); ?></p>
+                      <p class="p-0"><?php echo get_field('corporate_training_that_drives_success_description'); ?></p>
                     </div>
                     <div class="col-12 col-lg-7">
                       <div class="row">
@@ -137,7 +149,7 @@ get_header();
                                 </defs>
                             </svg>
                           </div>
-                          <p><big class="d-block my-2"><?php echo get_field('companies_trained'); ?></big>Companies Trained</p>
+                          <p class="ps-0"><big class="d-block my-2"><?php echo get_field('companies_trained'); ?></big><?php echo get_field('companies_trained_title'); ?></p>
                         </div>
                         <div class="col-md-4 col-4 g-3 text-center bold-counter">
                           <div class="icon float-none w-auto h-auto pt-0">
@@ -155,7 +167,7 @@ get_header();
                               </defs>
                             </svg>
                           </div>
-                          <p><big class="d-block my-2"><?php echo get_field('skill_improvement_reported'); ?></big>Skill Improvement Reported</p>
+                          <p class="ps-0"><big class="d-block my-2"><?php echo get_field('skill_improvement_reported'); ?></big><?php echo get_field('skill_improvement_reported_title'); ?></p>
                         </div>
                         <div class="col-md-4 col-4 g-3 text-center bold-counter">
                           <div class="icon float-none w-auto h-auto pt-0">
@@ -177,7 +189,7 @@ get_header();
                               </defs>
                             </svg>
                           </div>
-                          <p><big class="d-block my-2"><?php echo get_field('years_of_corporate_training_expertise'); ?></big>Years of Corporate Training Expertise</p>
+                          <p class="ps-0"><big class="d-block my-2"><?php echo get_field('years_of_corporate_training_expertise'); ?></big><?php echo get_field('years_of_corporate_training_expertise_title'); ?></p>
                         </div>
                       </div>
                     </div>
@@ -307,7 +319,7 @@ get_header();
                     <a href="<?php echo get_post_type_archive_link('training-program'); ?>" class="text-decoration-none theme-color-text">View All Training Programs</a>
                     <div class="d-flex jus mx-auto w-50 mt-4 btn-area justify-content-center">
                       <button data-bs-toggle="modal" data-bs-target="#exampleModal2" type="button" class="btn btn-primary f16">Download full course list</button>
-                      <button data-bs-toggle="modal" data-bs-target="#exampleModal2" type="button" class="btn btn-outline-primary f16 me-0 ms-2 ms-lg-3 fw-medium theme-text-dark">Looking for Something Specific? We can build it.</button>
+                      <button data-bs-toggle="modal" data-bs-target="#exampleModal2" type="button" class="btn btn-secondary f16 me-0 ms-2 ms-lg-3 fw-medium theme-text-dark">Looking for Something Specific? We can build it.</button>
                     </div>
                   </div>
                 </div>
@@ -320,7 +332,7 @@ get_header();
                 <div class="row justify-content-center">
                   <div class="col-12 col-lg-6">
                     <div class="d-flex flex-column justify-content-between h-100">
-                      <div class="heading-area mt-lg-5">
+                      <div class="heading-area mt-lg-5 make-me-sticky1">
                         <h2 class="fw-semibold mb-3"><?php echo get_field('why_top_companies_choose_grras_heading'); ?></h2>
                         <p class="theme-text-light"><?php echo get_field('why_top_companies_choose_grras_description'); ?></p>
                       </div>
@@ -435,7 +447,7 @@ get_header();
                   <div class="col-md-10">
                     <div class="tab-content" id="v-pills-tabContent">
                       <div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-tab" tabindex="0">
-                        <div class="owl-carousel video-review-2">
+                        <div class="owl-carousel video-review">
                             <?php
                   $choose_student_review = get_field('choose_student_review');
                   if ($choose_student_review):
@@ -476,7 +488,7 @@ get_header();
                         </div>
                       </div>
                       <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab" tabindex="0">
-                        <div class="owl-carousel video-review-2">
+                        <div class="owl-carousel video-review">
                             <?php
                   $choose_collage_collaboration_review= get_field('choose_collage_collaboration_review');
                   if($choose_collage_collaboration_review):
@@ -526,7 +538,7 @@ get_header();
                         </div>
                       </div>
                       <div class="tab-pane fade" id="college" role="tabpanel" aria-labelledby="college-tab" tabindex="0">
-                        <div class="owl-carousel video-review-2">
+                        <div class="owl-carousel video-review">
                             <?php
                   $choose_corporate_success_review = get_field('choose_corporate_success_review');
                   if ($choose_corporate_success_review):
@@ -618,7 +630,7 @@ get_header();
                   </div>
                   <div class="col-12 col-lg-12">
                       <div class="innovation-slider">
-                        <div class="owl-carousel innovation-slider-area">
+                        <div class="owl-carousel innovation-slider-area1">
                           <div class="item">
                             <div class="row gx-3">
                               <div class="col-6 col-sm-6 col-md-4 col-lg-3 mb-3">
@@ -707,14 +719,12 @@ get_header();
                       <div class="item">
                         <div class="cousebox">
                           <?php if ($image_url): ?>
-                            <a href="<?php echo home_url('aboutus?tab=awardsection'); ?>">
-                              <img src="<?php echo esc_url($image_url); ?>" class="img-fluid" alt="<?php the_title_attribute(); ?>">
+                            <a class="text-center" href="<?php echo home_url('aboutus?tab=masterclasses'); ?>">
+                              <img class="mx-auto" src="<?php echo esc_url($image_url); ?>" class="img-fluid" alt="<?php the_title_attribute(); ?>" style="max-height: 200px;     min-height: 200px;">
                             </a>
                           <?php endif; ?>
-                          <h4>
-                            <strong><?php echo esc_html($year); ?></strong><br>
-                            <?php echo nl2br(esc_html(get_the_title())); ?>
-                          </h4>
+                          <h4 style="min-height: 110px;"><?php echo esc_html($year); ?>
+                          <p class="pt-2 px-0 fw-normal mb-0"><?php echo nl2br(esc_html(get_the_title())); ?></p>
                         </div>
                       </div>
                   <?php
@@ -735,15 +745,15 @@ get_header();
             <!-- End FAQ Section -->
             
         </div>
-        <div id="solutionsection" class="contentarea">
+        <div id="training-programs" class="contentarea <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'training-programs') ? 'active' : ''; ?>">
           <!-- The Summer Training program 2023 Provides -->
           <div class="thesummer wow fadeInUp bg-transparent bg-image-none">
             <div class="container">
               <div class="row">
                 <div class="col-lg-12">
                   <div class="heading-area text-center mb-4 mb-lg-5">
-                    <h2 class="fw-semibold mb-3">Top Categories We Offer</h2>
-                    <p>We offer training across diverse technologies and domains, ensuring your teams gain skills that matter.</p>
+                    <h2 class="fw-semibold mb-3"><?php echo get_field('top_categories_we_offer_title'); ?></h2>
+                    <p><?php echo get_field('top_categories_we_offer_subheading'); ?></p>
                   </div>
                 </div>
               </div>
@@ -782,7 +792,7 @@ get_header();
           </div>
 
           <!-- Career Section -->
-          <div class="career-section bg-theme-light collaborate-section wow fadeInUp section-padding py-5">
+          <div class="career-section bg-theme-light collaborate-section wow fadeInUp section-padding py-5 pb-lg-5 pb-4">
             <div class="container">
               
               <!-- Heading Area -->
@@ -844,7 +854,7 @@ get_header();
           ?>
           <!-- End FAQ Section -->
         </div>
-        <div id="partnerssection" class="contentarea">
+        <div id="internshipsection" class="contentarea <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'internshipsection') ? 'active' : ''; ?>">
           <!-- Curious -->
           <div class="thesummer wow fadeInUp bg-transparent bg-image-none">
             <div class="container">
@@ -879,7 +889,7 @@ get_header();
               <div class="row">
                 <div class="col-lg-12">
                   <div class="heading-area text-center mb-4 mb-lg-5">
-                    <h2 class="fw-semibold mb-3"><?php echo get_field('your_time_your_learning_pace_heading'); ?></h1>
+                    <h2 class="fw-semibold mb-3"><?php echo get_field('your_time_your_learning_pace_heading'); ?></h2>
                     <p><?php echo get_field('your_time_your_learning_pace_description'); ?></p>
                   </div>
                 </div>
@@ -889,20 +899,16 @@ get_header();
               $yourTimeLeftImage = $yourTimeLeftImageId ? wp_get_attachment_url($yourTimeLeftImageId) : null;
               ?>
               <div class="row justify-content-center">
-                <div class="col-12 col-lg-6">
+                <div class="col-12 col-lg-6 mb-4 mb-lg-0">
                   <?php if(!empty($yourTimeLeftImage)): ?>
                     <img src="<?php echo esc_url($yourTimeLeftImage); ?>" class="img-fluid" alt="Your Time, Your Learning Pace">
                   <?php endif; ?>
                 </div>
                 <div class="col-12 col-lg-5 mb-4 ms-auto">
                   <?php
-                  $terms = get_terms(array(
-                      'taxonomy' => 'internship_types',
-                      'hide_empty' => false, // Change to true if you want to hide empty terms
-                  ));
-                  if (!empty($terms) && !is_wp_error($terms)):
-                    foreach ($terms as $term):
-                      if($term->slug === 'all') continue; // Skip 'top-choices' term
+                  if (have_rows('your_time_your_learning_pace_heading_rows')):
+                    while(have_rows('your_time_your_learning_pace_heading_rows')): the_row();
+                      
                   ?>
                   <div class="info-card p-3 bg-white mb-3 rounded theme-box-shadow wow fadeInUp mb-3">
                     <div class="d-flex">
@@ -912,12 +918,12 @@ get_header();
                         </svg>
                       </div>
                       <div class="card-data">
-                          <h5><?php echo $term->name; ?></h5>
-                          <p><?php echo $term->description; ?></p>
+                          <h5><?php echo get_sub_field('title'); ?></h5>
+                          <p><?php echo get_sub_field('description'); ?></p>
                       </div>
                     </div>
                   </div>
-                  <?php endforeach; endif; ?>
+                  <?php endwhile; endif; ?>
                 </div>
                 <div class="col-12 col-lg-12 text-center">
                   <p><?php echo get_field('your_time_your_learning_pace_heading_bottom_line'); ?></p>
@@ -943,11 +949,12 @@ get_header();
                 $intershipQry = new WP_Query([
                     'post_type'      => 'internships',
                     'post_status'    => 'publish',
-                    'posts_per_page' => 9
+                    'posts_per_page' => 9,
+                    'post__in'       => get_field('selected_internships')
                 ]);
 
-                if ($intershipQry->have_posts()) :
-                    $intCount = 0; 
+                if (!empty(get_field('selected_internships')) && $intershipQry->have_posts()) :
+                    $intCount = 1; 
                     while ($intershipQry->have_posts()) : $intershipQry->the_post();
                         $postTitle = get_the_title();
                         
@@ -978,43 +985,28 @@ get_header();
               <div class="row">
                 <div class="col-lg-12 ">
                   <div class="heading-area text-center mb-4">
-                    <h2 class="fw-semibold mb-3">More Than a Certificate It’s a Launchpad</h2>
+                    <h2 class="fw-semibold mb-3"><?php echo get_field('more_than_a_certificate_it’s_a_launchpad_title'); ?></h2>
                   </div>
                 </div>
               </div>
                 <div class="row">
-                  <div class="col-12 col-md-6 col-lg-4 mb-4">
+                  <?php if(have_rows('more_than_a_certificate_icon_rows')): ?>
+                    <?php while(have_rows('more_than_a_certificate_icon_rows')): the_row(); ?>
+                        <div class="col-12 col-md-6 col-lg-4 mb-4">
                       <div class="careerarea1 bg-white p-3 d-flex rounded-2 theme-box-shadow gap-3 align-items-center">
                         <div class="careerarea-icon">
-                          <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/more1.png" class="img-fluid" />
+                          <img src="<?php echo get_sub_field('icon'); ?>" class="img-fluid" />
                         </div>
                         <div class="careerarea-text">
-                          <h6 class="fw-normal">Opportunity to transition into full-time training or job support programs</h6>
+                          <h6 class="fw-normal"><?php echo get_sub_field('text'); ?></h6>
                         </div>
                       </div>
                   </div>
-                  <div class="col-12 col-md-6 col-lg-4 mb-4">
-                      <div class="careerarea1 bg-white p-3 d-flex rounded-2 theme-box-shadow gap-3 align-items-center">
-                        <div class="careerarea-icon">
-                          <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/more2.png" class="img-fluid" />
-                        </div>
-                        <div class="careerarea-text">
-                          <h6 class="fw-normal">Add credibility to your resume and LinkedIn</h6>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="col-12 col-md-6 col-lg-4 mb-4">
-                      <div class="careerarea1 bg-white p-3 d-flex rounded-2 theme-box-shadow gap-3 align-items-center">
-                        <div class="careerarea-icon">
-                          <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/more3.png" class="img-fluid" />
-                        </div>
-                        <div class="careerarea-text">
-                          <h6 class="fw-normal">Certified internship letter + performance evaluation</h6>
-                        </div>
-                      </div>
-                  </div>
+                    <?php endwhile; ?>
+                  <?php endif; ?>
+                  
                   <div class="col-12 col-md-12 col-lg-12 text-center">
-                    <h6>Ready to Begin Your Internship Journey?</h6>
+                    <h6><?php echo get_field('ready_to_begin_your_internship_journey'); ?></h6>
                     <a href="<?php echo home_url('internship'); ?>" class="btn btn-primary mt-2">Apply for Internship</a>
                   </div>
                 </div>
@@ -1028,7 +1020,7 @@ get_header();
           ?>
           <!-- End FAQ Section -->
         </div>
-        <div id="industrysection" class="contentarea">
+        <div id="academic-collaborations" class="contentarea <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'academic-collaborations') ? 'active' : ''; ?>">
             <!-- Partner Section -->
             <?php
             $academic_slug = 'academic-partner';
@@ -1063,7 +1055,6 @@ get_header();
                                             <img src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'medium')); ?>" alt="<?php the_title_attribute(); ?>" class="img-fluid">
                                         <?php endif; ?>
                                         <p><?php the_title(); ?></p>
-                                        <button type="button">Verify Authorisation</button>
                                     </div>
                                 </div>
                             <?php endwhile; wp_reset_postdata(); ?>
@@ -1071,8 +1062,8 @@ get_header();
 
                         <?php if ($academic_total > 8): ?>
                             <div class="col-12 col-lg-12 text-center">
-                                <div class="text-secondary fw-medium mb-3"><?php echo esc_html($academic_total - 8); ?> more programs available</div>
-                                <a href="<?php echo esc_url(get_term_link($academic_slug, 'partner-type')); ?>" class="btn btn-outline-primary rounded-pill btn-sm">View More</a>
+                                <div class="text-secondary fw-medium mb-3"><?php echo esc_html($academic_total - 8); ?> more academic partners available</div>
+                                <a href="<?php echo esc_url(get_term_link($academic_slug, 'partner-type')); ?>" class="btn btn-secondary rounded-pill btn-sm">Load More</a>
                             </div>
                         <?php endif; ?>
                     </div>
@@ -1086,94 +1077,91 @@ get_header();
                 <div class="row justify-content-center">
                   <div class="col-12 col-lg-12 col-xl-10">
                     <div class="heading-area text-lg-center">
-                      <h2 class="fw-bold mb-3 ">Bringing Industry-Relevant Training to Classrooms</h2>
-                      <p>"We collaborate with colleges and universities to provide specialized programs that go beyond the traditional academic curriculum, empowering students with technical skills, certifications, and real-world exposure</p>
+                      <h2 class="fw-bold mb-3 "><?php echo get_field('bringing_industry-relevant_training_to_classrooms_title'); ?></h2>
+                      <p><?php echo get_field('bringing_industry-relevant_training_to_classrooms_subheading'); ?></p>
                     </div>
                   </div>
                 </div>
-                <div class="row justify-content-center py-4 py-lg-5">
-                  <div class="col-12 col-lg-6 mb-3 mb-lg-0">
-                      <div class="content-area">
-                        <h4 class="mb-2 mb-lg-3 fw-semibold">Customized Training Programs</h4>
-                        <p>Every institution has unique goals and timelines. Grras Solutions customizes its programs to suit specific academic needs, offering</p>
-                        <div class="info-card p-3 bg-white mb-3 rounded theme-box-shadow wow fadeInUp">
-                            <div class="d-flex align-items-center">
-                              <div class="card-icon bg-theme-light p-2 rounded-pill me-3">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/calendar.png" class="img-fluid" />
-                              </div>
-                              <div class="card-data">
-                                  <h5>Flexible Timeframes</h5>
-                                  <p class="mb-0">From intensive one-week boot camps to in-depth, multi-month programs.</p>
-                              </div>
-                            </div>
+                <?php if (have_rows('bringing_industry_sections')): ?>
+                  <?php $index = 0; ?>
+                  <?php while (have_rows('bringing_industry_sections')): the_row(); ?>
+                    <?php
+                      $section_title = get_sub_field('section_title');
+                      $section_description = get_sub_field('section_description');
+                      $section_image = get_sub_field('section_image'); // Image field (Array)
+                      //$section_rows = get_sub_field('section_rows');
+                      $is_even = $index % 2 !== 0;
+                    ?>
+                
+                    <div class="row justify-content-center py-4 py-lg-5">
+                      <?php if (!$is_even): ?>
+                        <!-- Text Left | Image Right -->
+                        <div class="col-12 col-lg-6 mb-3 mb-lg-0">
+                          <div class="content-area">
+                            <h4 class="mb-2 mb-lg-3 fw-semibold"><?php echo esc_html($section_title); ?></h4>
+                            <p><?php echo esc_html($section_description); ?></p>
+                
+                            <?php if (have_rows('section_rows')): ?>
+                              <?php while (have_rows('section_rows')): the_row(); ?>
+                                <div class="info-card p-3 bg-white mb-3 rounded theme-box-shadow wow fadeInUp">
+                                  <div class="d-flex align-items-center">
+                                    <div class="card-icon bg-theme-light p-2 rounded-pill me-3">
+                                      <img src="<?php echo esc_url(get_sub_field('row_icon')); ?>" class="img-fluid" />
+                                    </div>
+                                    <div class="card-data">
+                                      <h5><?php echo esc_html(get_sub_field('row_title')); ?></h5>
+                                      <p class="mb-0"><?php echo esc_html(get_sub_field('row_description')); ?></p>
+                                    </div>
+                                  </div>
+                                </div>
+                              <?php endwhile; ?>
+                            <?php endif; ?>
+                          </div>
                         </div>
-                        <div class="info-card p-3 bg-white rounded theme-box-shadow wow fadeInUp">
-                            <div class="d-flex align-items-center">
-                              <div class="card-icon bg-theme-light p-2 rounded-pill me-3">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/teams.png" class="img-fluid" />
-                              </div>
-                              <div class="card-data">
-                                  <h5>Industry-Aligned Training</h5>
-                                  <p class="mb-0">Our courses seamlessly integrate with traditional syllabi, equipping students with practical, job-ready skills.</p>
-                              </div>
-                            </div>
+                        <div class="col-12 col-lg-6">
+                          <div class="img-area">
+                            <?php if (!empty($section_image)): ?>
+                              <img src="<?php echo esc_url($section_image['url']); ?>" alt="<?php echo esc_attr($section_title); ?>" class="img-fluid" />
+                            <?php endif; ?>
+                          </div>
                         </div>
-                      </div>
-                  </div>
-                  <div class="col-12 col-lg-6">
-                    <div class="img-area">
-                      <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/figure-1.png" class="img-fluid" />
+                      <?php else: ?>
+                        <!-- Image Left | Text Right -->
+                        <div class="col-12 col-lg-6 order-2 order-lg-1">
+                          <div class="img-area">
+                            <?php if (!empty($section_image)): ?>
+                              <img src="<?php echo esc_url($section_image['url']); ?>" alt="<?php echo esc_attr($section_title); ?>" class="img-fluid" />
+                            <?php endif; ?>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 order-1 order-lg-2">
+                          <div class="content-area">
+                            <h4 class="mb-2 mb-lg-3 fw-semibold"><?php echo esc_html($section_title); ?></h4>
+                            <p><?php echo esc_html($section_description); ?></p>
+                
+                            <?php if ($section_rows): ?>
+                              <?php foreach ($section_rows as $row): ?>
+                                <div class="info-card p-3 bg-white mb-3 rounded theme-box-shadow wow fadeInUp">
+                                  <div class="d-flex align-items-center">
+                                    <div class="card-icon bg-theme-light p-2 rounded-pill me-3">
+                                      <img src="<?php echo esc_url($row['row_icon']); ?>" class="img-fluid" />
+                                    </div>
+                                    <div class="card-data">
+                                      <h5><?php echo esc_html($row['row_title']); ?></h5>
+                                      <p class="mb-0"><?php echo esc_html($row['row_description']); ?></p>
+                                    </div>
+                                  </div>
+                                </div>
+                              <?php endforeach; ?>
+                            <?php endif; ?>
+                          </div>
+                        </div>
+                      <?php endif; ?>
                     </div>
-                  </div>
-                </div>
-                <div class="row justify-content-center py-4 py-lg-5">
-                  <div class="col-12 col-lg-6 order-2 order-lg-1">
-                    <div class="img-area">
-                      <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/figure-2.png" class="img-fluid" />
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-6 order-1 order-lg-2">
-                      <div class="content-area">
-                        <h4 class="mb-2 mb-lg-3 fw-semibold">Partnering for Long-Term Growth</h4>
-                        <p>We go beyond individual sessions or workshops, fostering long-term partnerships with academic institutions for mutual growth.</p>
-                        <div class="info-card p-3 bg-white mb-3 rounded theme-box-shadow wow fadeInUp">
-                            <div class="d-flex align-items-center">
-                              <div class="card-icon bg-theme-light p-2 rounded-pill me-3">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/learning.png" class="img-fluid" />
-                              </div>
-                              <div class="card-data">
-                                  <h5>Joint Curriculum Development</h5>
-                                  <p class="mb-0">Co-creating curricula that balance academic goals with industry requirements.</p>
-                              </div>
-                            </div>
-                        </div>
-                        <div class="info-card p-3 bg-white rounded theme-box-shadow wow fadeInUp">
-                            <div class="d-flex align-items-center">
-                              <div class="card-icon bg-theme-light p-2 rounded-pill me-3">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/desk.png" class="img-fluid" />
-                              </div>
-                              <div class="card-data">
-                                  <h5>Faculty Development Programs</h5>
-                                  <p class="mb-0">Helping educators stay updated with emerging technologies and modern teaching methodologies.</p>
-                              </div>
-                            </div>
-                        </div>
-                      </div>
-                  </div>
-                </div>
-                <div class="row justify-content-center align-items-center">
-                  <div class="col-12 col-lg-6 order-1 order-lg-2">
-                      <div class="content-area">
-                        <h4 class="mb-2 mb-lg-3 fw-semibold">Engagement Beyond the Classroom</h4>
-                        <p>Our partnerships extend beyond textbooks. Through hackathons, competitions, and live projects, we provide students with platforms to test their skills, solve real-world challenges, and showcase their talent.</p>
-                      </div>
-                  </div>
-                  <div class="col-12 col-lg-6 order-2 order-lg-2">
-                    <div class="img-area">
-                      <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/figure-3.png" class="img-fluid" />
-                    </div>
-                  </div>
-                </div>
+                    <?php $index++; ?>
+                  <?php endwhile; ?>
+                <?php endif; ?>
+
               </div>
             </div>
             <!-- End Industry Section -->
@@ -1367,7 +1355,7 @@ get_header();
                   <div class="col-md-10">
                     <div class="tab-content" id="v-pills-tabContent">
                       <div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-tab" tabindex="0">
-                        <div class="owl-carousel video-review-2">
+                        <div class="owl-carousel video-review">
                             <?php
                   $choose_student_review = get_field('choose_student_review');
                   if ($choose_student_review):
@@ -1408,7 +1396,7 @@ get_header();
                         </div>
                       </div>
                       <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab" tabindex="0">
-                        <div class="owl-carousel video-review-2">
+                        <div class="owl-carousel video-review">
                             <?php
                   $choose_collage_collaboration_review= get_field('choose_collage_collaboration_review');
                   if($choose_collage_collaboration_review):
@@ -1458,7 +1446,7 @@ get_header();
                         </div>
                       </div>
                       <div class="tab-pane fade" id="college" role="tabpanel" aria-labelledby="college-tab" tabindex="0">
-                        <div class="owl-carousel video-review-2">
+                        <div class="owl-carousel video-review">
                             <?php
                   $choose_corporate_success_review = get_field('choose_corporate_success_review');
                   if ($choose_corporate_success_review):
@@ -1529,7 +1517,7 @@ get_header();
                   </div>
                   <div class="col-12 col-lg-5">
                       <div class="innovation-slider">
-                        <div class="owl-carousel innovation-slider-area">
+                        <div class="owl-carousel innovation-slider-area1">
                           <div class="item">
                             <div class="row gx-3">
                               <div class="col-6 mb-3">
@@ -1612,24 +1600,39 @@ get_header();
             ?>
             <!-- End FAQ Section -->
         </div>
-        <div id="awardsection" class="contentarea">
+        <div id="masterclasses" class="contentarea <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'masterclasses') ? 'active' : ''; ?>">
           <!-- The Summer Training program 2023 Provides -->
           <div class="thesummer wow fadeInUp bg-transparent bg-image-none">
             <div class="container">
               <div class="row">
                 <div class="col-lg-12">
                   <div class="heading-area text-center mb-4">
-                    <h2 class="fw-semibold mb-3">Master New Tech, Every Week</h2>
-                    <p>Each week, we organize a diverse range of masterclasses covering high-demand technologies and real-world applications. These sessions help learners go beyond the curriculum and gain advanced knowledge that keeps them industry-ready.</p>
-                    <h5 class="fw-semibold">Ready to Begin Your Internship Journey?</h5>
+                    <h2 class="fw-semibold mb-3"><?php echo get_field('master_new_tech_every_week_title'); ?></h2>
+                    <p><?php echo get_field('master_new_tech_every_week_description'); ?></p>
+                    <h5 class="fw-semibold"><?php echo get_field('ready_to_begin_your_internship_journey_masterclasses'); ?></h5>
                   </div>
                 </div>
               </div>
               <div class="row g-3">
+                <?php
+                $args = array(
+                'post_type'      => 'courses',
+                'post_status'    => 'publish',
+                'post__in'       => get_field('masterclasses_courses'),
+                'posts_per_page' => 9,
+                'orderby' => 'date',
+                'order' => 'DESC'
+                );
+
+                $courseQuery = new WP_Query($args);
+                if(!empty(get_field('masterclasses_courses')) && $courseQuery->have_posts()):
+                    $count = 1;
+                    while ($courseQuery->have_posts()) : $courseQuery->the_post();
+                ?>
                 <div class="col-6 col-sm-6 col-lg-4">
-                    <div class="d-flex align-items-center gap-1 gap-md-3 p-2 p-md-3 explorearea explore-1">
+                    <div class="d-flex align-items-center gap-1 gap-md-3 p-2 p-md-3 explorearea explore-<?php echo $count; ?>">
                       <div class="iconarea d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="37" viewBox="0 0 36 37" fill="none">
+                        <!--<svg xmlns="http://www.w3.org/2000/svg" width="36" height="37" viewBox="0 0 36 37" fill="none">
                           <path d="M32.3628 20.1904V19.0086C32.689 19.0086 32.9538 18.7441 32.9538 18.4177V14.8722C32.9538 14.5458 32.689 14.2813 32.3628 14.2813H29.1719L29.0575 13.8374C28.7962 12.8223 28.3904 11.8498 27.8519 10.9503L27.6156 10.5549L29.881 8.28544C30.1091 8.05693 30.1091 7.68668 29.881 7.45817L27.3715 4.94497C27.1398 4.72407 26.7758 4.72407 26.544 4.94497L24.2743 7.21465L23.8792 6.97828C22.9783 6.43954 22.0049 6.03376 20.9883 5.77224L20.5447 5.65682V2.46316C20.5447 2.13677 20.2802 1.87224 19.9538 1.87224H16.4084C16.0819 1.87224 15.8174 2.13677 15.8174 2.46316V5.65406L15.3736 5.76877C14.3584 6.02983 13.386 6.43563 12.486 6.97344L12.0905 7.21003L9.82155 4.94497C9.58958 4.72222 9.22328 4.72222 8.99131 4.94497L6.4811 7.45447C6.37076 7.56458 6.30867 7.71415 6.30867 7.86996C6.30867 8.02599 6.37076 8.17534 6.4811 8.28544L8.75078 10.5549L8.51443 10.9503C7.97615 11.8498 7.57012 12.8223 7.30906 13.8374L7.19319 14.2813H3.99929C3.6729 14.2813 3.40838 14.5458 3.40838 14.8722V18.4177C3.40838 18.7441 3.6729 19.0086 3.99929 19.0086V20.1904C3.02036 20.1904 2.22656 19.3966 2.22656 18.4177V14.8722C2.22656 13.8933 3.02036 13.0995 3.99929 13.0995H6.28559C6.52934 12.2824 6.85896 11.4934 7.2689 10.746L5.6439 9.12102C5.31152 8.78933 5.12478 8.33923 5.12478 7.86996C5.12478 7.4007 5.31152 6.95059 5.6439 6.61913L8.15526 4.10777C8.85489 3.43815 9.95796 3.43815 10.6577 4.10777L12.2822 5.73208C13.0296 5.32236 13.8188 4.99344 14.6357 4.74992V2.46316C14.6357 1.48423 15.4294 0.69043 16.4084 0.69043H19.9538C20.9327 0.69043 21.7266 1.48423 21.7266 2.46316V4.74992C22.5436 4.99344 23.3324 5.32305 24.08 5.73277L25.705 4.10777C26.4049 3.43815 27.5077 3.43815 28.2076 4.10777L30.7185 6.61844C31.0507 6.95012 31.2372 7.39977 31.2372 7.86927C31.2372 8.33876 31.0507 8.78887 30.7185 9.12033L29.0935 10.7453C29.5032 11.4932 29.8325 12.2824 30.0766 13.0995H32.3628C33.3418 13.0995 34.1356 13.8933 34.1356 14.8722V18.4177C34.1356 19.3966 33.3418 20.1904 32.3628 20.1904Z" fill="#1B75E8"/>
                           <path d="M26.4556 16.6443H25.2738C25.2738 12.7281 22.099 9.5534 18.1829 9.5534C14.2667 9.5534 11.0919 12.7281 11.0919 16.6443H9.91016C9.91016 12.0754 13.6139 8.37158 18.1829 8.37158C22.7515 8.37158 26.4556 12.0754 26.4556 16.6443Z" fill="#1B75E8"/>
                           <path d="M18.1822 21.3726C16.2241 21.3726 14.6367 19.785 14.6367 17.8272C14.6367 15.8691 16.2241 14.2817 18.1822 14.2817C20.1405 14.2817 21.7276 15.8691 21.7276 17.8272C21.7255 19.7845 20.1395 21.3705 18.1822 21.3726ZM18.1822 15.4635C16.8768 15.4635 15.8185 16.5218 15.8185 17.8272C15.8185 19.1325 16.8768 20.1908 18.1822 20.1908C19.4874 20.1908 20.5458 19.1325 20.5458 17.8272C20.5458 16.5218 19.4874 15.4635 18.1822 15.4635Z" fill="#1B75E8"/>
@@ -1637,140 +1640,15 @@ get_header();
                           <path d="M8.13529 23.7359C6.17721 23.7359 4.58984 22.1483 4.58984 20.1905C4.58984 18.2324 6.17721 16.645 8.13529 16.645C10.0936 16.645 11.6808 18.2324 11.6808 20.1905C11.6786 22.1478 10.0927 23.7338 8.13529 23.7359ZM8.13529 17.8268C6.82999 17.8268 5.77166 18.8851 5.77166 20.1905C5.77166 21.4957 6.82999 22.5541 8.13529 22.5541C9.44057 22.5541 10.4989 21.4957 10.4989 20.1905C10.4989 18.8851 9.44057 17.8268 8.13529 17.8268Z" fill="#1B75E8"/>
                           <path d="M33.5847 25.2519C32.7041 24.6467 31.6601 24.3238 30.5914 24.3268H25.8641C25.5767 24.3294 25.2898 24.3555 25.0066 24.4047C24.6285 23.8133 24.1367 23.3032 23.5596 22.9032C23.4731 22.8378 23.3821 22.7784 23.2872 22.7261C22.4607 22.2254 21.5122 21.9618 20.5459 21.9632H15.8187C14.0116 21.9567 12.3277 22.8789 11.3597 24.4047C11.0758 24.3555 10.7883 24.3294 10.5005 24.3268H5.77325C4.70546 24.3238 3.66168 24.6463 2.78154 25.2508C1.3269 26.2406 0.456001 27.8857 0.455078 29.645V32.0086C0.457156 33.6221 1.39592 35.0874 2.86141 35.7632C3.40246 36.0181 3.9936 36.1484 4.59144 36.145H10.5005V34.9632H5.18234V28.4632H4.00052V34.9038C3.77801 34.8593 3.56196 34.7873 3.35699 34.6901C2.3102 34.2075 1.6392 33.1611 1.63689 32.0086V29.645C1.63828 28.2758 2.31667 26.9959 3.44863 26.2258C4.13256 25.7564 4.94344 25.5063 5.77325 25.5086H10.5005C10.6047 25.5086 10.705 25.5197 10.8066 25.5266C10.6067 26.0903 10.5031 26.6835 10.5005 27.2814V33.1905C10.5026 34.8215 11.8243 36.1429 13.455 36.145H15.2277V26.6905H14.046V34.9632H13.455C12.4761 34.9632 11.6823 34.1694 11.6823 33.1905V27.2814C11.6823 24.9967 13.5344 23.145 15.8187 23.145H20.5459C21.3062 23.1455 22.0514 23.356 22.6998 23.753C22.7598 23.7858 22.8175 23.8228 22.8722 23.8634C23.4259 24.2425 23.8804 24.7493 24.1971 25.3406C24.5154 25.938 24.6823 26.6043 24.6823 27.2814V33.1905C24.6823 34.1694 23.8885 34.9632 22.9096 34.9632H22.3187V26.6905H21.1369V36.145H22.9096C24.5406 36.1429 25.8621 34.8215 25.8641 33.1905V27.2814C25.8614 26.6835 25.7582 26.0905 25.5585 25.5266C25.6603 25.5197 25.7607 25.5086 25.8641 25.5086H30.5914C31.4216 25.5063 32.2333 25.757 32.9176 26.2269C34.0486 26.9974 34.7262 28.2765 34.7277 29.645V32.0086C34.7256 33.1653 34.0496 34.2146 32.9977 34.6947C32.7957 34.7903 32.5829 34.8605 32.3641 34.9038V28.4632H31.1823V34.9632H25.8641V36.145H31.7732C32.3675 36.1487 32.9553 36.0199 33.4933 35.7678C34.9636 35.094 35.9072 33.626 35.9095 32.0086V29.645C35.9086 27.8864 35.0384 26.242 33.5847 25.2519Z" fill="#1B75E8"/>
                           <path d="M15.8164 34.9624H20.5436V36.1442H15.8164V34.9624Z" fill="#1B75E8"/>
-                        </svg>
+                        </svg>-->
+                        <?php echo get_field('course_svg_icon'); ?>
                       </div>
                       <div class="headarea">
-                        <h6 class="mb-0">Data Science & Machine Learning</h6>
+                        <h6 class="mb-0"><?php echo get_the_title(); ?></h6>
                       </div>
                     </div>
                 </div>
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <div class="d-flex align-items-center gap-1 gap-md-3 p-2 p-md-3 explorearea explore-2">
-                      <div class="iconarea d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="37" viewBox="0 0 36 37" fill="none">
-                          <path d="M31.1277 26.6905C31.3154 25.6942 31.3106 24.6713 31.1136 23.6769L33.8199 17.1456C33.8202 17.1413 33.8202 17.1369 33.8199 17.1326C34.2585 15.9319 34.9012 14.8161 35.7196 13.8341C35.9233 13.619 36.0052 13.316 35.9377 13.0275L34.828 8.23533C34.8148 8.18523 34.7949 8.13713 34.7689 8.09233C34.7641 8.08346 34.7624 8.07283 34.7577 8.06455C34.753 8.05628 34.7322 8.03619 34.7204 8.02083C34.6962 7.98542 34.6683 7.95273 34.6371 7.92333C34.6166 7.90887 34.595 7.89584 34.5727 7.88433C34.5439 7.86312 34.5133 7.84453 34.4811 7.82879C34.4366 7.81195 34.3902 7.80064 34.3429 7.7951C34.3293 7.7951 34.3174 7.78624 34.3039 7.78505C34.1906 7.77751 34.0776 7.80274 33.9783 7.85773C33.9694 7.86247 33.9588 7.86424 33.9499 7.86956H33.944L29.7716 10.4737C29.5189 10.6301 29.3621 10.9034 29.3544 11.2005C29.2386 12.4763 28.9024 13.7225 28.3611 14.8836V14.8901L27.0085 18.1596C26.3447 17.8066 25.634 17.55 24.8979 17.3973C25.1765 15.4739 25.279 13.5291 25.2039 11.5869C26.3039 10.2671 26.8318 8.56308 26.6706 6.85261C26.3012 3.40881 23.1889 0.921688 23.056 0.817098C22.8561 0.659735 22.5781 0.6479 22.3656 0.787718C22.1531 0.927535 22.054 1.18763 22.1194 1.43341C22.4237 2.57622 22.1601 3.78226 19.9123 6.26229C18.9024 7.23746 18.5823 8.72643 19.1022 10.0305C19.301 10.5292 19.5858 10.9893 19.9437 11.3895C19.8006 12.3025 19.6884 13.1671 19.611 14.0091C19.4777 15.4018 19.4433 16.8022 19.5081 18.1997C18.981 18.4856 18.4875 18.8294 18.0369 19.225L15.1709 6.96961C15.1709 6.9572 15.1591 6.94833 15.1556 6.9371C15.146 6.89771 15.1321 6.85947 15.1142 6.82306L12.1869 1.41687C11.8939 0.875758 11.275 0.597699 10.6759 0.738017C10.0768 0.878334 9.64575 1.4023 9.6235 2.01723L9.40133 8.15969C9.40148 8.20402 9.40643 8.2482 9.41609 8.29146C9.41609 8.30092 9.41609 8.30919 9.41609 8.31805L12.3399 20.7962C11.8787 20.8166 11.4208 20.8849 10.9737 21L7.75743 13.2327C7.49953 12.6389 6.81549 12.3587 6.21517 12.6009L1.29943 14.636C0.697807 14.8871 0.411899 15.577 0.659476 16.1801L5.02154 26.7029C2.46499 26.8371 0.480534 28.9832 0.546521 31.5424C0.612507 34.1016 2.70493 36.1427 5.26499 36.145H31.2649C32.9537 36.1205 34.5012 35.1968 35.3245 33.722C36.1477 32.2471 36.1216 30.4451 35.2559 28.9948C34.3903 27.5444 32.8166 26.666 31.1277 26.6905ZM30.5256 11.3955L33.0027 9.84967L32.1258 11.9675C32.0008 12.269 32.144 12.6148 32.4455 12.7398C32.747 12.8648 33.0928 12.7217 33.2178 12.4201L34.0947 10.3023L34.7512 13.1463C34.0488 14.0033 33.4718 14.9557 33.0376 15.975C32.4215 16.2606 31.7141 16.2754 31.0865 16.0158C30.4591 15.7563 29.9687 15.2461 29.7344 14.6088C30.1494 13.5807 30.4158 12.4987 30.5256 11.3955ZM29.1665 16.0347C29.5575 16.5126 30.0647 16.882 30.6396 17.1072C31.0966 17.3037 31.5881 17.4074 32.0856 17.4121C32.2053 17.4117 32.3249 17.4043 32.4437 17.3902L30.5581 21.9402C29.9935 20.6953 29.12 19.6154 28.0208 18.8031L29.1665 16.0347ZM21.0712 11.8145L24.0399 11.9958C24.0581 12.5478 24.0516 13.1186 24.0333 13.6983C23.0444 13.7689 22.0505 13.7209 21.0729 13.5553C20.9985 13.5447 20.9258 13.5363 20.8519 13.5263C20.911 12.9697 20.983 12.4059 21.0699 11.8145H21.0712ZM20.7893 7.05588C22.3582 5.32512 23.1712 3.99381 23.3603 2.74226C24.488 3.90254 25.2324 5.38099 25.4929 6.97788C25.617 8.36804 25.1872 9.75093 24.2969 10.8258C23.1296 10.7549 21.9752 10.684 20.8336 10.6131C20.343 10.1546 20.0609 9.51566 20.0523 8.8442C20.0437 8.17275 20.3094 7.52685 20.788 7.05588H20.7893ZM20.7444 14.7039L20.9157 14.7264C21.6772 14.8441 22.4457 14.9096 23.2162 14.922C23.4608 14.922 23.7184 14.9025 23.9766 14.8824C23.9229 15.6429 23.8347 16.4371 23.7231 17.2579C23.5772 17.2502 23.4342 17.236 23.2876 17.236C22.3955 17.2376 21.51 17.3901 20.6687 17.6869C20.6414 16.692 20.6664 15.6963 20.7432 14.7039H20.7444ZM16.1737 21.614L14.4831 14.4127C14.4041 14.1002 14.0893 13.9088 13.7755 13.9823C13.4617 14.0557 13.2647 14.3671 13.3327 14.6821L14.8518 21.1637C14.4342 21.0144 14.0027 20.9069 13.5637 20.8429L10.9702 9.77521C11.3335 9.94061 11.728 10.0265 12.1272 10.0269C12.1644 10.0269 12.204 10.0216 12.2418 10.0199L12.6596 11.8038C12.7046 12.0126 12.8588 12.1809 13.0629 12.2439C13.267 12.3069 13.4892 12.2548 13.6441 12.1078C13.799 11.9606 13.8624 11.7414 13.8101 11.5344L13.3917 9.74924C13.7926 9.5717 14.1463 9.30254 14.424 8.96332L17.0606 20.2372C16.7182 20.6643 16.421 21.1257 16.1737 21.614ZM12.5633 8.79137C11.8076 8.93793 11.0359 8.62897 10.5903 8.00133L10.6652 5.92016C10.8709 5.95856 11.0795 5.97833 11.2887 5.97925C11.4907 5.9801 11.6922 5.95769 11.889 5.91248C12.2876 5.80779 12.6605 5.62235 12.9846 5.36766L13.9797 7.20419C13.8611 7.96618 13.3068 8.58783 12.5633 8.79255V8.79137ZM10.9448 1.88841C11.0253 1.86976 11.1083 1.90695 11.148 1.97941L12.4149 4.32235C12.1864 4.5291 11.9135 4.68071 11.6172 4.76553C11.3144 4.82111 11.0029 4.80636 10.7066 4.72239L10.803 2.05977C10.8062 1.9772 10.8642 1.90701 10.9448 1.88841ZM6.66839 13.6905L7.11984 14.7814L4.93349 15.6866C4.6743 15.7955 4.52767 16.0719 4.58289 16.3475C4.6381 16.6232 4.87988 16.8217 5.161 16.8223C5.23863 16.8222 5.31549 16.8069 5.38731 16.7775L7.57366 15.8716L8.02571 16.9636L6.93193 17.4168C6.67126 17.5247 6.5232 17.8018 6.57842 18.0785C6.63364 18.3551 6.87672 18.5542 7.15884 18.5538C7.23628 18.5534 7.31293 18.5382 7.38457 18.5088L8.47834 18.0556L8.93038 19.1476L6.74226 20.0546C6.48158 20.1625 6.33352 20.4396 6.38873 20.7163C6.44396 20.9929 6.68705 21.1919 6.96916 21.1915C7.0466 21.1913 7.12326 21.1761 7.19489 21.1466L9.38124 20.2413L9.85927 21.3954C7.93376 22.2743 6.52179 23.9928 6.03317 26.0523L1.75029 15.7256L6.66839 13.6905ZM31.2649 34.9632H5.26499C3.3069 34.9632 1.71956 33.3758 1.71956 31.4177C1.71956 29.4597 3.3069 27.8723 5.26499 27.8723C5.60738 27.8711 5.94806 27.9205 6.27603 28.0189C6.45321 28.0723 6.64523 28.0398 6.79483 27.9308C6.94443 27.8218 7.03433 27.649 7.03771 27.464C7.07974 25.358 8.29716 23.4529 10.1906 22.5299C12.084 21.607 14.3347 21.8217 16.0195 23.086C16.1683 23.1968 16.3607 23.2312 16.5387 23.1789C16.7168 23.1267 16.86 22.9937 16.9254 22.8201C18.0798 19.7433 21.2705 17.9336 24.5036 18.5216C27.7368 19.1097 30.0859 21.927 30.083 25.2132C30.0841 25.889 29.9835 26.5611 29.7846 27.207C29.7225 27.4079 29.7719 27.6267 29.9142 27.7814C30.0567 27.9363 30.2705 28.0037 30.476 27.9586C30.7351 27.9015 30.9996 27.8726 31.2649 27.8723C33.2229 27.8723 34.8102 29.4597 34.8102 31.4177C34.8102 33.3758 33.2229 34.9632 31.2649 34.9632Z" fill="#FF6881"/>
-                          <path d="M23.3999 9.96718C23.5853 9.96789 23.7604 9.88147 23.8726 9.73371C24.6103 8.73526 24.8954 7.47313 24.6585 6.25449C24.6081 6.04613 24.4488 5.8814 24.2422 5.82404C24.0357 5.76669 23.8143 5.82572 23.6637 5.97828C23.5131 6.13084 23.4569 6.353 23.5169 6.55881C23.6583 7.42474 23.4472 8.31127 22.9307 9.02052C22.7964 9.19958 22.7748 9.43914 22.8749 9.63931C22.975 9.83954 23.1796 9.96594 23.4034 9.96594L23.3999 9.96718Z" fill="#FF6881"/>
-                          <path d="M22.6194 27.8717C22.1799 27.8731 21.7466 27.9741 21.3519 28.1672C20.2889 26.7126 18.304 26.2865 16.7377 27.1766C15.1713 28.0667 14.5215 29.9899 15.2271 31.6476C15.32 31.8655 15.534 32.007 15.7708 32.0069C15.8504 32.0071 15.9292 31.991 16.0024 31.9596C16.1466 31.8982 16.2604 31.782 16.319 31.6366C16.3775 31.4913 16.3758 31.3285 16.3144 31.1843C16.1858 30.8845 16.1194 30.5616 16.1194 30.2354C16.1194 28.9299 17.1776 27.8717 18.483 27.8717C19.3998 27.8672 20.2349 28.3985 20.6191 29.2309C20.632 29.2501 20.6457 29.2686 20.6605 29.2863C20.6698 29.3066 20.6803 29.3263 20.6918 29.3455C20.7024 29.3585 20.7178 29.3643 20.7296 29.3768C20.7574 29.4056 20.788 29.4313 20.8212 29.4536C20.8507 29.4763 20.8824 29.4961 20.9158 29.5127C20.9501 29.5271 20.9857 29.5382 21.0221 29.5458C21.0585 29.5554 21.0957 29.561 21.1332 29.5629C21.21 29.5623 21.2862 29.5495 21.359 29.5251C21.3747 29.5222 21.3902 29.5185 21.4057 29.5139C21.4248 29.5015 21.4432 29.4878 21.4606 29.4731C21.4819 29.4636 21.5025 29.453 21.5227 29.4412C21.833 29.1902 22.2201 29.0533 22.6194 29.0536C23.3103 29.0546 23.9376 29.4571 24.2266 30.0847C24.362 30.3816 24.7126 30.5126 25.0095 30.3772C25.3066 30.2418 25.4375 29.8912 25.302 29.5943C24.8209 28.5454 23.7732 27.8728 22.6194 27.8717Z" fill="#FF6881"/>
-                          <path d="M10.9894 23.7658C10.9002 23.7947 8.8125 24.5168 8.8125 26.6901C8.8125 27.0165 9.07705 27.2811 9.4034 27.2811C9.72971 27.2811 9.99429 27.0165 9.99429 26.6901C10.0425 25.8658 10.5849 25.1527 11.3664 24.8861C11.6764 24.782 11.8433 24.4463 11.7393 24.1363C11.6351 23.8262 11.2995 23.6593 10.9894 23.7634V23.7658Z" fill="#FF6881"/>
-                          <path d="M19.3029 23.1278C19.3498 23.1397 19.3981 23.1456 19.4465 23.1456C19.7173 23.1452 19.9533 22.9609 20.019 22.6982C20.2911 21.5948 21.2678 20.8099 22.404 20.7819C22.7303 20.7811 22.9942 20.5159 22.9934 20.1895C22.9925 19.8632 22.7273 19.5993 22.401 19.6001C20.7215 19.6223 19.2701 20.7789 18.8733 22.411C18.794 22.7275 18.9863 23.0485 19.3029 23.1278Z" fill="#FF6881"/>
-                        </svg>
-                      </div>
-                      <div class="headarea">
-                        <h6 class="mb-0">UI/UX Design</h6>
-                      </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <div class="d-flex align-items-center gap-1 gap-md-3 p-2 p-md-3 explorearea explore-3">
-                      <div class="iconarea d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="42" height="37" viewBox="0 0 42 37" fill="none">
-                          <path d="M16.8327 26.483C16.681 26.483 16.528 26.4308 16.4033 26.3246L12.1102 22.669C11.962 22.5428 11.877 22.3584 11.877 22.1637C11.877 21.9693 11.9625 21.785 12.1102 21.6587L16.4033 18.0031C16.682 17.7655 17.1007 17.7992 17.3385 18.0779C17.5757 18.357 17.5424 18.7757 17.2633 19.0131L13.5636 22.1637L17.2633 25.3143C17.5424 25.5519 17.5757 25.9706 17.3385 26.2494C17.207 26.4038 17.0204 26.483 16.8327 26.483Z" fill="#00BC65"/>
-                          <path d="M25.3083 26.483C25.1206 26.483 24.934 26.4038 24.8029 26.2494C24.5653 25.9706 24.599 25.5519 24.8777 25.3143L28.5773 22.1637L24.8777 19.0131C24.599 18.7757 24.5653 18.357 24.8029 18.0779C25.0403 17.7992 25.4593 17.7655 25.7378 18.0031L30.0308 21.6587C30.1789 21.785 30.2641 21.9693 30.2641 22.1637C30.2641 22.3584 30.1789 22.5428 30.0308 22.669L25.7378 26.3246C25.613 26.4308 25.4601 26.483 25.3083 26.483Z" fill="#00BC65"/>
-                          <path d="M19.5493 29.2249C19.5037 29.2249 19.4578 29.2201 19.4115 29.2104C19.0532 29.1349 18.8236 28.7828 18.8991 28.4245L21.5747 15.7211C21.6502 15.3628 22.0019 15.1332 22.3607 15.2087C22.7191 15.2842 22.9487 15.6359 22.8732 15.9946L20.1975 28.6981C20.1316 29.0105 19.8561 29.2249 19.5493 29.2249Z" fill="#00BC65"/>
-                          <path d="M36.7073 36.145H5.43105C2.97501 36.145 0.976562 34.1469 0.976562 31.6905V5.14492C0.976562 2.68888 2.97501 0.69043 5.43105 0.69043H36.7073C39.1633 0.69043 41.1618 2.68888 41.1618 5.14492V31.6905C41.1618 34.1469 39.1633 36.145 36.7073 36.145ZM5.43105 2.0173C3.70657 2.0173 2.30343 3.42044 2.30343 5.14492V31.6905C2.30343 33.415 3.70657 34.8181 5.43105 34.8181H36.7073C38.4318 34.8181 39.8349 33.415 39.8349 31.6905V5.14492C39.8349 3.42044 38.4318 2.0173 36.7073 2.0173H5.43105Z" fill="#00BC65"/>
-                          <path d="M40.4984 11.3137H1.64C1.27348 11.3137 0.976562 11.0168 0.976562 10.6503C0.976562 10.2841 1.27348 9.98682 1.64 9.98682H40.4984C40.8649 9.98682 41.1618 10.2841 41.1618 10.6503C41.1618 11.0168 40.8649 11.3137 40.4984 11.3137Z" fill="#00BC65"/>
-                          <path d="M12.3124 8.13898C11.1551 8.13898 10.2129 7.19677 10.2129 6.03946C10.2129 4.88178 11.1551 3.93994 12.3124 3.93994C13.4701 3.93994 14.4119 4.88178 14.4119 6.03946C14.4119 7.19677 13.4701 8.13898 12.3124 8.13898ZM12.3124 5.26681C11.8867 5.26681 11.5398 5.61333 11.5398 6.03946C11.5398 6.46558 11.8867 6.81211 12.3124 6.81211C12.7386 6.81211 13.0851 6.46558 13.0851 6.03946C13.0851 5.61333 12.7386 5.26681 12.3124 5.26681Z" fill="#00BC65"/>
-                          <path d="M5.86319 8.11799C4.70551 8.11799 3.76367 7.17615 3.76367 6.01847C3.76367 4.86079 4.70551 3.91895 5.86319 3.91895C7.02087 3.91895 7.96271 4.86079 7.96271 6.01847C7.96271 7.17615 7.02087 8.11799 5.86319 8.11799ZM5.86319 5.24581C5.43744 5.24581 5.09054 5.59271 5.09054 6.01847C5.09054 6.44459 5.43744 6.79112 5.86319 6.79112C6.28931 6.79112 6.63584 6.44459 6.63584 6.01847C6.63584 5.59271 6.28931 5.24581 5.86319 5.24581Z" fill="#00BC65"/>
-                          <path d="M18.7632 8.15913C17.6059 8.15913 16.6641 7.21729 16.6641 6.05961C16.6641 4.90229 17.6059 3.96045 18.7632 3.96045C19.9209 3.96045 20.8628 4.90229 20.8628 6.05961C20.8628 7.21729 19.9209 8.15913 18.7632 8.15913ZM18.7632 5.28695C18.3375 5.28695 17.9909 5.63348 17.9909 6.05961C17.9909 6.48573 18.3375 6.83225 18.7632 6.83225C19.1894 6.83225 19.5359 6.48573 19.5359 6.05961C19.5359 5.63348 19.1894 5.28695 18.7632 5.28695Z" fill="#00BC65"/>
-                        </svg>
-                      </div>
-                      <div class="headarea">
-                        <h6 class="mb-0">Cybersecurity & Ethical Hacking</h6>
-                      </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-6 col-lg-4">
-                  <div class="d-flex align-items-center gap-1 gap-md-3 p-2 p-md-3 explorearea explore-4">
-                    <div class="iconarea d-flex align-items-center justify-content-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="35" height="37" viewBox="0 0 35 37" fill="none">
-                        <path d="M30.6539 6.33925C31.3577 6.33925 31.9271 5.76983 31.9271 5.06612C31.9271 4.3624 31.3577 3.79297 30.6539 3.79297C29.9503 3.79297 29.3809 4.3624 29.3809 5.06612C29.3809 5.76983 29.9557 6.33925 30.6539 6.33925ZM30.6539 4.70082C30.8581 4.70082 31.0246 4.86735 31.0246 5.07149C31.0246 5.27562 30.8581 5.44215 30.6539 5.44215C30.4445 5.44215 30.2834 5.28099 30.2834 5.07149C30.2834 4.86198 30.4498 4.70082 30.6539 4.70082Z" fill="#F2A700"/>
-                        <path d="M32.0683 1.73535H5.89632C4.90252 1.73535 4.09136 2.5465 4.09136 3.54031V6.2961H2.29715C1.30334 6.2961 0.492188 7.10725 0.492188 8.10105V30.7328C0.492188 31.7266 1.30334 32.5378 2.29715 32.5378H14.2926V35.1485C14.2926 35.3957 14.4967 35.5998 14.7438 35.5998H23.2207C23.4678 35.5998 23.6719 35.3957 23.6719 35.1485V32.5378H28.4691C29.4629 32.5378 30.274 31.7266 30.274 30.7328V27.9771H32.0683C33.062 27.9771 33.8732 27.1659 33.8732 26.1722V3.54031C33.8732 2.5465 33.062 1.73535 32.0683 1.73535ZM4.99384 3.54031C4.99384 3.04072 5.40211 2.63783 5.89632 2.63783H32.0683C32.5678 2.63783 32.9707 3.04609 32.9707 3.54031V7.4994H15.8451L13.8306 5.40973C13.6748 5.24857 13.4599 5.15725 13.2397 5.15725H8.80252C8.35128 5.15725 7.98062 5.52791 7.98062 5.97915V7.4994H4.99384V3.54031ZM2.29715 31.6408C1.79756 31.6408 1.39466 31.2325 1.39466 30.7383V8.10105C1.39466 7.60146 1.80293 7.19858 2.29715 7.19858H4.09136V26.1775C4.09136 27.1713 4.90252 27.9825 5.89632 27.9825H15.6946C15.8719 28.3263 15.9525 28.713 15.9203 29.1105H15.2219C14.7063 29.1105 14.2926 29.5295 14.2926 30.0399V31.6408H2.29715ZM18.5364 22.1916C18.6277 22.0304 18.7942 21.9283 18.9822 21.9283C19.2616 21.9283 19.4872 22.1539 19.4872 22.4333C19.4872 22.6159 19.3905 22.7824 19.2348 22.8738C19.0628 22.9758 18.8587 22.9651 18.6492 22.847C18.6224 22.8308 18.5955 22.8093 18.5847 22.7824C18.4128 22.5085 18.4827 22.2936 18.5364 22.1916ZM18.531 21.1118C18.2033 21.2247 17.924 21.4448 17.7522 21.7565C17.4942 22.2184 17.5265 22.7824 17.8273 23.2659C17.924 23.4164 18.0529 23.5399 18.2087 23.6312C18.4558 23.7709 18.7244 23.8461 18.9877 23.8461C19.2348 23.8461 19.4765 23.7816 19.6913 23.6581C20.1211 23.4056 20.3897 22.9383 20.3897 22.4386C20.3897 21.8209 19.9869 21.2998 19.4335 21.1118V18.7911L23.4248 25.9949C23.4195 26.0002 23.4141 26.011 23.3979 26.0163C21.9852 26.3816 21.0612 27.7031 21.1364 29.1105H16.8335C16.9141 27.6978 15.9847 26.3763 14.5451 25.9733L18.531 18.7911V21.1118ZM22.7695 34.6974H15.1951L15.2219 30.0076H22.7426C22.7587 30.0076 22.7695 30.0184 22.7695 30.0345V34.6974ZM29.3715 30.7328C29.3715 31.2325 28.9632 31.6353 28.4691 31.6353H23.6719V30.0345C23.6719 29.5188 23.2529 29.1052 22.7426 29.1052H22.0443C22.012 28.7077 22.098 28.3209 22.2699 27.9771H29.3715V30.7328ZM32.0683 27.08H23.1455C23.2905 26.9994 23.4463 26.9296 23.6182 26.8866C23.9029 26.8114 24.1339 26.6126 24.2521 26.344C24.365 26.0808 24.3488 25.7853 24.2091 25.5329L19.5893 17.2118C19.4711 16.9916 19.2401 16.8519 18.9877 16.8519C18.7298 16.8573 18.4988 16.9861 18.3753 17.2064L13.75 25.5329C13.6104 25.7853 13.5996 26.0862 13.7125 26.3494C13.8252 26.618 14.0563 26.8114 14.341 26.8866C14.5128 26.9296 14.6633 26.9994 14.8137 27.08H5.89632C5.39674 27.08 4.99384 26.6717 4.99384 26.1775V8.40188H8.05583C8.50707 8.40188 8.87773 8.03122 8.87773 7.57998V6.05973H13.2021L15.2165 8.1494C15.3724 8.31056 15.5872 8.40188 15.8075 8.40188H32.9707V26.1722C32.9707 26.6717 32.5678 27.08 32.0683 27.08Z" fill="#F2A700"/>
-                        <path d="M27.5817 6.33925C28.2855 6.33925 28.8549 5.76983 28.8549 5.06612C28.8549 4.3624 28.2855 3.79297 27.5817 3.79297C26.878 3.79297 26.3086 4.3624 26.3086 5.06612C26.3086 5.76983 26.878 6.33925 27.5817 6.33925ZM27.5817 4.70082C27.7858 4.70082 27.9524 4.86735 27.9524 5.07149C27.9524 5.27562 27.7858 5.44215 27.5817 5.44215C27.3722 5.44215 27.211 5.28099 27.211 5.07149C27.211 4.86198 27.3775 4.70082 27.5817 4.70082Z" fill="#F2A700"/>
-                        <path d="M24.5036 6.33925C25.2073 6.33925 25.7767 5.76983 25.7767 5.06612C25.7767 4.3624 25.2073 3.79297 24.5036 3.79297C23.7999 3.79297 23.2305 4.3624 23.2305 5.06612C23.2305 5.76983 23.7999 6.33925 24.5036 6.33925ZM24.5036 4.70082C24.7078 4.70082 24.8743 4.86735 24.8743 5.07149C24.8743 5.27562 24.7078 5.44215 24.5036 5.44215C24.2941 5.44215 24.133 5.28099 24.133 5.07149C24.133 4.86198 24.2995 4.70082 24.5036 4.70082Z" fill="#F2A700"/>
-                        <path d="M27.6793 12.334C27.4161 12.5973 27.2496 12.9303 27.1852 13.2848H20.8731V12.5757C20.8731 12.0923 20.481 11.7002 19.9975 11.7002H17.9616C17.4781 11.7002 17.0859 12.0923 17.0859 12.5757V13.2848H10.7794C10.7202 12.9357 10.5537 12.6026 10.2851 12.3287C9.6029 11.6572 8.43719 11.6679 7.77107 12.334C7.43264 12.6724 7.25 13.1184 7.25 13.5911C7.25 14.0692 7.43802 14.5204 7.77107 14.8481C8.1095 15.1973 8.56074 15.3745 9.0281 15.3745C9.32351 15.3745 9.62435 15.3047 9.90905 15.1597C10.2153 15.0038 10.4677 14.746 10.6181 14.429C10.6558 14.3485 10.688 14.2679 10.7148 14.1873H15.0929C12.7132 15.3477 10.919 17.5287 10.2959 20.1609H9.59749C9.11404 20.1609 8.7219 20.553 8.7219 21.0365V23.0725C8.7219 23.5559 9.11404 23.9481 9.59749 23.9481H11.6335C12.117 23.9481 12.5091 23.5559 12.5091 23.0725V21.0365C12.5091 20.553 12.117 20.1609 11.6335 20.1609H11.2252C11.9773 17.3245 14.2496 15.1006 17.1021 14.413V14.6063C17.1021 15.0898 17.4942 15.482 17.9777 15.482H20.0136C20.4971 15.482 20.8892 15.0898 20.8892 14.6063V14.413C23.7363 15.1006 26.0087 17.3245 26.7661 20.1609H26.3954C25.912 20.1609 25.5199 20.553 25.5199 21.0365V23.0725C25.5199 23.5559 25.912 23.9481 26.3954 23.9481H28.4314C28.9149 23.9481 29.307 23.5559 29.307 23.0725V21.0365C29.307 20.553 28.9149 20.1609 28.4314 20.1609H27.6954C27.0669 17.5287 25.2727 15.3424 22.8983 14.1873H27.2872C27.3732 14.4344 27.5128 14.6601 27.7008 14.8481C28.0393 15.1973 28.4905 15.3745 28.9579 15.3745C29.2533 15.3745 29.5541 15.3047 29.8388 15.1597C30.145 15.0038 30.3975 14.746 30.5479 14.429C30.8971 13.6931 30.7735 12.8927 30.2202 12.3287C29.5166 11.6625 28.3508 11.6679 27.6793 12.334ZM9.7963 14.0476C9.73177 14.1766 9.62435 14.2894 9.49547 14.3539C9.0281 14.5903 8.6252 14.4399 8.40496 14.2089C8.23843 14.0476 8.14711 13.8275 8.14711 13.5911C8.14711 13.3601 8.23843 13.1398 8.40496 12.968C8.57148 12.8014 8.79173 12.7101 9.0281 12.7101C9.25908 12.7101 9.48474 12.8014 9.64588 12.9626C9.92518 13.2527 9.97889 13.6555 9.7963 14.0476ZM11.6227 23.0456L9.61362 23.0725L9.58676 21.0634H11.5959L11.6227 23.0456ZM28.4153 23.0456L26.4062 23.0725L26.3794 21.0634H28.3884L28.4153 23.0456ZM17.9938 14.6117L17.983 13.9349C17.9938 13.8865 17.9938 13.8382 17.9884 13.7845V13.7791C17.9884 13.7629 17.9992 13.7522 17.9992 13.7361C17.9992 13.7092 17.9884 13.6878 17.983 13.6662L17.967 12.608H19.976L19.9921 13.6662C19.9867 13.6931 19.976 13.7146 19.976 13.7415C19.976 13.7576 19.9814 13.7683 19.9867 13.7845V13.7898C19.976 13.8596 19.9814 13.9242 19.9975 13.9832L20.0083 14.5903L17.9938 14.6117ZM29.7099 14.0476C29.6454 14.1766 29.538 14.2894 29.409 14.3539C28.9418 14.5903 28.5388 14.4399 28.3186 14.2089C28.1521 14.0476 28.0607 13.8275 28.0607 13.5911C28.0607 13.3601 28.1521 13.1398 28.3186 12.968C28.4851 12.8014 28.7054 12.7101 28.9418 12.7101C29.1727 12.7101 29.3983 12.8014 29.5595 12.9626C29.8388 13.2527 29.8926 13.6555 29.7099 14.0476Z" fill="#F2A700"/>
-                      </svg>
-                    </div>
-                    <div class="headarea">
-                      <h6 class="mb-0">Full Stack Development (MERN/MEAN)</h6>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <div class="d-flex align-items-center gap-1 gap-md-3 p-2 p-md-3 explorearea explore-5">
-                      <div class="iconarea d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="37" viewBox="0 0 36 37" fill="none">
-                          <path d="M35.6908 26.737L32.0577 24.9205L29.7456 18.9061C29.7183 18.835 29.6768 18.7703 29.6234 18.7159C29.5701 18.6616 29.5061 18.6189 29.4355 18.5904L15.089 12.8556C14.9887 12.8158 14.8789 12.806 14.7731 12.8276C14.6674 12.8493 14.5702 12.9014 14.4936 12.9775L12.5802 14.8909C12.5051 14.9676 12.4538 15.0644 12.4327 15.1696C12.4116 15.2748 12.4215 15.3838 12.4612 15.4835L18.1959 29.83C18.2243 29.9006 18.2671 29.9646 18.3214 30.018C18.3757 30.0713 18.4404 30.1129 18.5115 30.1401L24.5259 32.4523L26.3425 36.0853C26.3807 36.1654 26.4376 36.2352 26.5085 36.2886C26.5793 36.3422 26.662 36.3778 26.7495 36.3927C26.779 36.3954 26.8086 36.3954 26.8381 36.3927C26.9847 36.3921 27.1251 36.3333 27.2285 36.2293L35.8348 27.6231C35.8981 27.5619 35.9459 27.4866 35.9744 27.4033C36.0028 27.3199 36.0109 27.2311 35.9981 27.144C35.9833 27.0565 35.9476 26.9738 35.8941 26.903C35.8406 26.8322 35.7709 26.7752 35.6908 26.737ZM13.6214 15.4116L13.9288 15.1069L21.0702 22.2484C20.5995 22.9153 20.3963 23.7344 20.5005 24.544C20.6048 25.3536 21.0091 26.0946 21.6335 26.6203C22.2577 27.1461 23.0567 27.4186 23.8722 27.3838C24.6877 27.3488 25.4604 27.0093 26.0376 26.4321C26.6147 25.855 26.9544 25.0822 26.9892 24.2667C27.0241 23.4512 26.7517 22.6523 26.2258 22.028C25.7 21.4036 24.959 20.9994 24.1495 20.8951C23.3399 20.7907 22.5207 20.9941 21.8538 21.4647L14.7124 14.3233L15.017 14.0159L28.7986 19.5291L30.9723 25.1835L24.789 31.3668L19.1345 29.1931L13.6214 15.4116ZM23.7312 21.9742C24.2289 21.9749 24.711 22.1482 25.0953 22.4645C25.4797 22.7808 25.7424 23.2206 25.8388 23.7089C25.9353 24.1972 25.8594 24.7038 25.6241 25.1425C25.389 25.5812 25.0089 25.9246 24.5489 26.1146C24.0888 26.3044 23.5771 26.329 23.1009 26.1839C22.6249 26.0388 22.2137 25.7332 21.9377 25.319C21.6617 24.9049 21.5377 24.4078 21.587 23.9125C21.6364 23.4172 21.8559 22.9543 22.2083 22.6027C22.6125 22.1997 23.1603 21.9737 23.7312 21.9742ZM26.9904 34.9029L25.6059 32.1339L31.7338 26.0059L34.5028 27.3904L26.9904 34.9029Z" fill="#4500D0"/>
-                          <path d="M11.1448 30.5779C11.0388 30.4778 10.8986 30.422 10.7529 30.422C10.6072 30.422 10.4671 30.4778 10.3611 30.5779L9.6578 31.2813C7.78084 28.7339 6.74541 25.6644 6.69577 22.5006C6.64614 19.3368 7.58478 16.2363 9.38086 13.6313C9.91893 13.9274 10.5386 14.0412 11.1467 13.9554C11.7549 13.8698 12.319 13.5894 12.7544 13.1561C13.1898 12.7229 13.4731 12.1603 13.5618 11.5526C13.6505 10.9448 13.5398 10.3246 13.2464 9.78508C15.8514 7.98899 18.9519 7.05036 22.1157 7.09999C25.2795 7.14963 28.349 8.18506 30.8964 10.062L30.182 10.757C30.079 10.8609 30.0213 11.0012 30.0214 11.1474C30.0209 11.2203 30.035 11.2926 30.0625 11.3601C30.0901 11.4275 30.1307 11.4889 30.182 11.5406L32.6243 13.9636C32.7281 14.0668 32.8685 14.1246 33.0147 14.1246C33.1611 14.1246 33.3014 14.0668 33.4052 13.9636L35.8336 11.5351C35.8851 11.4837 35.926 11.4226 35.9538 11.3554C35.9817 11.2881 35.9961 11.216 35.9961 11.1433C35.9961 11.0705 35.9817 10.9984 35.9538 10.9313C35.926 10.864 35.8851 10.8029 35.8336 10.7515L33.4052 8.32301C33.3014 8.21987 33.1611 8.16197 33.0147 8.16197C32.8685 8.16197 32.7281 8.21987 32.6243 8.32301L31.6856 9.25619C29.372 7.51527 26.6369 6.4215 23.7608 6.08718C20.8848 5.75286 17.9716 6.19005 15.3205 7.35385L18.5132 4.16943C18.8752 4.34241 19.2868 4.38157 19.675 4.27995C20.0631 4.17833 20.4027 3.94253 20.6335 3.61435C20.8643 3.28617 20.9713 2.88685 20.9357 2.48721C20.9002 2.08759 20.7241 1.71349 20.4389 1.43129C20.1538 1.14909 19.7779 0.977027 19.3778 0.945636C18.9778 0.914244 18.5797 1.02555 18.2539 1.2598C17.9282 1.49406 17.696 1.83612 17.5985 2.2253C17.501 2.61448 17.5445 3.02563 17.7212 3.38579L12.3327 8.78268C11.7855 8.41567 11.128 8.25 10.4723 8.31399C9.81655 8.37797 9.20343 8.66763 8.73757 9.13348C8.27172 9.59933 7.98206 10.2125 7.91809 10.8681C7.8541 11.5239 8.01976 12.1815 8.38677 12.7286L2.98989 18.1172C2.62831 17.941 2.21597 17.8987 1.82616 17.9978C1.43635 18.0969 1.09429 18.331 0.860785 18.6585C0.627275 18.986 0.517433 19.3857 0.550777 19.7865C0.58412 20.1874 0.75849 20.5634 1.0429 20.8478C1.32731 21.1322 1.70335 21.3066 2.10418 21.3399C2.50501 21.3732 2.90469 21.2634 3.23218 21.0299C3.55968 20.7964 3.79378 20.4543 3.89289 20.0645C3.99201 19.6747 3.94971 19.2624 3.77353 18.9008L6.96625 15.7164C5.80128 18.3669 5.36272 21.2796 5.69557 24.1556C6.02843 27.0316 7.12071 29.7672 8.86028 32.0815L7.92434 33.0202C7.82119 33.1239 7.76329 33.2643 7.76329 33.4107C7.76329 33.5569 7.82119 33.6973 7.92434 33.8011L10.3528 36.2296C10.4562 36.3335 10.5966 36.3923 10.7432 36.3929C10.8163 36.3929 10.8887 36.3786 10.9562 36.3506C11.0237 36.3225 11.0849 36.2813 11.1364 36.2296L13.5676 33.8011C13.6708 33.6973 13.7287 33.5569 13.7287 33.4107C13.7287 33.2643 13.6708 33.1239 13.5676 33.0202L11.1448 30.5779ZM33.0203 9.49156L34.6651 11.1364L33.0203 12.7812L31.3755 11.1364L33.0203 9.49156ZM18.8288 2.2311C18.9112 2.14813 19.0163 2.09148 19.1308 2.06833C19.2453 2.04518 19.3642 2.05658 19.4722 2.10109C19.5803 2.14558 19.6727 2.22118 19.7377 2.31827C19.8027 2.41537 19.8374 2.5296 19.8374 2.64645C19.8374 2.76331 19.8027 2.87753 19.7377 2.97463C19.6727 3.07173 19.5803 3.14732 19.4722 3.19182C19.3642 3.23632 19.2453 3.24772 19.1308 3.22457C19.0163 3.20143 18.9112 3.14478 18.8288 3.06181C18.7743 3.00729 18.731 2.94255 18.7015 2.87128C18.6719 2.8 18.6567 2.72361 18.6567 2.64645C18.6567 2.5693 18.6719 2.4929 18.7015 2.42163C18.731 2.35036 18.7743 2.28562 18.8288 2.2311ZM9.52485 9.9208C9.68564 9.75917 9.87683 9.63095 10.0873 9.54346C10.2978 9.45597 10.5236 9.41093 10.7516 9.41093C10.9795 9.41093 11.2052 9.45597 11.4157 9.54346C11.6262 9.63095 11.8174 9.75917 11.9782 9.9208C12.2213 10.1635 12.3869 10.4728 12.4542 10.8096C12.5214 11.1466 12.4872 11.4958 12.3558 11.8132C12.2245 12.1306 12.002 12.4019 11.7164 12.5928C11.4308 12.7838 11.095 12.8856 10.7516 12.8856C10.408 12.8856 10.0723 12.7838 9.78668 12.5928C9.5011 12.4019 9.27856 12.1306 9.14724 11.8132C9.01592 11.4958 8.9817 11.1466 9.04891 10.8096C9.11613 10.4728 9.28176 10.1635 9.52485 9.9208ZM2.66868 20.0555C2.55561 20.1498 2.41137 20.1984 2.26431 20.1917C2.11723 20.1851 1.97797 20.1236 1.87387 20.0196C1.76977 19.9155 1.70836 19.7762 1.70172 19.6291C1.69508 19.4821 1.74367 19.3379 1.83796 19.2248C1.94878 19.1158 2.09794 19.0549 2.25332 19.0549C2.4087 19.0549 2.55785 19.1158 2.66868 19.2248C2.72326 19.2793 2.76657 19.3441 2.79612 19.4153C2.82566 19.4866 2.84087 19.563 2.84087 19.6401C2.84087 19.7173 2.82566 19.7936 2.79612 19.865C2.76657 19.9363 2.72326 20.001 2.66868 20.0555ZM10.7516 35.0444L9.10672 33.3996L10.7516 31.7548L12.3964 33.3996L10.7516 35.0444Z" fill="#4500D0"/>
-                        </svg>
-                      </div>
-                      <div class="headarea">
-                        <h6 class="mb-0">Java Development</h6>
-                      </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <div class="d-flex align-items-center gap-1 gap-md-3 p-2 p-md-3 explorearea explore-6">
-                      <div class="iconarea d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 37 37" fill="none">
-                          <path d="M10.1208 23.254C10.4519 23.063 10.5653 22.6392 10.3743 22.308C10.1831 21.9773 9.75946 21.8636 9.42836 22.0546C9.09728 22.2458 8.98366 22.6697 9.17491 23.0006C9.36588 23.3316 9.78978 23.4452 10.1208 23.254Z" fill="#BB0064"/>
-                          <path d="M7.28336 28.0337L10.7706 34.0742C11.5231 35.379 13.2159 35.8622 14.5546 35.0883C15.8792 34.3228 16.3345 32.6302 15.5681 31.3046L13.4907 27.7059L15.2898 26.6671C15.6209 26.4757 15.7345 26.0524 15.5432 25.7212L14.6428 24.1616C14.7501 24.1407 15.4562 24.0022 27.9063 21.5599C29.4454 21.4763 30.3676 19.793 29.5901 18.4473L27.2888 14.4613L28.7594 12.2337C28.9039 12.0147 28.9125 11.7331 28.7813 11.5058L27.3964 9.10706C27.2652 8.87985 27.0161 8.74676 26.755 8.76218L24.091 8.92204L21.5361 4.49672C21.1661 3.85564 20.5031 3.46747 19.763 3.45828C19.7541 3.45801 19.7454 3.45801 19.7365 3.45801C19.0213 3.45801 18.3721 3.81398 17.9875 4.41584L8.9415 15.9396L3.06063 19.3348C0.747611 20.6697 -0.0536001 23.637 1.28644 25.9563C2.51071 28.077 5.09179 28.9112 7.28336 28.0337ZM14.369 31.9973C14.7515 32.659 14.5251 33.5056 13.8615 33.8889C13.1959 34.2738 12.3482 34.0374 11.9699 33.382L8.50762 27.3842L10.9064 25.9993C14.9136 32.9408 14.3046 31.8861 14.369 31.9973ZM12.7982 26.5062L12.1057 25.3068L13.3052 24.6143L13.9976 25.8138L12.7982 26.5062ZM26.411 10.1701L27.368 11.8277L26.5145 13.1201L24.8651 10.2629L26.411 10.1701ZM19.1457 5.17512C19.3315 4.87108 19.6264 4.83971 19.7459 4.84295C19.8642 4.84431 20.1587 4.88109 20.3364 5.18892L28.3907 19.1398C28.6532 19.594 28.3343 20.165 27.8081 20.178C27.7137 20.1801 27.6702 20.1971 27.4283 20.2423L18.9085 5.48538C19.0873 5.25546 19.1103 5.23328 19.1457 5.17512ZM17.9869 6.65934L25.9917 20.5242L13.9108 22.8937L10.2375 16.5314L17.9869 6.65934ZM2.48582 25.2639C2.18178 24.7377 2.02111 24.1405 2.02111 23.5362C2.02111 22.3011 2.68491 21.151 3.7531 20.5342L9.15032 17.418L12.6126 23.415L7.21546 26.5314C5.56191 27.4857 3.4404 26.9171 2.48582 25.2639Z" fill="#BB0064"/>
-                          <path d="M7.97529 23.6935C7.78405 23.3624 7.36045 23.2488 7.02936 23.4401L5.82998 24.1325C5.49943 24.3235 5.07503 24.2096 4.88405 23.8791C4.69281 23.5479 4.26921 23.4344 3.93812 23.6256C3.60704 23.8169 3.49343 24.2405 3.68467 24.5715C4.25461 25.5588 5.52595 25.907 6.52245 25.3319L7.72183 24.6394C8.05292 24.4482 8.16653 24.0249 7.97529 23.6935Z" fill="#BB0064"/>
-                          <path d="M35.0621 4.93917L31.2035 7.08637C30.8695 7.27247 30.7491 7.69418 30.9352 8.02824C31.1207 8.36204 31.5422 8.48294 31.8771 8.29658L35.7354 6.14937C36.0698 5.96327 36.1899 5.54156 36.0037 5.2075C35.8179 4.87317 35.3962 4.75306 35.0621 4.93917Z" fill="#BB0064"/>
-                          <path d="M34.6569 12.1107L31.9814 11.3939C31.612 11.2949 31.2321 11.514 31.1331 11.8835C31.0341 12.2531 31.2535 12.6325 31.623 12.7315L34.2988 13.4483C34.6704 13.5481 35.0483 13.3256 35.1468 12.9588C35.2458 12.5893 35.0264 12.2094 34.6569 12.1107Z" fill="#BB0064"/>
-                          <path d="M27.9347 2.42329L27.2171 5.09905C27.1181 5.46855 27.3372 5.84805 27.7067 5.94733C28.0759 6.04606 28.4557 5.8275 28.555 5.45773L29.2724 2.78197C29.3714 2.41247 29.1523 2.0327 28.7827 1.93369C28.4136 1.8347 28.0338 2.0538 27.9347 2.42329Z" fill="#BB0064"/>
-                        </svg>
-                      </div>
-                      <div class="headarea">
-                        <h6 class="mb-0">Cloud & DevOps (AWS, Azure, GCP)</h6>
-                      </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-6 col-lg-4">
-                  <div class="d-flex align-items-center gap-1 gap-md-3 p-2 p-md-3 explorearea explore-7">
-                    <div class="iconarea d-flex align-items-center justify-content-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="35" height="37" viewBox="0 0 35 37" fill="none">
-                        <path d="M30.6539 6.33925C31.3577 6.33925 31.9271 5.76983 31.9271 5.06612C31.9271 4.3624 31.3577 3.79297 30.6539 3.79297C29.9503 3.79297 29.3809 4.3624 29.3809 5.06612C29.3809 5.76983 29.9557 6.33925 30.6539 6.33925ZM30.6539 4.70082C30.8581 4.70082 31.0246 4.86735 31.0246 5.07149C31.0246 5.27562 30.8581 5.44215 30.6539 5.44215C30.4445 5.44215 30.2834 5.28099 30.2834 5.07149C30.2834 4.86198 30.4498 4.70082 30.6539 4.70082Z" fill="#F2A700"/>
-                        <path d="M32.0683 1.73535H5.89632C4.90252 1.73535 4.09136 2.5465 4.09136 3.54031V6.2961H2.29715C1.30334 6.2961 0.492188 7.10725 0.492188 8.10105V30.7328C0.492188 31.7266 1.30334 32.5378 2.29715 32.5378H14.2926V35.1485C14.2926 35.3957 14.4967 35.5998 14.7438 35.5998H23.2207C23.4678 35.5998 23.6719 35.3957 23.6719 35.1485V32.5378H28.4691C29.4629 32.5378 30.274 31.7266 30.274 30.7328V27.9771H32.0683C33.062 27.9771 33.8732 27.1659 33.8732 26.1722V3.54031C33.8732 2.5465 33.062 1.73535 32.0683 1.73535ZM4.99384 3.54031C4.99384 3.04072 5.40211 2.63783 5.89632 2.63783H32.0683C32.5678 2.63783 32.9707 3.04609 32.9707 3.54031V7.4994H15.8451L13.8306 5.40973C13.6748 5.24857 13.4599 5.15725 13.2397 5.15725H8.80252C8.35128 5.15725 7.98062 5.52791 7.98062 5.97915V7.4994H4.99384V3.54031ZM2.29715 31.6408C1.79756 31.6408 1.39466 31.2325 1.39466 30.7383V8.10105C1.39466 7.60146 1.80293 7.19858 2.29715 7.19858H4.09136V26.1775C4.09136 27.1713 4.90252 27.9825 5.89632 27.9825H15.6946C15.8719 28.3263 15.9525 28.713 15.9203 29.1105H15.2219C14.7063 29.1105 14.2926 29.5295 14.2926 30.0399V31.6408H2.29715ZM18.5364 22.1916C18.6277 22.0304 18.7942 21.9283 18.9822 21.9283C19.2616 21.9283 19.4872 22.1539 19.4872 22.4333C19.4872 22.6159 19.3905 22.7824 19.2348 22.8738C19.0628 22.9758 18.8587 22.9651 18.6492 22.847C18.6224 22.8308 18.5955 22.8093 18.5847 22.7824C18.4128 22.5085 18.4827 22.2936 18.5364 22.1916ZM18.531 21.1118C18.2033 21.2247 17.924 21.4448 17.7522 21.7565C17.4942 22.2184 17.5265 22.7824 17.8273 23.2659C17.924 23.4164 18.0529 23.5399 18.2087 23.6312C18.4558 23.7709 18.7244 23.8461 18.9877 23.8461C19.2348 23.8461 19.4765 23.7816 19.6913 23.6581C20.1211 23.4056 20.3897 22.9383 20.3897 22.4386C20.3897 21.8209 19.9869 21.2998 19.4335 21.1118V18.7911L23.4248 25.9949C23.4195 26.0002 23.4141 26.011 23.3979 26.0163C21.9852 26.3816 21.0612 27.7031 21.1364 29.1105H16.8335C16.9141 27.6978 15.9847 26.3763 14.5451 25.9733L18.531 18.7911V21.1118ZM22.7695 34.6974H15.1951L15.2219 30.0076H22.7426C22.7587 30.0076 22.7695 30.0184 22.7695 30.0345V34.6974ZM29.3715 30.7328C29.3715 31.2325 28.9632 31.6353 28.4691 31.6353H23.6719V30.0345C23.6719 29.5188 23.2529 29.1052 22.7426 29.1052H22.0443C22.012 28.7077 22.098 28.3209 22.2699 27.9771H29.3715V30.7328ZM32.0683 27.08H23.1455C23.2905 26.9994 23.4463 26.9296 23.6182 26.8866C23.9029 26.8114 24.1339 26.6126 24.2521 26.344C24.365 26.0808 24.3488 25.7853 24.2091 25.5329L19.5893 17.2118C19.4711 16.9916 19.2401 16.8519 18.9877 16.8519C18.7298 16.8573 18.4988 16.9861 18.3753 17.2064L13.75 25.5329C13.6104 25.7853 13.5996 26.0862 13.7125 26.3494C13.8252 26.618 14.0563 26.8114 14.341 26.8866C14.5128 26.9296 14.6633 26.9994 14.8137 27.08H5.89632C5.39674 27.08 4.99384 26.6717 4.99384 26.1775V8.40188H8.05583C8.50707 8.40188 8.87773 8.03122 8.87773 7.57998V6.05973H13.2021L15.2165 8.1494C15.3724 8.31056 15.5872 8.40188 15.8075 8.40188H32.9707V26.1722C32.9707 26.6717 32.5678 27.08 32.0683 27.08Z" fill="#F2A700"/>
-                        <path d="M27.5817 6.33925C28.2855 6.33925 28.8549 5.76983 28.8549 5.06612C28.8549 4.3624 28.2855 3.79297 27.5817 3.79297C26.878 3.79297 26.3086 4.3624 26.3086 5.06612C26.3086 5.76983 26.878 6.33925 27.5817 6.33925ZM27.5817 4.70082C27.7858 4.70082 27.9524 4.86735 27.9524 5.07149C27.9524 5.27562 27.7858 5.44215 27.5817 5.44215C27.3722 5.44215 27.211 5.28099 27.211 5.07149C27.211 4.86198 27.3775 4.70082 27.5817 4.70082Z" fill="#F2A700"/>
-                        <path d="M24.5036 6.33925C25.2073 6.33925 25.7767 5.76983 25.7767 5.06612C25.7767 4.3624 25.2073 3.79297 24.5036 3.79297C23.7999 3.79297 23.2305 4.3624 23.2305 5.06612C23.2305 5.76983 23.7999 6.33925 24.5036 6.33925ZM24.5036 4.70082C24.7078 4.70082 24.8743 4.86735 24.8743 5.07149C24.8743 5.27562 24.7078 5.44215 24.5036 5.44215C24.2941 5.44215 24.133 5.28099 24.133 5.07149C24.133 4.86198 24.2995 4.70082 24.5036 4.70082Z" fill="#F2A700"/>
-                        <path d="M27.6793 12.334C27.4161 12.5973 27.2496 12.9303 27.1852 13.2848H20.8731V12.5757C20.8731 12.0923 20.481 11.7002 19.9975 11.7002H17.9616C17.4781 11.7002 17.0859 12.0923 17.0859 12.5757V13.2848H10.7794C10.7202 12.9357 10.5537 12.6026 10.2851 12.3287C9.6029 11.6572 8.43719 11.6679 7.77107 12.334C7.43264 12.6724 7.25 13.1184 7.25 13.5911C7.25 14.0692 7.43802 14.5204 7.77107 14.8481C8.1095 15.1973 8.56074 15.3745 9.0281 15.3745C9.32351 15.3745 9.62435 15.3047 9.90905 15.1597C10.2153 15.0038 10.4677 14.746 10.6181 14.429C10.6558 14.3485 10.688 14.2679 10.7148 14.1873H15.0929C12.7132 15.3477 10.919 17.5287 10.2959 20.1609H9.59749C9.11404 20.1609 8.7219 20.553 8.7219 21.0365V23.0725C8.7219 23.5559 9.11404 23.9481 9.59749 23.9481H11.6335C12.117 23.9481 12.5091 23.5559 12.5091 23.0725V21.0365C12.5091 20.553 12.117 20.1609 11.6335 20.1609H11.2252C11.9773 17.3245 14.2496 15.1006 17.1021 14.413V14.6063C17.1021 15.0898 17.4942 15.482 17.9777 15.482H20.0136C20.4971 15.482 20.8892 15.0898 20.8892 14.6063V14.413C23.7363 15.1006 26.0087 17.3245 26.7661 20.1609H26.3954C25.912 20.1609 25.5199 20.553 25.5199 21.0365V23.0725C25.5199 23.5559 25.912 23.9481 26.3954 23.9481H28.4314C28.9149 23.9481 29.307 23.5559 29.307 23.0725V21.0365C29.307 20.553 28.9149 20.1609 28.4314 20.1609H27.6954C27.0669 17.5287 25.2727 15.3424 22.8983 14.1873H27.2872C27.3732 14.4344 27.5128 14.6601 27.7008 14.8481C28.0393 15.1973 28.4905 15.3745 28.9579 15.3745C29.2533 15.3745 29.5541 15.3047 29.8388 15.1597C30.145 15.0038 30.3975 14.746 30.5479 14.429C30.8971 13.6931 30.7735 12.8927 30.2202 12.3287C29.5166 11.6625 28.3508 11.6679 27.6793 12.334ZM9.7963 14.0476C9.73177 14.1766 9.62435 14.2894 9.49547 14.3539C9.0281 14.5903 8.6252 14.4399 8.40496 14.2089C8.23843 14.0476 8.14711 13.8275 8.14711 13.5911C8.14711 13.3601 8.23843 13.1398 8.40496 12.968C8.57148 12.8014 8.79173 12.7101 9.0281 12.7101C9.25908 12.7101 9.48474 12.8014 9.64588 12.9626C9.92518 13.2527 9.97889 13.6555 9.7963 14.0476ZM11.6227 23.0456L9.61362 23.0725L9.58676 21.0634H11.5959L11.6227 23.0456ZM28.4153 23.0456L26.4062 23.0725L26.3794 21.0634H28.3884L28.4153 23.0456ZM17.9938 14.6117L17.983 13.9349C17.9938 13.8865 17.9938 13.8382 17.9884 13.7845V13.7791C17.9884 13.7629 17.9992 13.7522 17.9992 13.7361C17.9992 13.7092 17.9884 13.6878 17.983 13.6662L17.967 12.608H19.976L19.9921 13.6662C19.9867 13.6931 19.976 13.7146 19.976 13.7415C19.976 13.7576 19.9814 13.7683 19.9867 13.7845V13.7898C19.976 13.8596 19.9814 13.9242 19.9975 13.9832L20.0083 14.5903L17.9938 14.6117ZM29.7099 14.0476C29.6454 14.1766 29.538 14.2894 29.409 14.3539C28.9418 14.5903 28.5388 14.4399 28.3186 14.2089C28.1521 14.0476 28.0607 13.8275 28.0607 13.5911C28.0607 13.3601 28.1521 13.1398 28.3186 12.968C28.4851 12.8014 28.7054 12.7101 28.9418 12.7101C29.1727 12.7101 29.3983 12.8014 29.5595 12.9626C29.8388 13.2527 29.8926 13.6555 29.7099 14.0476Z" fill="#F2A700"/>
-                      </svg>
-                    </div>
-                    <div class="headarea">
-                      <h6 class="mb-0">Python Programming</h6>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <div class="d-flex align-items-center gap-1 gap-md-3 p-2 p-md-3 explorearea explore-8">
-                      <div class="iconarea d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="37" viewBox="0 0 36 37" fill="none">
-                          <path d="M35.6908 26.737L32.0577 24.9205L29.7456 18.9061C29.7183 18.835 29.6768 18.7703 29.6234 18.7159C29.5701 18.6616 29.5061 18.6189 29.4355 18.5904L15.089 12.8556C14.9887 12.8158 14.8789 12.806 14.7731 12.8276C14.6674 12.8493 14.5702 12.9014 14.4936 12.9775L12.5802 14.8909C12.5051 14.9676 12.4538 15.0644 12.4327 15.1696C12.4116 15.2748 12.4215 15.3838 12.4612 15.4835L18.1959 29.83C18.2243 29.9006 18.2671 29.9646 18.3214 30.018C18.3757 30.0713 18.4404 30.1129 18.5115 30.1401L24.5259 32.4523L26.3425 36.0853C26.3807 36.1654 26.4376 36.2352 26.5085 36.2886C26.5793 36.3422 26.662 36.3778 26.7495 36.3927C26.779 36.3954 26.8086 36.3954 26.8381 36.3927C26.9847 36.3921 27.1251 36.3333 27.2285 36.2293L35.8348 27.6231C35.8981 27.5619 35.9459 27.4866 35.9744 27.4033C36.0028 27.3199 36.0109 27.2311 35.9981 27.144C35.9833 27.0565 35.9476 26.9738 35.8941 26.903C35.8406 26.8322 35.7709 26.7752 35.6908 26.737ZM13.6214 15.4116L13.9288 15.1069L21.0702 22.2484C20.5995 22.9153 20.3963 23.7344 20.5005 24.544C20.6048 25.3536 21.0091 26.0946 21.6335 26.6203C22.2577 27.1461 23.0567 27.4186 23.8722 27.3838C24.6877 27.3488 25.4604 27.0093 26.0376 26.4321C26.6147 25.855 26.9544 25.0822 26.9892 24.2667C27.0241 23.4512 26.7517 22.6523 26.2258 22.028C25.7 21.4036 24.959 20.9994 24.1495 20.8951C23.3399 20.7907 22.5207 20.9941 21.8538 21.4647L14.7124 14.3233L15.017 14.0159L28.7986 19.5291L30.9723 25.1835L24.789 31.3668L19.1345 29.1931L13.6214 15.4116ZM23.7312 21.9742C24.2289 21.9749 24.711 22.1482 25.0953 22.4645C25.4797 22.7808 25.7424 23.2206 25.8388 23.7089C25.9353 24.1972 25.8594 24.7038 25.6241 25.1425C25.389 25.5812 25.0089 25.9246 24.5489 26.1146C24.0888 26.3044 23.5771 26.329 23.1009 26.1839C22.6249 26.0388 22.2137 25.7332 21.9377 25.319C21.6617 24.9049 21.5377 24.4078 21.587 23.9125C21.6364 23.4172 21.8559 22.9543 22.2083 22.6027C22.6125 22.1997 23.1603 21.9737 23.7312 21.9742ZM26.9904 34.9029L25.6059 32.1339L31.7338 26.0059L34.5028 27.3904L26.9904 34.9029Z" fill="#4500D0"/>
-                          <path d="M11.1448 30.5779C11.0388 30.4778 10.8986 30.422 10.7529 30.422C10.6072 30.422 10.4671 30.4778 10.3611 30.5779L9.6578 31.2813C7.78084 28.7339 6.74541 25.6644 6.69577 22.5006C6.64614 19.3368 7.58478 16.2363 9.38086 13.6313C9.91893 13.9274 10.5386 14.0412 11.1467 13.9554C11.7549 13.8698 12.319 13.5894 12.7544 13.1561C13.1898 12.7229 13.4731 12.1603 13.5618 11.5526C13.6505 10.9448 13.5398 10.3246 13.2464 9.78508C15.8514 7.98899 18.9519 7.05036 22.1157 7.09999C25.2795 7.14963 28.349 8.18506 30.8964 10.062L30.182 10.757C30.079 10.8609 30.0213 11.0012 30.0214 11.1474C30.0209 11.2203 30.035 11.2926 30.0625 11.3601C30.0901 11.4275 30.1307 11.4889 30.182 11.5406L32.6243 13.9636C32.7281 14.0668 32.8685 14.1246 33.0147 14.1246C33.1611 14.1246 33.3014 14.0668 33.4052 13.9636L35.8336 11.5351C35.8851 11.4837 35.926 11.4226 35.9538 11.3554C35.9817 11.2881 35.9961 11.216 35.9961 11.1433C35.9961 11.0705 35.9817 10.9984 35.9538 10.9313C35.926 10.864 35.8851 10.8029 35.8336 10.7515L33.4052 8.32301C33.3014 8.21987 33.1611 8.16197 33.0147 8.16197C32.8685 8.16197 32.7281 8.21987 32.6243 8.32301L31.6856 9.25619C29.372 7.51527 26.6369 6.4215 23.7608 6.08718C20.8848 5.75286 17.9716 6.19005 15.3205 7.35385L18.5132 4.16943C18.8752 4.34241 19.2868 4.38157 19.675 4.27995C20.0631 4.17833 20.4027 3.94253 20.6335 3.61435C20.8643 3.28617 20.9713 2.88685 20.9357 2.48721C20.9002 2.08759 20.7241 1.71349 20.4389 1.43129C20.1538 1.14909 19.7779 0.977027 19.3778 0.945636C18.9778 0.914244 18.5797 1.02555 18.2539 1.2598C17.9282 1.49406 17.696 1.83612 17.5985 2.2253C17.501 2.61448 17.5445 3.02563 17.7212 3.38579L12.3327 8.78268C11.7855 8.41567 11.128 8.25 10.4723 8.31399C9.81655 8.37797 9.20343 8.66763 8.73757 9.13348C8.27172 9.59933 7.98206 10.2125 7.91809 10.8681C7.8541 11.5239 8.01976 12.1815 8.38677 12.7286L2.98989 18.1172C2.62831 17.941 2.21597 17.8987 1.82616 17.9978C1.43635 18.0969 1.09429 18.331 0.860785 18.6585C0.627275 18.986 0.517433 19.3857 0.550777 19.7865C0.58412 20.1874 0.75849 20.5634 1.0429 20.8478C1.32731 21.1322 1.70335 21.3066 2.10418 21.3399C2.50501 21.3732 2.90469 21.2634 3.23218 21.0299C3.55968 20.7964 3.79378 20.4543 3.89289 20.0645C3.99201 19.6747 3.94971 19.2624 3.77353 18.9008L6.96625 15.7164C5.80128 18.3669 5.36272 21.2796 5.69557 24.1556C6.02843 27.0316 7.12071 29.7672 8.86028 32.0815L7.92434 33.0202C7.82119 33.1239 7.76329 33.2643 7.76329 33.4107C7.76329 33.5569 7.82119 33.6973 7.92434 33.8011L10.3528 36.2296C10.4562 36.3335 10.5966 36.3923 10.7432 36.3929C10.8163 36.3929 10.8887 36.3786 10.9562 36.3506C11.0237 36.3225 11.0849 36.2813 11.1364 36.2296L13.5676 33.8011C13.6708 33.6973 13.7287 33.5569 13.7287 33.4107C13.7287 33.2643 13.6708 33.1239 13.5676 33.0202L11.1448 30.5779ZM33.0203 9.49156L34.6651 11.1364L33.0203 12.7812L31.3755 11.1364L33.0203 9.49156ZM18.8288 2.2311C18.9112 2.14813 19.0163 2.09148 19.1308 2.06833C19.2453 2.04518 19.3642 2.05658 19.4722 2.10109C19.5803 2.14558 19.6727 2.22118 19.7377 2.31827C19.8027 2.41537 19.8374 2.5296 19.8374 2.64645C19.8374 2.76331 19.8027 2.87753 19.7377 2.97463C19.6727 3.07173 19.5803 3.14732 19.4722 3.19182C19.3642 3.23632 19.2453 3.24772 19.1308 3.22457C19.0163 3.20143 18.9112 3.14478 18.8288 3.06181C18.7743 3.00729 18.731 2.94255 18.7015 2.87128C18.6719 2.8 18.6567 2.72361 18.6567 2.64645C18.6567 2.5693 18.6719 2.4929 18.7015 2.42163C18.731 2.35036 18.7743 2.28562 18.8288 2.2311ZM9.52485 9.9208C9.68564 9.75917 9.87683 9.63095 10.0873 9.54346C10.2978 9.45597 10.5236 9.41093 10.7516 9.41093C10.9795 9.41093 11.2052 9.45597 11.4157 9.54346C11.6262 9.63095 11.8174 9.75917 11.9782 9.9208C12.2213 10.1635 12.3869 10.4728 12.4542 10.8096C12.5214 11.1466 12.4872 11.4958 12.3558 11.8132C12.2245 12.1306 12.002 12.4019 11.7164 12.5928C11.4308 12.7838 11.095 12.8856 10.7516 12.8856C10.408 12.8856 10.0723 12.7838 9.78668 12.5928C9.5011 12.4019 9.27856 12.1306 9.14724 11.8132C9.01592 11.4958 8.9817 11.1466 9.04891 10.8096C9.11613 10.4728 9.28176 10.1635 9.52485 9.9208ZM2.66868 20.0555C2.55561 20.1498 2.41137 20.1984 2.26431 20.1917C2.11723 20.1851 1.97797 20.1236 1.87387 20.0196C1.76977 19.9155 1.70836 19.7762 1.70172 19.6291C1.69508 19.4821 1.74367 19.3379 1.83796 19.2248C1.94878 19.1158 2.09794 19.0549 2.25332 19.0549C2.4087 19.0549 2.55785 19.1158 2.66868 19.2248C2.72326 19.2793 2.76657 19.3441 2.79612 19.4153C2.82566 19.4866 2.84087 19.563 2.84087 19.6401C2.84087 19.7173 2.82566 19.7936 2.79612 19.865C2.76657 19.9363 2.72326 20.001 2.66868 20.0555ZM10.7516 35.0444L9.10672 33.3996L10.7516 31.7548L12.3964 33.3996L10.7516 35.0444Z" fill="#4500D0"/>
-                        </svg>
-                      </div>
-                      <div class="headarea">
-                        <h6 class="mb-0">Red Hat Linux & Server Administration</h6>
-                      </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <div class="d-flex align-items-center gap-1 gap-md-3 p-2 p-md-3 explorearea explore-9">
-                      <div class="iconarea d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="37" height="37" viewBox="0 0 37 37" fill="none">
-                          <path d="M10.1208 23.254C10.4519 23.063 10.5653 22.6392 10.3743 22.308C10.1831 21.9773 9.75946 21.8636 9.42836 22.0546C9.09728 22.2458 8.98366 22.6697 9.17491 23.0006C9.36588 23.3316 9.78978 23.4452 10.1208 23.254Z" fill="#BB0064"/>
-                          <path d="M7.28336 28.0337L10.7706 34.0742C11.5231 35.379 13.2159 35.8622 14.5546 35.0883C15.8792 34.3228 16.3345 32.6302 15.5681 31.3046L13.4907 27.7059L15.2898 26.6671C15.6209 26.4757 15.7345 26.0524 15.5432 25.7212L14.6428 24.1616C14.7501 24.1407 15.4562 24.0022 27.9063 21.5599C29.4454 21.4763 30.3676 19.793 29.5901 18.4473L27.2888 14.4613L28.7594 12.2337C28.9039 12.0147 28.9125 11.7331 28.7813 11.5058L27.3964 9.10706C27.2652 8.87985 27.0161 8.74676 26.755 8.76218L24.091 8.92204L21.5361 4.49672C21.1661 3.85564 20.5031 3.46747 19.763 3.45828C19.7541 3.45801 19.7454 3.45801 19.7365 3.45801C19.0213 3.45801 18.3721 3.81398 17.9875 4.41584L8.9415 15.9396L3.06063 19.3348C0.747611 20.6697 -0.0536001 23.637 1.28644 25.9563C2.51071 28.077 5.09179 28.9112 7.28336 28.0337ZM14.369 31.9973C14.7515 32.659 14.5251 33.5056 13.8615 33.8889C13.1959 34.2738 12.3482 34.0374 11.9699 33.382L8.50762 27.3842L10.9064 25.9993C14.9136 32.9408 14.3046 31.8861 14.369 31.9973ZM12.7982 26.5062L12.1057 25.3068L13.3052 24.6143L13.9976 25.8138L12.7982 26.5062ZM26.411 10.1701L27.368 11.8277L26.5145 13.1201L24.8651 10.2629L26.411 10.1701ZM19.1457 5.17512C19.3315 4.87108 19.6264 4.83971 19.7459 4.84295C19.8642 4.84431 20.1587 4.88109 20.3364 5.18892L28.3907 19.1398C28.6532 19.594 28.3343 20.165 27.8081 20.178C27.7137 20.1801 27.6702 20.1971 27.4283 20.2423L18.9085 5.48538C19.0873 5.25546 19.1103 5.23328 19.1457 5.17512ZM17.9869 6.65934L25.9917 20.5242L13.9108 22.8937L10.2375 16.5314L17.9869 6.65934ZM2.48582 25.2639C2.18178 24.7377 2.02111 24.1405 2.02111 23.5362C2.02111 22.3011 2.68491 21.151 3.7531 20.5342L9.15032 17.418L12.6126 23.415L7.21546 26.5314C5.56191 27.4857 3.4404 26.9171 2.48582 25.2639Z" fill="#BB0064"/>
-                          <path d="M7.97529 23.6935C7.78405 23.3624 7.36045 23.2488 7.02936 23.4401L5.82998 24.1325C5.49943 24.3235 5.07503 24.2096 4.88405 23.8791C4.69281 23.5479 4.26921 23.4344 3.93812 23.6256C3.60704 23.8169 3.49343 24.2405 3.68467 24.5715C4.25461 25.5588 5.52595 25.907 6.52245 25.3319L7.72183 24.6394C8.05292 24.4482 8.16653 24.0249 7.97529 23.6935Z" fill="#BB0064"/>
-                          <path d="M35.0621 4.93917L31.2035 7.08637C30.8695 7.27247 30.7491 7.69418 30.9352 8.02824C31.1207 8.36204 31.5422 8.48294 31.8771 8.29658L35.7354 6.14937C36.0698 5.96327 36.1899 5.54156 36.0037 5.2075C35.8179 4.87317 35.3962 4.75306 35.0621 4.93917Z" fill="#BB0064"/>
-                          <path d="M34.6569 12.1107L31.9814 11.3939C31.612 11.2949 31.2321 11.514 31.1331 11.8835C31.0341 12.2531 31.2535 12.6325 31.623 12.7315L34.2988 13.4483C34.6704 13.5481 35.0483 13.3256 35.1468 12.9588C35.2458 12.5893 35.0264 12.2094 34.6569 12.1107Z" fill="#BB0064"/>
-                          <path d="M27.9347 2.42329L27.2171 5.09905C27.1181 5.46855 27.3372 5.84805 27.7067 5.94733C28.0759 6.04606 28.4557 5.8275 28.555 5.45773L29.2724 2.78197C29.3714 2.41247 29.1523 2.0327 28.7827 1.93369C28.4136 1.8347 28.0338 2.0538 27.9347 2.42329Z" fill="#BB0064"/>
-                        </svg>
-                      </div>
-                      <div class="headarea">
-                        <h6 class="mb-0">Data Analytics & Visualization</h6>
-                      </div>
-                    </div>
-                </div>
+                <?php $count++; endwhile; wp_reset_postdata(); endif; ?>
                 <div class="col-12 col-sm-12 text-center pt-md-4">
                   <button type="button" class="btn btn-primary">Browse All Courses</button>
                 </div>
@@ -1810,64 +1688,28 @@ get_header();
               <div class="row">
                 <div class="col-lg-12">
                   <div class="heading-area mb-4">
-                    <h2 class="fw-semibold mb-3">Develop the Human Side of Tech</h2>
-                    <p>Great tech skills mean little without the soft skills to lead, communicate, and adapt. That’s why we regularly conduct soft skill workshops to prepare our students for real-world work environments and career growth.</p>
+                    <h2 class="fw-semibold mb-3"><?php echo get_field('develop_the_human_side_of_tech_title'); ?></h2>
+                    <p><?php echo get_field('develop_the_human_side_of_tech_description'); ?></p>
                   </div>
                 </div>
               </div>
                 <div class="row">
-                  <div class="col-12 col-md-6 col-lg-4 mb-3 mb-lg-4">
-                      <div class="border brd-dark careerarea1 bg-white p-2 p-md-3 d-flex rounded-2 theme-box-shadow gap-3 align-items-center">
-                        <div class="careerarea-icon">
-                          <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/more4.png" class="img-fluid" />
-                        </div>
-                        <div class="careerarea-text">
-                          <h6 class="fw-normal">Communication & Public Speaking</h6>
-                        </div>
+                  <?php if(have_rows('develop_the_human_side_of_tech_rows')): ?>     
+                    <?php while(have_rows('develop_the_human_side_of_tech_rows')): the_row(); ?>
+                      <div class="col-12 col-md-6 col-lg-4 mb-3 mb-lg-4">
+                          <div class="border brd-dark careerarea1 bg-white p-2 p-md-3 d-flex rounded-2 theme-box-shadow gap-3 align-items-center">
+                            <div class="careerarea-icon">
+                              <img src="<?php echo get_sub_field('icon'); ?>" class="img-fluid" />
+                            </div>
+                            <div class="careerarea-text">
+                              <h6 class="fw-normal"><?php echo get_sub_field('title'); ?></h6>
+                            </div>
+                          </div>
                       </div>
-                  </div>
-                  <div class="col-12 col-md-6 col-lg-4 mb-3 mb-lg-4">
-                      <div class="border brd-dark careerarea1 bg-white p-2 p-md-3 d-flex rounded-2 theme-box-shadow gap-3 align-items-center">
-                        <div class="careerarea-icon">
-                          <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/more5.png" class="img-fluid" />
-                        </div>
-                        <div class="careerarea-text">
-                          <h6 class="fw-normal">Leadership & Teamwork</h6>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="col-12 col-md-6 col-lg-4 mb-3 mb-lg-4">
-                      <div class="border brd-dark careerarea1 bg-white p-2 p-md-3 d-flex rounded-2 theme-box-shadow gap-3 align-items-center">
-                        <div class="careerarea-icon">
-                          <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/more6.png" class="img-fluid" />
-                        </div>
-                        <div class="careerarea-text">
-                          <h6 class="fw-normal">Time Management & Productivity</h6>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="col-12 col-md-6 col-lg-4 mb-3 mb-lg-4">
-                      <div class="border brd-dark careerarea1 bg-white p-2 p-md-3 d-flex rounded-2 theme-box-shadow gap-3 align-items-center">
-                        <div class="careerarea-icon">
-                          <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/more1.png" class="img-fluid" />
-                        </div>
-                        <div class="careerarea-text">
-                          <h6 class="fw-normal">Problem-Solving & Critical Thinking</h6>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="col-12 col-md-6 col-lg-4 mb-3 mb-lg-4">
-                      <div class="border brd-dark careerarea1 bg-white p-2 p-md-3 d-flex rounded-2 theme-box-shadow gap-3 align-items-center">
-                        <div class="careerarea-icon">
-                          <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/more2.png" class="img-fluid" />
-                        </div>
-                        <div class="careerarea-text">
-                          <h6 class="fw-normal">Emotional Intelligence & Workplace Etiquette</h6>
-                        </div>
-                      </div>
-                  </div>
+                    <?php endwhile; ?>
+                  <?php endif; ?>
                   <div class="col-12 col-md-12 col-lg-12">
-                    <p>These sessions empower our learners to not only succeed in interviews but to thrive in their professional journeys.</p>
+                    <p><?php echo get_field('develop_the_human_side_of_tech_bottom_tagline'); ?></p>
                   </div>
                 </div>
             </div>
@@ -1880,44 +1722,28 @@ get_header();
               <div class="row justify-content-center">
                 <div class="col-12 col-lg-8 mb-3 mb-lg-0">
                     <div class="content-area">
-                      <h2 class="mb-2 mb-lg-3">Learn from the Best in the Business</h2>
-                      <p>We regularly invite top-tier industry professionals and domain experts to conduct exclusive sessions for our students. These guest speakers bring valuable insights, career advice, and knowledge of cutting-edge industry practices.</p>
+                      <h2 class="mb-2 mb-lg-3"><?php echo get_field('learn_from_the_best_in_the_business_title'); ?></h2>
+                      <p><?php echo get_field('learn_from_the_best_in_the_business_description'); ?></p>
                       <div class="row g-2">
-                        <div class="col-6 col-sm-6 col-lg-3">
-                            <div class="border careerarea1 bg-white p-2 rounded-2 theme-box-shadow gap-3 align-items-center">
-                              <div class="careerarea-text">
-                                <p class="fw-normal mb-0 f14">Expert Talks from professionals at leading companies</p>
-                              </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-6 col-lg-3">
-                            <div class="border careerarea1 bg-white p-2 rounded-2 theme-box-shadow gap-3 align-items-center">
-                              <div class="careerarea-text">
-                                <p class="fw-normal mb-0 f14">Exposure to current industry trends and technologies</p>
-                              </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-6 col-lg-3">
-                            <div class="border careerarea1 bg-white p-2 rounded-2 theme-box-shadow gap-3 align-items-center">
-                              <div class="careerarea-text">
-                                <p class="fw-normal mb-0 f14">Networking opportunities and real-world case studies</p>
-                              </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-sm-6 col-lg-3">
-                            <div class="border careerarea1 bg-white p-2 rounded-2 theme-box-shadow gap-3 align-items-center">
-                              <div class="careerarea-text">
-                                <p class="fw-normal mb-0 f14">Learn what recruiters and CTOs actually look for</p>
-                              </div>
-                            </div>
-                        </div>
+                        <?php if(have_rows('learn_from_the_best_in_the_business_rows')): ?>
+                            <?php while(have_rows('learn_from_the_best_in_the_business_rows')): the_row(); ?>
+                                <div class="col-6 col-sm-6 col-lg-3">
+                                    <div class="border careerarea1 bg-white p-2 rounded-2 theme-box-shadow gap-3 align-items-center">
+                                      <div class="careerarea-text">
+                                        <p class="fw-normal mb-0 f14"><?php echo get_sub_field('title'); ?></p>
+                                      </div>
+                                    </div>
+                                </div>
+                            <?php endwhile; ?>
+                        <?php endif; ?>
+                        
                         <div class="col-12 mt-4">
                           <button type="button" class="btn btn-primary d-none d-lg-block">See Upcoming Masterclasses</button>
                         </div>
                       </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-4">
+                <div class="col-12 col-lg-4 mb-5 mb-lg-0">
                   <div class="img-area">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/card.png" class="img-fluid" />
                   </div>
@@ -3363,7 +3189,56 @@ get_header();
             </div>
           </div>
         </div> -->
+        <?php if (have_rows('additional_tabs')): ?>
+            <?php $count = 1; ?>
+            <?php while (have_rows('additional_tabs')): the_row(); 
+                $tab_name = get_sub_field('tab_name');
+                $tab_html_content = get_sub_field('tab_html_content');
+                $unique_key = get_sub_field('unique_tab_key');
+                $is_active = (isset($_GET['tab']) && $_GET['tab'] === $unique_key) ? 'active' : '';
+            ?>
+                <div id="additional-tab-<?php echo $count; ?>" class="container contentarea <?php echo $is_active; ?>">
+                    <?php echo $tab_html_content; ?>
+                </div>
+                <?php $count++; ?>
+            <?php endwhile; ?>
+        <?php endif; ?>
       </div>
 <?php
 get_footer();
 ?>
+<script>
+      const wrapper = document.getElementById('menu');
+      const nextBtn = document.getElementById('nextBtn');
+      const prevBtn = document.getElementById('prevBtn');
+
+      let scrollAmount = 0;
+
+      function getScrollStep() {
+        // Scroll width of one item
+        const firstItem = wrapper.querySelector('.menu-item');
+        return firstItem ? firstItem.offsetWidth + 10 : 100; // item width + gap
+      }
+
+      nextBtn.addEventListener('click', () => {
+        scrollAmount += getScrollStep();
+        wrapper.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+      });
+
+      prevBtn.addEventListener('click', () => {
+        scrollAmount = Math.max(0, scrollAmount - getScrollStep());
+        wrapper.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+      });
+      
+</script>
+<script>
+    jQuery(document).ready(function($){
+        $(window).on('scroll', function () {
+            if ($(window).scrollTop() > 600) {
+                $('.menu, .mobildbtn').addClass('position-fixed');
+            } else {
+                $('.menu, .mobildbtn').removeClass('position-fixed');
+            }
+        });
+    });
+</script>

@@ -1319,16 +1319,21 @@ function qsm_extra_template_and_leaderboard( $variable_list ) {
 	if ( ! class_exists( 'QSM_Extra_Variables' ) ) {
 		global $mlwQuizMasterNext;
 		$template_array = array(
-			'%QUESTION_ANSWER_CORRECT%'   => __('This variable shows all questions and answers for questions the user got correct.', 'quiz-master-next'),
-			'%QUESTION_ANSWER_INCORRECT%' => __('This variable shows all questions and answers for questions the user got incorrect.', 'quiz-master-next'),
-			'%QUESTION_ANSWER_GROUP_X%'   => __('X: Answer value - This variable shows all questions and answers for questions where the user selected the matching answer.', 'quiz-master-next'),
-    		'%CUSTOM_MESSAGE_POINTS_X%'   => __('X: Points range and message e.g. ( CUSTOM_MESSAGE_POINTS_loser:0-49;winner:50-100; ) - Shows a custom message based on the amount of points a user has earned.', 'quiz-master-next'),
-    		'%CUSTOM_MESSAGE_CORRECT_X%'  => __('X: Score range and message e.g. ( CUSTOM_MESSAGE_POINTS_loser:0-49;winner:50-100; ) - Shows a custom message based on the score a user has earned.', 'quiz-master-next'),
-			'%QUIZ_TIME%'                 => __('This variable displays the total time of quiz.', 'quiz-master-next'),
-			'%QUIZ_PERCENTAGE%'           => __('This variable displays the obtained percentage of quiz.', 'quiz-master-next'),
-			'%CATEGORY_PERCENTAGE_X%'     => __('X:Category Name - This variable displays the percentage of any selected category out of the total quiz score.', 'quiz-master-next'),
-			'%COUNT_UNATTEMPTED%'         => __('This variable displays the total number of questions not attempted or not counted by the user.', 'quiz-master-next'),
-			'%QUESTION_ANSWER_ATTEMPTED%' => __('This variable displays only attempted questions answers on the result page.', 'quiz-master-next'),
+			'%QUESTION_ANSWER_CORRECT%'    => __('This variable shows all questions and answers for questions the user got correct.', 'quiz-master-next'),
+			'%QUESTION_ANSWER_INCORRECT%'  => __('This variable shows all questions and answers for questions the user got incorrect.', 'quiz-master-next'),
+			'%QUESTION_ANSWER_GROUP_X%'    => __('X: Answer value - This variable shows all questions and answers for questions where the user selected the matching answer.', 'quiz-master-next'),
+    		'%CUSTOM_MESSAGE_POINTS_X%'    => __('X: Points range and message e.g. ( CUSTOM_MESSAGE_POINTS_loser:0-49;winner:50-100; ) - Shows a custom message based on the amount of points a user has earned.', 'quiz-master-next'),
+    		'%CUSTOM_MESSAGE_CORRECT_X%'   => __('X: Score range and message e.g. ( CUSTOM_MESSAGE_POINTS_loser:0-49;winner:50-100; ) - Shows a custom message based on the score a user has earned.', 'quiz-master-next'),
+			'%QUIZ_TIME%'                  => __('This variable displays the total time of quiz.', 'quiz-master-next'),
+			'%QUIZ_PERCENTAGE%'            => __('This variable displays the obtained percentage of quiz.', 'quiz-master-next'),
+			'%CATEGORY_PERCENTAGE_X%'      => __('X:Category Name - This variable displays the percentage of any selected category out of the total quiz score.', 'quiz-master-next'),
+			'%COUNT_UNATTEMPTED%'          => __('This variable displays the total number of questions not attempted or not counted by the user.', 'quiz-master-next'),
+			'%QUESTION_ANSWER_ATTEMPTED%'  => __('This variable displays only attempted questions answers on the result page.', 'quiz-master-next'),
+			'%SUBMISSION_DATE%'            => __('This variable displays the quiz submission date.', 'quiz-master-next'),
+			'%RETAKE_QUIZ_BUTTON%'         => __('This variable displays the quiz retake button.', 'quiz-master-next'),
+		  	'%REMAINING_QUIZ_ATTEMPTS%'    => __('This variable displays the quiz remaining attempts.', 'quiz-master-next'),
+		    '%CATEGORY_MAX_POINTS_X%'      => __('X:Category Name - This variable displays the max points of any selected category can earn in the total quiz score.', 'quiz-master-next'),
+		    '%CATEGORY_WISE_PERCENTAGE_X%' => __('X:Category Name - This variable displays the percentage of points that earned for that category.', 'quiz-master-next'),
 		);
 		$extra_variables = array(
 			'Extra Template Variables' => $template_array,
@@ -1349,10 +1354,16 @@ function qsm_extra_template_and_leaderboard( $variable_list ) {
 	}
 	if ( ! class_exists('QSM_Advanced_Assessment') ) {
 		$template_array = array(
-			'%ANSWER_LABEL_POINTS%'   => __( 'The amount of points of all labels earned.', 'quiz-master-next' ),
-			'%ANSWER_LABEL_POINTS_X%' => __( 'X: Answer label slug - The amount of points a specific label earned.', 'quiz-master-next' ),
-			'%ANSWER_LABEL_COUNTS%'   => __( 'The amount of counts of all labels earned.', 'quiz-master-next' ),
-			'%ANSWER_LABEL_COUNTS_X%' => __( 'X: Answer label slug - The amount of counts a specific label earned.', 'quiz-master-next' ),
+			'%ANSWER_LABEL_POINTS%'       => __( 'The amount of points of all labels earned.', 'quiz-master-next' ),
+			'%ANSWER_LABEL_POINTS_X%'     => __( 'X: Answer label slug - The amount of points a specific label earned.', 'quiz-master-next' ),
+			'%ANSWER_LABEL_COUNTS%'       => __( 'The amount of counts of all labels earned.', 'quiz-master-next' ),
+			'%ANSWER_LABEL_COUNTS_X%'     => __( 'X: Answer label slug - The amount of counts a specific label earned.', 'quiz-master-next' ),
+			'%ANSWER_LABEL_PERCENTAGE%'   => __( 'The amount of percentage of all labels earned.', 'quiz-master-next' ),
+			'%ANSWER_LABEL_PERCENTAGE_X%' => __( 'X: Answer label slug - The amount of percentage a specific label earned.', 'quiz-master-next' ),
+			'%MOST_SELECTED_LABEL%'       => __( 'Shows the most frequently chosen label(s).', 'quiz-master-next' ),
+			'%HIGHEST_SCORING_LABEL%'     => __( 'Shows the label(s) with highest points earned.', 'quiz-master-next' ),
+			'%LOWEST_SCORING_LABEL%'      => __( 'Shows the label(s) with lowest points earned.', 'quiz-master-next' ),
+			'%LEAST_SELECTED_LABEL%'      => __( 'Shows the label(s) least frequently chosen.', 'quiz-master-next' ),
 		);
 		$advanced_assessment = array(
 			'Advanced Assessment' => $template_array,
@@ -1545,72 +1556,79 @@ add_action('wp_ajax_qsm_insert_quiz_template', 'qsm_insert_quiz_template_callbac
 function qsm_insert_quiz_template_callback() {
     global $wpdb;
 
-    // Sanitize the incoming data
-    $template_id = isset($_POST['template_id']) ? intval($_POST['template_id']) : null;
-    $template_name = isset($_POST['template_name']) ? sanitize_text_field(wp_unslash($_POST['template_name'])) : "";
-    $template_type = isset($_POST['template_type']) ? sanitize_text_field(wp_unslash($_POST['template_type'])) : "";
-    $template_content = isset($_POST['template_content']) ? wp_unslash($_POST['template_content']) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-    $filtered_content = preg_replace_callback(
-        '/<qsmvariabletag>([^<]+)<\/qsmvariabletag>/u',
-        function ( $matches ) {
-            return '%' . wp_strip_all_tags(preg_replace('/^\s+|\s+$/u', '', $matches[1])) . '%';
-        },
-        $template_content
-    );
-    $filtered_content = preg_replace_callback(
-        '/<qsmextrashortcodetag>([^<]+)<\/qsmextrashortcodetag>/u',
-        function ( $matches ) {
-            return wp_strip_all_tags(preg_replace('/^\s+|\s+$/u', '', $matches[1]));
-        },
-        $filtered_content
-    );
+	// validate nonce
+	if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'qsm_add_template' ) && is_user_logged_in() ) {
 
-    $table_name = $wpdb->prefix . 'mlw_quiz_output_templates';
+		// Sanitize the incoming data
+		$template_id = isset($_POST['template_id']) ? intval($_POST['template_id']) : null;
+		$template_name = isset($_POST['template_name']) ? sanitize_text_field(wp_unslash($_POST['template_name'])) : "";
+		$template_type = isset($_POST['template_type']) ? sanitize_text_field(wp_unslash($_POST['template_type'])) : "";
+		$template_content = isset($_POST['template_content']) ? wp_unslash($_POST['template_content']) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$filtered_content = preg_replace_callback(
+			'/<qsmvariabletag>([^<]+)<\/qsmvariabletag>/u',
+			function ( $matches ) {
+				return '%' . wp_strip_all_tags(preg_replace('/^\s+|\s+$/u', '', $matches[1])) . '%';
+			},
+			$template_content
+		);
+		$filtered_content = preg_replace_callback(
+			'/<qsmextrashortcodetag>([^<]+)<\/qsmextrashortcodetag>/u',
+			function ( $matches ) {
+				return wp_strip_all_tags(preg_replace('/^\s+|\s+$/u', '', $matches[1]));
+			},
+			$filtered_content
+		);
 
-    if ( $template_id ) {
-        // Replace (Update) existing template
-        $update_data = array(
-            'template_content' => $filtered_content,
-        );
-        $where = array( 'id' => $template_id );
+		$table_name = $wpdb->prefix . 'mlw_quiz_output_templates';
 
-        $updated = $wpdb->update(
-            $table_name,
-            $update_data,
-            $where,
-            array( '%s' ),
-            array( '%d' )
-        );
+		if ( $template_id ) {
+			// Replace (Update) existing template
+			$update_data = array(
+				'template_content' => $filtered_content,
+			);
+			$where = array( 'id' => $template_id );
 
-        if ( false !== $updated ) {
-            $template_data = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE id = %d", $template_id), ARRAY_A);
-            wp_send_json_success($template_data);
-        } else {
-            wp_send_json_error(array( 'message' => __('Failed to update template.', 'quiz-master-next') ));
-        }
-    } else {
-        // Insert new template
-        $template_data = array(
-            'template_name'    => $template_name,
-            'template_type'    => $template_type,
-            'template_content' => $filtered_content,
-            'created_at'       => current_time('mysql'),
-        );
+			$updated = $wpdb->update(
+				$table_name,
+				$update_data,
+				$where,
+				array( '%s' ),
+				array( '%d' )
+			);
 
-        $wpdb->insert(
-            $table_name,
-            $template_data,
-            array( '%s', '%s', '%s', '%s' ) // Format of the inserted data
-        );
+			if ( false !== $updated ) {
+				$template_data = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE id = %d", $template_id), ARRAY_A);
+				wp_send_json_success($template_data);
+			} else {
+				wp_send_json_error(array( 'message' => __('Failed to update template.', 'quiz-master-next') ));
+			}
+		} else {
+			// Insert new template
+			$template_data = array(
+				'template_name'    => $template_name,
+				'template_type'    => $template_type,
+				'template_content' => $filtered_content,
+				'created_at'       => current_time('mysql'),
+			);
 
-        $template_data['id'] = $wpdb->insert_id;
+			$wpdb->insert(
+				$table_name,
+				$template_data,
+				array( '%s', '%s', '%s', '%s' ) // Format of the inserted data
+			);
 
-        if ( $template_data['id'] ) {
-            wp_send_json_success($template_data);
-        } else {
-            wp_send_json_error(array( 'message' => __('Failed to insert template.', 'quiz-master-next') ));
-        }
-    }
+			$template_data['id'] = $wpdb->insert_id;
+
+			if ( $template_data['id'] ) {
+				wp_send_json_success($template_data);
+			} else {
+				wp_send_json_error(array( 'message' => __('Failed to insert template.', 'quiz-master-next') ));
+			}
+		}
+	} else {
+		wp_send_json_error( [ 'message' => __( 'Invalid nonce. Busted.', 'quiz-master-next' ) ] );
+        wp_die();
+	}
 }
 
 add_action( 'wp_ajax_qsm_remove_my_templates', 'qsm_remove_my_templates_handler' );

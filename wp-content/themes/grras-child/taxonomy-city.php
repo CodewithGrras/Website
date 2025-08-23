@@ -185,7 +185,7 @@ $term = get_queried_object();
                               </div>
                             </div>
                             <div class="col-md-6 col-6">
-                              <div class="day"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/days.svg" alt=""> <?php echo get_field('days'); ?> Day</div>
+                              <div class="day"><img src="<?php echo get_stylesheet_directory_uri() ?>/images/hours.svg" alt=""> <?php echo get_field('hours'); ?> hrs</div>
                             </div>
                           </div>
                         </div>

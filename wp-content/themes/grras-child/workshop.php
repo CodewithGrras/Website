@@ -52,7 +52,7 @@ $i = 0;
                 <div class="imgbox">
                     <img src="<?php echo esc_url($thumbnail); ?>" alt="">
                 </div>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal-<?php echo esc_attr($name) . $i; ?>" class="play">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleVideoModal-<?php echo $i; ?>" class="play">
                     <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/images/gilplay.jpg'); ?>" alt="">
                 </a>
                 <p><?php echo esc_html($name); ?></p>
@@ -73,7 +73,7 @@ $i = 0;
             $i++;
              $name = get_sub_field('name');
             ?>
-            <div class="modal fade" id="exampleModal-<?php echo esc_attr($name) . $i; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="exampleVideoModal-<?php echo $i; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

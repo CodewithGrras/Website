@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Quiz And Survey Master
  * Description: Easily and quickly add quizzes and surveys to your website.
- * Version: 10.1.1
+ * Version: 10.2.4
  * Author: ExpressTech
  * Author URI: https://quizandsurveymaster.com/
  * Plugin URI: https://expresstech.io/
@@ -43,7 +43,7 @@ class MLWQuizMasterNext {
 	 * @var string
 	 * @since 4.0.0
 	 */
-	public $version = '10.1.1';
+	public $version = '10.2.4';
 
 	/**
 	 * QSM Alert Manager Object
@@ -879,6 +879,8 @@ class MLWQuizMasterNext {
 			if ( $enabled && 'cancelled' !== $enabled ) {
 				add_submenu_page( 'qsm_dashboard', __( 'Question Categories', 'quiz-master-next' ), __( 'Question Categories', 'quiz-master-next' ), $capabilities[3], 'edit-tags.php?taxonomy=qsm_category' );
 			}
+			add_submenu_page( 'qsm_dashboard', __( 'Quiz Categories', 'quiz-master-next' ), __( 'Quiz Categories', 'quiz-master-next' ), $capabilities[3], 'edit-tags.php?taxonomy=quiz-categories' );
+			add_submenu_page( 'qsm_dashboard', __( 'Quiz Tags', 'quiz-master-next' ), __( 'Quiz Tags', 'quiz-master-next' ), $capabilities[3], 'edit-tags.php?taxonomy=quiz_tags' );
 			if ( ! class_exists( 'QSM_Advanced_Assessment' ) ) {
 				add_submenu_page( 'qsm_dashboard', __( 'Answer Labels', 'quiz-master-next' ), __( 'Answer Labels', 'quiz-master-next' ), $capabilities[4], 'qsm-answer-label', 'qsm_advanced_assessment_quiz_page_content', 3 );
 			}

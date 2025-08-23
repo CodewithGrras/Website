@@ -1,96 +1,165 @@
 <?php 
-	  $frequently_asked_questions_new = get_field('frequently_asked_questions_new');
-    if(!empty($frequently_asked_questions_new)) {
+  $faq_category_id = get_field('acf_faq_category');
+  if ($faq_category_id):
+    $faq_query = new WP_Query([
+      'post_type' => 'faqs',
+      'posts_per_page' => -1,
+      'tax_query' => [
+        [
+          'taxonomy' => 'faq-category',
+          'field' => 'term_id',
+          'terms' => $faq_category_id,
+        ]
+      ]
+    ]);
+    if($faq_query->have_posts()):
 ?>
-    <section class="faqs scroller" id="faqsec" data-anchor="faqsec">
-      <div class="container wow fadeInUp">
-        <div class="row justify-content-center">
-          <div class="col-md-12">
-            <h2>Frequently Asked Questions</h2>
-          </div>
-        </div>
-         <?php 
-         
-         $frequently_asked_questions_new = get_field('frequently_asked_questions_new'); ?>
-        <div class="row">
-          	<div class="col-lg-4 d-none d-md-block">
-	            <ul class="nav left-tab mt-0" id="myTab" role="tablist">
-	                <?php 
-	                foreach($frequently_asked_questions_new as $index => $item){
-	                ?>
-	              <li class="nav-item" role="presentation">
-	                <a href="#" class="nav-link <?php echo $index == 0 ? 'active' : ''?>" id="<?php slug_custom($item['category']) ?>-tab" data-bs-toggle="tab" data-bs-target="#<?php slug_custom($item['category']) ?>-tab-pane" role="tab" aria-controls="<?php slug_custom($item['category']) ?>-tab-pane" aria-selected="false"><?php echo($item['category']) ?> (<?php echo count($item['question_and_answer']) ?>)</a>
-	              </li>
-	              <?php } ?>
-	           
-	            </ul>
-	          </div>
-          <div class="col-lg-8 d-none d-md-block">
-            <div class="tab-content" id="myTabContent">
-                <?php 
-	                foreach($frequently_asked_questions_new as $index => $item){
-	                ?>
-	                
-	              <div class="tab-pane fade show <?php echo $index == 0 ? 'active' : ''?>" id="<?php slug_custom($item['category']) ?>-tab-pane" role="tabpanel" aria-labelledby="<?php slug_custom($item['category']) ?>-tab" tabindex="<?php echo $index; ?>">
-                <div class="accordion" id="accordionExample<?php echo $index;?>">
-                    <?php foreach($item['question_and_answer'] as $index2 => $sub_item): ?>
-                  <div class="accordion-item">
-                    <h4 class="accordion-header" id="heading<?php echo $index2; ?>">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $index2; ?>" aria-expanded="false" aria-controls="collapse<?php echo $index2; ?>">
-                        <?php echo $sub_item['question']; ?>
-                      </button>
-                    </h4>
-                    <div id="collapse<?php echo $index2; ?>" class="accordion-collapse collapse" aria-labelledby="heading<?php echo $index2; ?>" data-bs-parent="#accordionExample<?php echo $index; ?>">
-                      <div class="accordion-body">
-                        <p> <?php echo $sub_item['answer']; ?></p>
-                      </div>
+
+<section class="faqs scroller" id="faqsec" data-anchor="faqsec">
+  <div class="container wow fadeInUp">
+    <div class="row justify-content-center">
+      <div class="col-md-12">
+        <h2>Frequently Asked Questions</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Sidebar (Desktop) -->
+      <div class="col-lg-4 d-none d-md-block">
+        <ul class="nav left-tab mt-0" id="myTab" role="tablist">
+          <?php 
+            $count = 0;
+            while ($faq_query->have_posts()): $faq_query->the_post();
+              $faq_id = get_the_ID();
+              $faq_slug = sanitize_title(get_the_title());
+              $accordion_data = get_field('faq_accordions_data', $faq_id);
+          ?>
+          <li class="nav-item" role="presentation">
+            <a href="#" class="nav-link <?php echo $count === 0 ? 'active' : ''; ?>"
+              id="<?php echo $faq_slug; ?>-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#<?php echo $faq_slug; ?>-tab-pane"
+              role="tab"
+              aria-controls="<?php echo $faq_slug; ?>-tab-pane"
+              aria-selected="<?php echo $count === 0 ? 'true' : 'false'; ?>">
+              <?php the_title(); ?> (<?php echo is_array($accordion_data) ? count($accordion_data) : 0; ?>)
+            </a>
+          </li>
+          <?php 
+            $count++;
+            endwhile;
+            wp_reset_postdata();
+          ?>
+        </ul>
+      </div>
+
+      <!-- Accordion Content (Desktop) -->
+      <div class="col-lg-8 d-none d-md-block">
+        <div class="tab-content" id="myTabContent">
+          <?php 
+            $count = 0;
+            $faq_query->rewind_posts();
+            while ($faq_query->have_posts()): $faq_query->the_post();
+              $faq_id = get_the_ID();
+              $faq_slug = sanitize_title(get_the_title());
+              $accordion_data = get_field('faq_accordions_data', $faq_id);
+          ?>
+          <div class="tab-pane fade show <?php echo $count === 0 ? 'active' : ''; ?>"
+            id="<?php echo $faq_slug; ?>-tab-pane"
+            role="tabpanel"
+            aria-labelledby="<?php echo $faq_slug; ?>-tab">
+            <div class="accordion" id="accordion<?php echo $count; ?>">
+              <?php if ($accordion_data): ?>
+                <?php foreach ($accordion_data as $index => $item): ?>
+                <div class="accordion-item">
+                  <h4 class="accordion-header" id="heading-<?php echo $count . '-' . $index; ?>">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#collapse-<?php echo $count . '-' . $index; ?>"
+                      aria-expanded="false"
+                      aria-controls="collapse-<?php echo $count . '-' . $index; ?>">
+                      <?php echo esc_html($item['accordion_title']); ?>
+                    </button>
+                  </h4>
+                  <div id="collapse-<?php echo $count . '-' . $index; ?>"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="heading-<?php echo $count . '-' . $index; ?>"
+                    data-bs-parent="#accordion<?php echo $count; ?>">
+                    <div class="accordion-body">
+                      <p><?php echo wp_kses_post($item['accordion_description']); ?></p>
                     </div>
                   </div>
-                  <?php endforeach; ?>
                 </div>
-              </div>
-           
-	              <?php } ?>
-             </div>
-          </div>
-          <div class="col-lg-12 d-block d-md-none">
-    <div class="accordion" id="accordionExample2">
-        <?php foreach ($frequently_asked_questions_new as $index => $item) { ?>
-            <div class="accordion-item">
-                <h4 class="accordion-header" id="heading11<?php echo $index; ?>">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse11<?php echo $index; ?>" aria-expanded="false" aria-controls="collapse11<?php echo $index; ?>">
-                        <?php echo $item['category']; ?> (<?php echo count($item['question_and_answer']); ?>)
-                    </button>
-                </h4>
-                <div id="collapse11<?php echo $index; ?>" class="accordion-collapse collapse" aria-labelledby="heading11<?php echo $index; ?>" data-bs-parent="#accordionExample2">
-                    <div class="accordion-body">
-                        <div class="accordion" id="nestedAccordion<?php echo $index; ?>">
-                            <?php foreach ($item['question_and_answer'] as $index2 => $sub_item) { ?>
-                                <div class="accordion-item">
-                                    <h4 class="accordion-header" id="nestedHeading<?php echo $index . '-' . $index2; ?>">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#nestedCollapse<?php echo $index . '-' . $index2; ?>" aria-expanded="false" aria-controls="nestedCollapse<?php echo $index . '-' . $index2; ?>">
-                                            <?php echo $sub_item['question']; ?>
-                                        </button>
-                                    </h4>
-                                    <div id="nestedCollapse<?php echo $index . '-' . $index2; ?>" class="accordion-collapse collapse" aria-labelledby="nestedHeading<?php echo $index . '-' . $index2; ?>" data-bs-parent="#nestedAccordion<?php echo $index; ?>">
-                                        <div class="accordion-body">
-                                            <p><?php echo $sub_item['answer']; ?></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
+              <?php endif; ?>
             </div>
-        <?php } ?>
-    </div>
-</div>
-
+          </div>
+          <?php 
+            $count++;
+            endwhile;
+            wp_reset_postdata();
+          ?>
         </div>
       </div>
-    </section
-    
- <a  href="javascript:void(0)" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal5"  ></a>
 
- <?php } ?>
+      <!-- Mobile Accordion View -->
+      <div class="col-lg-12 d-block d-md-none">
+        <div class="accordion" id="mobileFAQ">
+          <?php 
+            $faq_query->rewind_posts();
+            $count = 0;
+            while ($faq_query->have_posts()): $faq_query->the_post();
+              $faq_id = get_the_ID();
+              $faq_title = get_the_title();
+              $accordion_data = get_field('faq_accordions_data', $faq_id);
+          ?>
+          <div class="accordion-item">
+            <h4 class="accordion-header" id="mobileHeading<?php echo $count; ?>">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#mobileCollapse<?php echo $count; ?>" aria-expanded="false"
+                aria-controls="mobileCollapse<?php echo $count; ?>">
+                <?php echo esc_html($faq_title); ?> (<?php echo is_array($accordion_data) ? count($accordion_data) : 0; ?>)
+              </button>
+            </h4>
+            <div id="mobileCollapse<?php echo $count; ?>" class="accordion-collapse collapse"
+              aria-labelledby="mobileHeading<?php echo $count; ?>" data-bs-parent="#mobileFAQ">
+              <div class="accordion-body">
+                <div class="accordion" id="nestedMobileAccordion<?php echo $count; ?>">
+                  <?php if ($accordion_data): ?>
+                    <?php foreach ($accordion_data as $index => $item): ?>
+                    <div class="accordion-item">
+                      <h4 class="accordion-header" id="nestedMobileHeading<?php echo $count . '-' . $index; ?>">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#nestedMobileCollapse<?php echo $count . '-' . $index; ?>"
+                          aria-expanded="false"
+                          aria-controls="nestedMobileCollapse<?php echo $count . '-' . $index; ?>">
+                          <?php echo esc_html($item['accordion_title']); ?>
+                        </button>
+                      </h4>
+                      <div id="nestedMobileCollapse<?php echo $count . '-' . $index; ?>"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="nestedMobileHeading<?php echo $count . '-' . $index; ?>"
+                        data-bs-parent="#nestedMobileAccordion<?php echo $count; ?>">
+                        <div class="accordion-body">
+                          <p><?php echo esc_html($item['accordion_description']); ?></p>
+                        </div>
+                      </div>
+                    </div>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
+                </div>
+              </div>
+            </div>
+          </div>
+          <?php 
+            $count++;
+            endwhile;
+            wp_reset_postdata();
+          ?>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<?php endif; endif; ?>

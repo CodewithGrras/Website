@@ -194,7 +194,7 @@ class QMNQuizManager {
 
                 // Retrieve action.
                 if ( 'retrieve' === $action ) {
-                    $res = $this->add_quiz_results( $data );
+                    $res = $this->add_quiz_results( $data, 'resubmit' );
                     if ( false !== $res ) {
                         $data['processed'] = 1;
                         // Mark submission processed.
@@ -623,6 +623,10 @@ class QMNQuizManager {
 				'quiz_limit_choice'                  => $quiz_limit_choice,
 				'not_allow_after_expired_time'       => $qmn_quiz_options->not_allow_after_expired_time,
 				'scheduled_time_end'                 => strtotime( $qmn_quiz_options->scheduled_time_end ),
+				'prevent_reload'                     => $qmn_quiz_options->prevent_reload,
+				'limit_email_based_submission'       => isset($qmn_quiz_options->limit_email_based_submission) ? $qmn_quiz_options->limit_email_based_submission : 0,
+				'total_user_tries'					 => $qmn_quiz_options->total_user_tries,
+				'is_logged_in'						 => is_user_logged_in(),
 			);
 
 			$return_display = apply_filters( 'qmn_begin_shortcode', $return_display, $qmn_quiz_options, $qmn_array_for_variables, $shortcode_args );
@@ -1458,14 +1462,30 @@ class QMNQuizManager {
 		 * @since 7.3.5
 		 */
 		$start_button_text = ! empty( $options->start_quiz_survey_text ) ? $options->start_quiz_survey_text : $options->next_button_text;
-		$tmpl_pagination = '<div class="qsm-pagination qmn_pagination border margin-bottom">
-			<a class="qsm-btn qsm-previous qmn_btn mlw_qmn_quiz_link mlw_previous" href="javascript:void(0)">' . esc_html( $mlwQuizMasterNext->pluginHelper->qsm_language_support( $options->previous_button_text, "quiz_previous_button_text-{$options->quiz_id}" ) ) . '</a>
+		$tmpl_pagination = '<div class="qsm-pagination qmn_pagination m-0 p-0 d-flex">
+			<!-- Previous Button -->
+            <a class="qsm-btn qsm-previous qmn_btn mlw_qmn_quiz_link mlw_previous" href="javascript:void(0)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <g clip-path="url(#clip0_7001_110692)">
+                        <path d="M11 0C17.0654 0 22 4.9346 22 11C22 17.0654 17.0654 22 11 22C4.9346 22 0 17.0654 0 11C0 4.9346 4.9346 0 11 0ZM6.9596 11.707L12.2929 17.0405C12.4881 17.2357 12.7441 17.3333 13 17.3333C13.2559 17.3333 13.5119 17.2357 13.7071 17.0404C14.0976 16.6499 14.0976 16.0167 13.7071 15.6262L9.08087 10.9998L13.7071 6.37367C14.0976 5.9832 14.0976 5.35 13.7071 4.95947C13.3166 4.56893 12.6834 4.56893 12.2929 4.95947L6.95953 10.2927C6.77193 10.4802 6.6666 10.7345 6.6666 10.9997C6.66667 11.2651 6.772 11.5195 6.9596 11.707Z" fill="CurrentColor"></path>
+                    </g>
+                </svg>
+                <span>' . esc_html( $mlwQuizMasterNext->pluginHelper->qsm_language_support( $options->previous_button_text, "quiz_previous_button_text-{$options->quiz_id}" ) ) . '</span>
+            </a>
 			<span class="qmn_page_message"></span>
 			<div class="qmn_page_counter_message"></div>
 			<div class="qsm-progress-bar" style="display:none;"><div class="progressbar-text"></div></div>
-			<a class="qsm-btn qsm-next qmn_btn mlw_qmn_quiz_link mlw_next mlw_custom_start" href="javascript:void(0)">' . esc_html( $mlwQuizMasterNext->pluginHelper->qsm_language_support( $start_button_text, "quiz_next_button_text-{$options->quiz_id}" ) ) . '</a>
-			<a class="qsm-btn qsm-next qmn_btn mlw_qmn_quiz_link mlw_next mlw_custom_next" href="javascript:void(0)">' . esc_html( $mlwQuizMasterNext->pluginHelper->qsm_language_support( $options->next_button_text, "quiz_next_button_text-{$options->quiz_id}" ) ) . '</a>
-			<input type="submit" class="qsm-btn qsm-submit-btn qmn_btn" value="' . esc_attr( $mlwQuizMasterNext->pluginHelper->qsm_language_support( $options->submit_button_text, "quiz_submit_button_text-{$options->quiz_id}" ) ) . '" />
+			<a class="qsm-btn qsm-next qmn_btn mlw_qmn_quiz_link mlw_next mlw_custom_start btn w-100" href="javascript:void(0)">' . esc_html( $mlwQuizMasterNext->pluginHelper->qsm_language_support( $start_button_text, "quiz_next_button_text-{$options->quiz_id}" ) ) . '</a>
+			<!-- Default Next Button with SVG -->
+            <a class="qsm-btn qsm-next qmn_btn mlw_qmn_quiz_link mlw_next mlw_custom_next" href="javascript:void(0)">
+                <span>' . esc_html( $mlwQuizMasterNext->pluginHelper->qsm_language_support( $options->next_button_text, "quiz_next_button_text-{$options->quiz_id}" ) ) . '</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="22" viewBox="0 0 23 22" fill="none">
+                    <g clip-path="url(#clip0_7001_110698)">
+                        <path d="M11.5 0C5.4346 0 0.5 4.9346 0.5 11C0.5 17.0654 5.4346 22 11.5 22C17.5654 22 22.5 17.0654 22.5 11C22.5 4.9346 17.5654 0 11.5 0ZM15.5404 11.707L10.2071 17.0405C10.0119 17.2357 9.75593 17.3333 9.5 17.3333C9.24407 17.3333 8.98813 17.2357 8.79293 17.0404C8.4024 16.6499 8.4024 16.0167 8.79293 15.6262L13.4191 10.9998L8.79293 6.37367C8.4024 5.9832 8.4024 5.35 8.79293 4.95947C9.1834 4.56893 9.8166 4.56893 10.2071 4.95947L15.5405 10.2927C15.7281 10.4802 15.8334 10.7345 15.8334 10.9997C15.8333 11.2651 15.728 11.5195 15.5404 11.707Z" fill="CurrentColor"></path>
+                    </g>
+                </svg>
+            </a>
+			<input type="button" class="qsm-btn qsm-submit-btn btn-primary w-100 text-uppercase text-white" value="' . esc_attr( $mlwQuizMasterNext->pluginHelper->qsm_language_support( $options->submit_button_text, "quiz_submit_button_text-{$options->quiz_id}" ) ) . '" />
 		</div>';
 		qsm_add_inline_tmpl( 'qsm_quiz', 'tmpl-qsm-pagination-' . esc_attr( $options->quiz_id ), $tmpl_pagination );
 		?>
@@ -1697,7 +1717,7 @@ class QMNQuizManager {
 				}
 				?>
 				<?php if ( 0 === intval( $pagination_option ) ) : ?>
-					<input type='submit' class='qsm-btn qsm-submit-btn qmn_btn' value="<?php echo esc_attr( $mlwQuizMasterNext->pluginHelper->qsm_language_support( $qmn_quiz_options->submit_button_text, "quiz_submit_button_text-{$qmn_quiz_options->quiz_id}" ) ); ?>" />
+					<input type='submit' class='qsm-btn qsm-submit-btn btn-primary w-100 text-uppercase text-white' value="<?php echo esc_attr( $mlwQuizMasterNext->pluginHelper->qsm_language_support( $qmn_quiz_options->submit_button_text, "quiz_submit_button_text-{$qmn_quiz_options->quiz_id}" ) ); ?>" />
 				<?php endif; ?>
 			</div>
 			<?php
@@ -1705,7 +1725,7 @@ class QMNQuizManager {
 			?>
 			<div class="qsm-auto-page-row quiz_section quiz_end empty_quiz_end <?php echo esc_attr( $qsm_d_none ); ?>" >
 				<?php if ( ( ( ! empty( $qmn_quiz_options->randomness_order ) && 0 !== intval( $qmn_quiz_options->randomness_order ) ) || ( ! empty( $qmn_quiz_options->question_from_total ) && 0 !== intval( $qmn_quiz_options->question_from_total ) ) ) && ( empty( $qmn_quiz_options->pagination ) || 0 === intval( $qmn_quiz_options->pagination ) ) ) : ?>
-					<input type="submit" class="qsm-btn qsm-submit-btn qmn_btn" value="<?php echo esc_attr( $mlwQuizMasterNext->pluginHelper->qsm_language_support( $qmn_quiz_options->submit_button_text, "quiz_submit_button_text-{$qmn_quiz_options->quiz_id}" ) ); ?>" />
+					<input type="submit" class="qsm-btn qsm-submit-btn btn-primary w-100 text-uppercase text-white" value="<?php echo esc_attr( $mlwQuizMasterNext->pluginHelper->qsm_language_support( $qmn_quiz_options->submit_button_text, "quiz_submit_button_text-{$qmn_quiz_options->quiz_id}" ) ); ?>" />
 				<?php endif; ?>
 			</div>
 			<?php
@@ -1754,6 +1774,11 @@ class QMNQuizManager {
 	 */
 	public function qsm_validate_contact_fields( $contact_form, $request ) {
 		$errors = [];
+
+		if ( ! is_array( $contact_form ) ) {
+			return;
+		}
+
 		foreach ( $contact_form as $index => $field ) {
 			if ( 'true' === $field['enable'] ) {
 				$contact_key = "contact_field_" . $index;
@@ -1866,18 +1891,21 @@ class QMNQuizManager {
 		$dateStr    = $qsm_option['quiz_options']['scheduled_time_end'];
 		$timezone   = isset( $_POST['currentuserTimeZone'] ) ? sanitize_text_field( wp_unslash( $_POST['currentuserTimeZone'] ) ) : '';
 		$dtUtcDate  = strtotime( $dateStr . ' ' . $timezone );
-		$missing_contact_fields = $this->qsm_validate_contact_fields( $qsm_option['contact_form'], $_REQUEST );
-		if ( 1 !== $missing_contact_fields ) {
-			echo wp_json_encode(
-				array(
-					'display'       => '<div class="qsm-result-page-warning">' . wp_kses_post( $missing_contact_fields ) . '</div>',
-					'redirect'      => false,
-					'result_status' => array(
-						'save_response' => false,
-					),
-				)
-			);
-			wp_die();
+		$enable_server_side_validation = isset( $qsm_option['quiz_options']['enable_server_side_validation'] ) ? $qsm_option['quiz_options']['enable_server_side_validation'] : 0;
+		if ( 1 == $enable_server_side_validation ) {
+			$missing_contact_fields = $this->qsm_validate_contact_fields( $qsm_option['contact_form'], $_REQUEST );
+			if ( 1 !== $missing_contact_fields ) {
+				echo wp_json_encode(
+					array(
+						'display'       => '<div class="qsm-result-page-warning">' . wp_kses_post( $missing_contact_fields ) . '</div>',
+						'redirect'      => false,
+						'result_status' => array(
+							'save_response' => false,
+						),
+					)
+				);
+				wp_die();
+			}
 		}
 
 		if ( isset($qsm_option['quiz_options']['not_allow_after_expired_time']) && '1' === $qsm_option['quiz_options']['not_allow_after_expired_time'] && isset( $_POST['currentuserTime'] ) && sanitize_text_field( wp_unslash( $_POST['currentuserTime'] ) ) > $dtUtcDate && ! empty($dateStr) ) {
@@ -1907,7 +1935,7 @@ class QMNQuizManager {
 				wp_die();
 			}
 		}
-		if ( 0 != $options->total_user_tries ) {
+		if ( 0 != $options->total_user_tries && ( ! isset( $options->limit_email_based_submission ) || ( isset( $options->limit_email_based_submission ) && 0 == $options->limit_email_based_submission ) ) ) {
 
 			// Prepares the variables
 			$mlw_qmn_user_try_count = 0;
@@ -1932,6 +1960,30 @@ class QMNQuizManager {
 					)
 				);
 				wp_die();
+			}
+		}
+		if ( isset( $options->limit_email_based_submission ) && 0 != $options->limit_email_based_submission ) {
+			$user_email = '';
+			foreach ( $_POST as $key => $value ) {
+				if ( preg_match( '/^contact_field_\d+$/', $key ) && is_string( $value ) && filter_var( $value, FILTER_VALIDATE_EMAIL ) ) {
+					$user_email = $value;
+					break;
+				}
+			}
+			if ( ! empty( $user_email ) ) {
+				$mlw_qmn_email_based_submission_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}mlw_results WHERE email=%s AND deleted=0 AND quiz_id=%d", $user_email, $options->quiz_id ) );
+				if ( $mlw_qmn_email_based_submission_count >= $options->total_user_tries ) {
+					echo wp_json_encode(
+						array(
+							'display'       => $mlwQuizMasterNext->pluginHelper->qsm_language_support( htmlspecialchars_decode( $options->total_user_tries_text, ENT_QUOTES ), "quiz_total_user_tries_text-{$options->quiz_id}" ),
+							'redirect'      => false,
+							'result_status' => array(
+								'save_response' => false,
+							),
+						)
+					);
+					wp_die();
+				}
 			}
 		}
 		$data      = array(
@@ -1962,7 +2014,7 @@ class QMNQuizManager {
 	 *
 	 * @return boolean results added or not
 	 */
-	public function add_quiz_results( $data ) {
+	public function add_quiz_results( $data, $action = '' ) {
 		global $wpdb;
 		if ( empty( $wpdb ) || empty( $data['qmn_array_for_variables'] ) || empty( $data['results_array'] ) || empty( $data['unique_id'] ) || ! isset( $data['http_referer'] ) || ! isset( $data['form_type'] ) ) {
 			return false;
@@ -1978,55 +2030,77 @@ class QMNQuizManager {
 			if ( empty( $data['page_name'] ) ) {
 				$data['page_name'] = url_to_postid( $data['http_referer'] ) ? get_the_title( url_to_postid( $data['http_referer'] ) ) : '';
 			}
-			$res = $wpdb->insert(
-				$table_name,
-				array(
-					'quiz_id'         => $data['qmn_array_for_variables']['quiz_id'],
-					'quiz_name'       => $data['qmn_array_for_variables']['quiz_name'],
-					'quiz_system'     => $data['qmn_array_for_variables']['quiz_system'],
-					'point_score'     => $data['qmn_array_for_variables']['total_points'],
-					'correct_score'   => $data['qmn_array_for_variables']['total_score'],
-					'correct'         => $data['qmn_array_for_variables']['total_correct'],
-					'total'           => $data['qmn_array_for_variables']['total_questions'],
-					'name'            => $data['qmn_array_for_variables']['user_name'],
-					'business'        => $data['qmn_array_for_variables']['user_business'],
-					'email'           => $data['qmn_array_for_variables']['user_email'],
-					'phone'           => $data['qmn_array_for_variables']['user_phone'],
-					'user'            => $data['qmn_array_for_variables']['user_id'],
-					'user_ip'         => $data['qmn_array_for_variables']['user_ip'],
-					'time_taken'      => $data['qmn_array_for_variables']['time_taken'],
-					'time_taken_real' => gmdate( 'Y-m-d H:i:s', strtotime( $data['qmn_array_for_variables']['time_taken'] ) ),
-					'quiz_results'    => maybe_serialize( $data['results_array'] ),
-					'deleted'         => ( isset( $data['deleted'] ) && 1 === intval( $data['deleted'] ) ) ? 1 : 0,
-					'unique_id'       => $data['unique_id'],
-					'form_type'       => $data['form_type'],
-					'page_url'        => $data['http_referer'],
-					'page_name'       => sanitize_text_field( $data['page_name'] ),
-				),
-				array(
-					'%d',
-					'%s',
-					'%d',
-					'%f',
-					'%d',
-					'%d',
-					'%d',
-					'%s',
-					'%s',
-					'%s',
-					'%s',
-					'%d',
-					'%s',
-					'%s',
-					'%s',
-					'%s',
-					'%d',
-					'%s',
-					'%d',
-					'%s',
-					'%s',
+			// Check if unique_id already exists
+			$existing_id = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT result_id FROM $table_name WHERE unique_id = %s LIMIT 1",
+					$data['unique_id']
 				)
 			);
+
+			$record = array(
+				'quiz_id'         => $data['qmn_array_for_variables']['quiz_id'],
+				'quiz_name'       => $data['qmn_array_for_variables']['quiz_name'],
+				'quiz_system'     => $data['qmn_array_for_variables']['quiz_system'],
+				'point_score'     => $data['qmn_array_for_variables']['total_points'],
+				'correct_score'   => $data['qmn_array_for_variables']['total_score'],
+				'correct'         => $data['qmn_array_for_variables']['total_correct'],
+				'total'           => $data['qmn_array_for_variables']['total_questions'],
+				'name'            => $data['qmn_array_for_variables']['user_name'],
+				'business'        => $data['qmn_array_for_variables']['user_business'],
+				'email'           => $data['qmn_array_for_variables']['user_email'],
+				'phone'           => $data['qmn_array_for_variables']['user_phone'],
+				'user'            => $data['qmn_array_for_variables']['user_id'],
+				'user_ip'         => $data['qmn_array_for_variables']['user_ip'],
+				'time_taken'      => $data['qmn_array_for_variables']['time_taken'],
+				'time_taken_real' => gmdate( 'Y-m-d H:i:s', strtotime( $data['qmn_array_for_variables']['time_taken'] ) ),
+				'quiz_results'    => maybe_serialize( $data['results_array'] ),
+				'deleted'         => ( isset( $data['deleted'] ) && 1 === intval( $data['deleted'] ) ) ? 1 : 0,
+				'unique_id'       => $data['unique_id'],
+				'form_type'       => $data['form_type'],
+				'page_url'        => $data['http_referer'],
+				'page_name'       => sanitize_text_field( $data['page_name'] ),
+			);
+
+			$formats = array(
+				'%d',  // quiz_id
+				'%s',  // quiz_name
+				'%d',  // quiz_system
+				'%f',  // point_score
+				'%d',  // correct_score
+				'%d',  // correct
+				'%d',  // total
+				'%s',  // name
+				'%s',  // business
+				'%s',  // email
+				'%s',  // phone
+				'%d',  // user
+				'%s',  // user_ip
+				'%s',  // time_taken
+				'%s',  // time_taken_real
+				'%s',  // quiz_results
+				'%d',  // deleted
+				'%s',  // unique_id
+				'%d',  // form_type
+				'%s',  // page_url
+				'%s',  // page_name
+			);
+
+			if ( 'resubmit' === $action && $existing_id ) {
+				$new_unique_id = uniqid();
+				$record['unique_id'] = $new_unique_id;
+				$res = $wpdb->insert(
+					$table_name,
+					$record,
+					$formats
+				);
+			} else {
+				$res = $wpdb->insert(
+					$table_name,
+					$record,
+					$formats
+				);
+			}
 			if ( false === $res ) {
 				// Throw exception
 				throw new Exception( 'Database insert failed.' );
@@ -2199,6 +2273,7 @@ class QMNQuizManager {
 							)
 						);
 						$mlwQuizMasterNext->audit_manager->new_audit( 'Submit Quiz by ' . $qmn_array_for_variables['user_name'] .' - ' .$qmn_array_for_variables['user_ip'], $qmn_array_for_variables['quiz_id'], wp_json_encode( $qmn_array_for_variables ) );
+						$result_display .= '<div class="qsm-result-page-warning">' . __( "Sorry, your submission was not successful. Please contact the website administrator.", "quiz-master-next" ) . '</div>';
 					}
 				}
 			}
@@ -2458,6 +2533,7 @@ class QMNQuizManager {
 										'question_title'  => isset( $question['settings']['question_title'] ) ? $question['settings']['question_title'] : '',
 										'user_compare_text' => $user_compare_text,
 										'case_sensitive'  => $case_sensitive,
+										'answer_limit_keys' => isset( $results_array['answer_limit_keys'] ) ? $results_array['answer_limit_keys'] : '',
 									),
 									$options,
 									$quiz_data
@@ -2542,6 +2618,7 @@ class QMNQuizManager {
 									'question_title'    => isset( $question['settings']['question_title'] ) ? $mlwQuizMasterNext->pluginHelper->qsm_language_support( $question['settings']['question_title'], "Question-{$question_id}", "QSM Questions") : '',
 									'user_compare_text' => $user_compare_text,
 									'case_sensitive'    => $case_sensitive,
+									'answer_limit_keys' => isset( $results_array['answer_limit_keys'] ) ? $results_array['answer_limit_keys'] : '',
 								),
 								$options,
 								$quiz_data
@@ -2643,7 +2720,7 @@ class QMNQuizManager {
 		$question_type     = $question['question_type_new'];
 		$question_required = ( 0 === maybe_unserialize( $question['question_settings'] )['required'] );
 		$multi_response    = ( '4' === $question_type || '10' === $question_type || '14' === $question_type );
-
+		$max_value_array   = apply_filters( 'before_max_min_points_conditions', $max_value_array, $question['answers'], $question_type );
 		return self::qsm_max_min_points_conditions( $max_value_array, $min_value_array, $question_required, $multi_response, $question );
 
 	}
@@ -3181,7 +3258,7 @@ function qmn_total_user_tries_check( $display, $qmn_quiz_options, $qmn_array_for
 		}
 		$mlw_qmn_user_try_count = apply_filters( 'qsm_total_user_tries_check_before', $mlw_qmn_user_try_count, $qmn_quiz_options, $qmn_array_for_variables );
 		// If user has already reached the limit for this quiz
-		if ( $mlw_qmn_user_try_count >= $qmn_quiz_options->total_user_tries ) {
+		if ( $mlw_qmn_user_try_count >= $qmn_quiz_options->total_user_tries && ( ! isset( $qmn_quiz_options->limit_email_based_submission ) || ( isset( $qmn_quiz_options->limit_email_based_submission ) && 0 == $qmn_quiz_options->limit_email_based_submission ) ) ) {
 
 			// Stops the quiz and prepares entered text
 			$qmn_allowed_visit = false;

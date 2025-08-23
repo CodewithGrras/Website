@@ -1,0 +1,95 @@
+.qsm-license-container,
+.qsm-license-form-parent {
+    background-color: #FFFFFF;
+    width: 100%;
+    border: 1px solid #B8B8B8;
+    margin-top: 10px;
+    box-sizing: border-box;
+    min-height: 160px;
+    max-width: 650px;
+}
+.qsm-license-container .qsm-license-content {
+    background-color: #FFFFFF;
+    padding: 20px 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.qsm-license-form-parent .qsm-license-header,
+.qsm-license-container .qsm-license-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 15px;
+    border-bottom: 1px solid #B8B8B8;
+    box-sizing: border-box;
+}
+.qsm-license-form-parent .qsm-license-header .qsm-heading,
+.qsm-license-container .qsm-license-header .qsm-heading {
+    font-weight: 600;
+    margin: 0;
+    font-size: 16px;
+}
+.qsm-license-container .qsm-license-header .qsm-toggleButton .dashicons-edit {
+    color: #3C434A;
+}
+.qsm-license-container .qsm-license-header a:focus {
+    outline: none;
+    box-shadow: none;
+}
+.qsm-license-container a {
+    text-decoration: none;
+    color: #0085BA;
+}
+.qsm-license-info {
+    display: flex;
+    align-items: center;
+    padding-left: 7px;
+}
+.qsm-license-info .qsm-valid-msg {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.qsm-license-info .qsm-valid-msg .qsm-msg{
+    line-height: 1.4;
+    margin-right: 10px;
+    font-size: 15px;
+}
+.qsm-license-info .qsm-valid-msg .qsm-warning {
+    height: 16px;
+    width: 16px;
+    margin: 1px 5px 0 0;
+}
+.qsm-license-info .qsm-valid-msg .dashicons-yes-alt {
+    margin-right: 10px;
+    background-color: #00a32a;
+    color: #FFFFFF;
+    border: 0 solid #00a32a;
+    border-radius: 50%;
+}
+.qsm-license-info .qsm-toggleButton {
+    margin: 0 0 0 10px;
+    font-size: 15px;
+    line-height: 1.4;
+}
+.qsm_extra_variables_validate_parent,
+.rq_validata-license,
+#qsm-license_entry {
+    padding: 10px;
+}
+#qsm-license_entry .qsm-validate-msg {
+    margin: 10px 0 0 0;
+    line-height: 1.4;
+}
+#qsm-license_message .qsm_extra_variables_validate_message .dashicons-warning,
+#qsm-license_entry .qsm-validate-msg .dashicons-warning{
+    background: #A83434;
+    border: 0 solid;
+    border-radius: 50%;
+    color: white;
+    margin: 0 5px 0 0;
+}
+.qsm-addon-title {
+    border-right: 1px solid #919191;
+    padding: 0 10px 0 0;
+    max-width: 245px;
+}

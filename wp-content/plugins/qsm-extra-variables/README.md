@@ -1,0 +1,1 @@
+# QSM Extra Template Variables

@@ -1,3 +1,7 @@
+   <?php
+   $choose_projects = get_field('choose_projects');
+   if($choose_projects && !empty($choose_projects)):
+   ?>
    <div class="industryproject ent-pro bg-theme-light-gradient-md">
 	      <div class="container">
 	        <div class="text-center">
@@ -7,8 +11,6 @@
         <div class="owl-carousel project-works">
             <?php
 			
-			$choose_projects = get_field('choose_projects');			
-			//echo "<pre>"; print_r($choose_projects); exit;
 			if($choose_projects):
 				foreach( $choose_projects as $project ):
 					$permalink = get_permalink( $project->ID );
@@ -97,7 +99,9 @@
               
           <div class="modal-body">
             <p><?php echo $queried_post->post_content; ?></p>
+            <?php if(!empty(get_field('link',$project->ID))): ?>
             <a href="<?php echo get_field('link',$project->ID); ?>" class="btn btn-outline-primary" target="_blank">Explore More</a>
+            <?php endif; ?>
           </div>
         </div>
       </div>
@@ -108,6 +112,7 @@
             ?>
                 <p>No projects found.</p>
             <?php
+            endif;
             endif;
             ?>
 

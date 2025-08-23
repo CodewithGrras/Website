@@ -207,6 +207,15 @@ if ( function_exists('acf_add_options_page') ) {
         'redirect'      => false,
         'icon_url'      => 'dashicons-admin-generic',
     ));
+    
+    acf_add_options_page(array(
+        'page_title'    => 'Redhat Common Options',
+        'menu_title'    => 'Redhat Common Options',
+        'menu_slug'     => 'redhat-common-options',
+        'capability'    => 'edit_others_posts', // Change capability to allow Editors to access
+        'redirect'      => false,
+        'icon_url'      => 'dashicons-admin-generic',
+    ));
 }
 
 
@@ -557,7 +566,7 @@ function add_predefined_choice( $choices ) {
 remove_filter ('acf_the_content', 'wpautop');
 // filter by catgory on the blog page
 
-function filter_posts_by_category() {
+/*function filter_posts_by_category() {
     $category_id = isset($_GET['category_id']) ? intval($_GET['category_id']) : 0;
 
     $args = array(
@@ -599,7 +608,95 @@ function filter_posts_by_category() {
     wp_reset_postdata();
 
     wp_die();
+}*/
+
+function filter_posts_by_category() {
+    $category_id = isset($_GET['category_id']) ? intval($_GET['category_id']) : 0;
+    $paged       = isset($_GET['paged']) ? intval($_GET['paged']) : 1;
+
+    $args = array(
+        'post_type'      => 'post',
+        'posts_per_page' => 6,
+        'post_status'    => 'publish',
+        'cat'            => $category_id,
+        'paged'          => $paged
+    );
+
+    $query = new WP_Query($args);
+
+    ob_start(); // Start buffer for blogDataHtml
+    if ($query->have_posts()) :
+        while ($query->have_posts()) : $query->the_post();
+            ?>
+            <div class="col-lg-4 col-sm-6 col-6">
+                <div class="blog-content">
+                    <div class="imgbox">
+                        <?php
+                        if (has_post_thumbnail()) {
+                            the_post_thumbnail('medium', array('class' => 'img-fluid'));
+                        } else {
+                            echo '<img src="' . get_stylesheet_directory_uri() . '/images/default-image.jpg" class="img-fluid" alt="">';
+                        }
+                        ?>
+                    </div>
+                    <div class="contentbox">
+                        <h4><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
+                        <div class="admin"><span>By</span> <?php the_author(); ?></div>
+                        <div class="date"><?php echo get_the_date(); ?></div>
+                        <div class="read"><?php echo get_field('read_time') ? get_field('read_time') : 7 ?> Min Read</div>
+                    </div>
+                </div>
+            </div>
+            <?php
+        endwhile;
+    else:
+        echo '<p>No posts found.</p>';
+    endif;
+    $blogDataHtml = ob_get_clean();
+
+    // Pagination HTML
+    ob_start();
+    if ($query->max_num_pages > 1) :
+        $current_page = max(1, $paged);
+        $total_pages  = $query->max_num_pages;
+        $range        = 2;
+
+        echo '<nav aria-label="Page navigation"><ul class="pagination">';
+
+        if ($current_page > $range + 1) {
+            echo '<li class="page-item"><a class="page-link" href="#" data-page="1">1</a></li>';
+            if ($current_page > $range + 2) {
+                echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+            }
+        }
+
+        for ($i = max(1, $current_page - $range); $i <= min($total_pages, $current_page + $range); $i++) {
+            if ($i === $current_page) {
+                echo '<li class="page-item active"><span class="page-link">' . $i . '</span></li>';
+            } else {
+                echo '<li class="page-item"><a class="page-link" href="#" data-page="' . $i . '">' . $i . '</a></li>';
+            }
+        }
+
+        if ($current_page < $total_pages - $range) {
+            if ($current_page < $total_pages - $range - 1) {
+                echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
+            }
+            echo '<li class="page-item"><a class="page-link" href="#" data-page="' . $total_pages . '">' . $total_pages . '</a></li>';
+        }
+
+        echo '</ul></nav>';
+    endif;
+    $paginationHtml = ob_get_clean();
+
+    wp_reset_postdata();
+
+    wp_send_json(array(
+        'blogDataHtml'   => $blogDataHtml,
+        'paginationHtml' => $paginationHtml
+    ));
 }
+
 add_action('wp_ajax_filter_posts_by_category', 'filter_posts_by_category');
 add_action('wp_ajax_nopriv_filter_posts_by_category', 'filter_posts_by_category');
 function custom_excerpt_length($length) {

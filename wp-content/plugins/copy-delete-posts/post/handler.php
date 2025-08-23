@@ -732,6 +732,9 @@ function cdp_insert_new_post($areWePro = false) {
 
             // Replace title with Counter if multiple copies
             $data['post_title'] = str_replace('[Counter]', ($counter + $i), $base_title);
+            if (isset($data['meta_input']) && isset($data['meta_input']['_elementor_template_type'])) {
+                $data['post_name'] = $data['post_name'] . '-' . ($counter + $i);
+            }
 
             // Adjust URLs for new subsite
             if ($alreadyReplaced == false && $areWePro && isset($gosCurrent['cdp-premium-replace-domain']) && $gosCurrent['cdp-premium-replace-domain'] == 'true') {
@@ -1130,6 +1133,10 @@ function cdp_insert_new_post($areWePro = false) {
             $childrens = cdp_check_childs($id, $areWePro); // if sizeof($this) == has childs
             $post_data = cdp_filter_post($post, $swap, $pConv, $settings, $site, $taxonomies, $areWePro); // can be false
             $meta_data = cdp_filter_meta($meta, $settings, $id, $areWePro, $site, $post_data['post_title']); // can be false
+            if (isset($meta['_elementor_template_type'])) { // Add Elementor template type to post data to prevent setting the type of template to 'page' by default in Elementor after creating the new post
+                $post_data['meta_input']['_elementor_template_type'] = $meta['_elementor_template_type'][0];
+                unset($meta['_elementor_template_type']);
+            }
             $inserted_posts = cdp_insert_post($id, $post_data, $times, $areWePro, $isChild, $p_ids, $site); // $res['error'] must be == 0
             $inserted_metas = cdp_insert_post_meta($inserted_posts['ids'], $meta_data, $areWePro, $inserted_posts['counter'], $site); // sizeof($res['error']) must be == 0
 

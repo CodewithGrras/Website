@@ -29,7 +29,7 @@ get_header();
             <form id="search-form" class="form-inline d-flex" action="javascript:void(0);" >
 
               <input type="text" class="form-control" placeholder="Search" id="search-input2" name="s">
-              <button type="button" class="btn btn-dark btn-sm py-1 px-3 rounded-1 fw-normal ms-2">Search</button>
+              <button type="submit" class="btn btn-dark btn-sm py-1 px-3 rounded-1 fw-normal ms-2">Search</button>
               <!--<?php echo get_search_query(); ?>-->
 
               <!-- <button type="submit" class="btn btn-primary">Search</button> -->
@@ -116,7 +116,7 @@ get_header();
 
                 </div>
 
-                <h3 class="custom_contant" style="-webkit-line-clamp: 2!important;"><?php the_title(); ?></h3>
+                <h3 class="custom_contant" style="-webkit-line-clamp: 3!important;"><?php the_title(); ?></h3>
 
                 <p><?php echo wp_trim_words(get_the_excerpt(), 25, '...'); ?></p>
 
@@ -144,7 +144,7 @@ get_header();
 
     <ul class="bloglist ">
 
-            <li><a href="javascript:void(0);" class="category-link" data-category-id="" data-name="All">All</a></li>
+            <li class="active"><a href="javascript:void(0);" class="category-link" data-category-id="" data-name="All">All</a></li>
 
         <?php
 
@@ -250,7 +250,7 @@ get_header();
 
             <!-- Pagination -->
 
-            <div class="col-lg-12 text-center">
+            <div class="col-lg-12 text-center blogPagination">
 
          <?php    if ($query->max_num_pages > 1) :
 
@@ -341,14 +341,13 @@ jQuery(document).ready(function($) {
   $('.category-link').on('click', function(e) {
 
     e.preventDefault();
-
-    
-
+    $('ul.bloglist li.active').removeClass('active');
+    $(this).parents('li').addClass('active');
     var categoryId = $(this).data('category-id'); 
 
-var name = $(this).data('name'); 
-
-$('#display-change').text(name);
+    var name = $(this).data('name'); 
+    
+    $('#display-change').text(name);
 
 
 
@@ -370,11 +369,8 @@ $('#display-change').text(name);
 
       success: function(response) {
 
-        // Replace the post container with the new category posts
-
-        
-
-        $('#post-container').html(response);
+        $('#post-container').html(response.blogDataHtml);
+        $('.blogPagination').html(response.paginationHtml);
 
         $('html, body').animate({
 

@@ -97,7 +97,7 @@ $terms = get_terms(array(
 </div>
 
 <div class="mt-5 text-center">
-    <a href="#" class="btn btn-outline-primary" id='view-more'>More Videos Reviews</a>
+    <a href="#" class="btn btn-secondary" id='view-more'>More Videos Reviews</a>
     <a href="<?php get_link_custom('review-rating') ?>" class="btn btn-primary">View All Success Stories</a>
 </div>
 </div>

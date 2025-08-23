@@ -151,7 +151,7 @@ class QSM_Contact_Manager {
 				if ( 'true' === $fields[ $i ]["enable"] || true === $fields[ $i ]["enable"] ) {
 					$value = '';
 					?>
-					<div class="qsm_contact_div qsm-contact-type-<?php echo esc_attr( $fields[ $i ]['type'] ); ?>">
+					<div style="display:none;" class="qsm_contact_div qsm-contact-type-<?php echo esc_attr( $fields[ $i ]['type'] ); ?>">
 						<?php
 						if ( 'name' === $fields[ $i ]['use'] ) {
 							$value = $name;
@@ -406,7 +406,7 @@ class QSM_Contact_Manager {
 	 * @param type $default_value
 	 */
 	public static function generate_contact_field( $field, $index, $quiz_options, $default_value = '' ) {
-		global $mlwQuizMasterNext;
+	    global $mlwQuizMasterNext;
 		$fields_hidden               = false;
 		$contact_disable_autofill    = $quiz_options->contact_disable_autofill;
 		if ( is_user_logged_in() && 1 === intval( $quiz_options->loggedin_user_contact ) ) {
@@ -420,6 +420,7 @@ class QSM_Contact_Manager {
 		}
 		$fieldAttr   = " name='contact_field_" . esc_attr( $index ) . "' id='contact_field_" . esc_attr( $index ) . "' ";
 		$class       = '';
+		//print_r($field);
 		if ( ( 'true' === $field["required"] || true === $field["required"] ) && ! $fields_hidden ) {
 			if ( 'radio' === $field["type"] ) {
 				$class .= ' mlwRequiredRadio ';
@@ -442,6 +443,7 @@ class QSM_Contact_Manager {
 				// Filer Value
 				if ( empty( $contact_disable_autofill ) ) {
 					$default_value   = apply_filters( 'qsm_contact_text_field_value', $default_value, $field['use'], $quiz_options );
+					$default_value = "name";
 					$fieldAttr       .= " value='" . esc_attr( $default_value ) . "' ";
 				} else {
 					$fieldAttr .= " autocomplete='off' ";
@@ -469,6 +471,24 @@ class QSM_Contact_Manager {
 
 				$fieldAttr   .= " placeholder='" . esc_attr( wp_strip_all_tags( $field_placeholder ) ) . "' ";
 				$class       = apply_filters( 'qsm_contact_text_field_class', $class, $field['use'] );
+				
+				$newValue = "";
+				if(isset($_GET['quizUserName']) && $_GET['quizUserName'] && $field['use'] === 'name') {
+				    $newValue = $_GET['quizUserName'];
+				} elseif(isset($_GET['quizUserPhone']) && $_GET['quizUserPhone'] && $field['use'] === 'phone') {
+				    $newValue = $_GET['quizUserPhone'];
+				}
+				if (strpos($fieldAttr, 'value=') !== false) {
+                    // Replace existing value
+                    $fieldAttr = preg_replace(
+                        '/value=(["\'])(.*?)\1/i',
+                        'value="' . esc_attr($newValue) . '"',
+                        $fieldAttr
+                    );
+                } else {
+                    // Add value attribute
+                    $fieldAttr .= ' value="' . esc_attr($newValue) . '"';
+                }
 				if ( ! isset( $field['hide_label'] ) || 'true' != $field['hide_label'] ) {
 				?>
 					<span class='mlw_qmn_question qsm_question'><label for="contact_field_<?php echo esc_attr( $index ) ?>"><?php echo esc_attr( $field_label ); ?></label></span>
@@ -495,6 +515,22 @@ class QSM_Contact_Manager {
 				}
 				$class       = apply_filters( 'qsm_contact_email_field_class', $class, $field['use'] );
 				$fieldAttr   .= " placeholder='" . esc_attr( wp_strip_all_tags( $field_placeholder ) ) . "' ";
+				
+				$newValue = "";
+				if(isset($_GET['quizUserEmail']) && $_GET['quizUserEmail'] && $field['use'] === 'email') {
+				    $newValue = $_GET['quizUserEmail'];
+				}
+				if (strpos($fieldAttr, 'value=') !== false) {
+                    // Replace existing value
+                    $fieldAttr = preg_replace(
+                        '/value=(["\'])(.*?)\1/i',
+                        'value="' . esc_attr($newValue) . '"',
+                        $fieldAttr
+                    );
+                } else {
+                    // Add value attribute
+                    $fieldAttr .= ' value="' . esc_attr($newValue) . '"';
+                }
 				if ( ! isset( $field['hide_label'] ) || 'true' != $field['hide_label'] ) {
 					?>
 					<span class='mlw_qmn_question qsm_question'><label for="contact_field_<?php echo esc_attr( $index ) ?>"><?php echo esc_attr( $field_label ); ?></label></span>

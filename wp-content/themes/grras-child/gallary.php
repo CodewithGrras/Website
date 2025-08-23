@@ -6,11 +6,18 @@ get_header();
 $banner = get_field("banner");
 ?>
 <!-- solution -->
-<div class="solution">
+<div class="solution bg-theme-light section-padding">
     <div class="container">
-        <h2><?php echo $banner["title"] ?></h2>
-        <p><?php echo $banner["sub_title"] ?></p>
-        <p><?php echo $banner["description"] ?></p>
+        <div class="row">
+            <div class="col-12 col-lg-7">
+                <div class="gallerybanner-area text-center text-lg-start">
+                    <h1><?php echo $banner["title"] ?></h1>
+                    <p class="subititle"><?php echo $banner["sub_title"] ?></p>
+                    <p><?php echo $banner["description"] ?></p>
+                </div>
+            </div>
+        </div>
+            
     </div>
 </div>
 

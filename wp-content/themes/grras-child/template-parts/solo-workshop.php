@@ -41,7 +41,7 @@ if ($date) {
         // Format the date as "dS M, D"
         echo $date_time->format('jS M, D');
     } else {
-        echo 'Invalid date format'; // Handle parsing errors
+        echo 'N/A'; // Handle parsing errors
     }
 } else {
     echo 'No start time provided'; // Handle empty date
@@ -71,7 +71,7 @@ if ($start_time && $end_time) {
         // Output the formatted time range
         echo $start_formatted . ' - ' . $end_formatted;
     } else {
-        echo 'Invalid date format'; // Handle parsing errors
+        echo 'N/A'; // Handle parsing errors
     }
 } else {
     echo 'Start time or end time not provided'; // Handle empty date

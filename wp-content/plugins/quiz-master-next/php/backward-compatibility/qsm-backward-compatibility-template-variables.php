@@ -37,7 +37,7 @@ function qsm_bckcmp_tempvar_qa_text_qt_multi_choice_correct( $answers_from_db, $
         } elseif ( $is_answer_correct && 1 !== $single_answer[2] ) {
             $question_with_answer_text .= '<span class="qsm-text-wrong-option ' . $image_class . '">' . $show_user_answer . '</span>';
         } else {
-            $question_with_answer_text .= '<span class="qsm-text-simple-option ' . $image_class . '">' . $show_user_answer . '</span>';
+            $question_with_answer_text .= '<span class="qsm-text-simple-option t1 ' . $image_class . '">' . $show_user_answer . '</span>';
         }
     }
 
@@ -87,7 +87,7 @@ function qsm_bckcmp_tempvar_qa_text_qt_single_choice_correct( $answers_from_db, 
         } elseif ( $answer_value == $single_answer_option && 1 !== $single_answer[2] ) {
             $question_with_answer_text .= '<span class="qsm-text-wrong-option ' . $image_class . '">' . $show_user_answer . '</span>';
         } else {
-            $question_with_answer_text .= '<span class="qsm-text-simple-option ' . $image_class . '">' . $show_user_answer . '</span>';
+            $question_with_answer_text .= '<span class="qsm-text-simple-option t2 ' . $image_class . '">' . $show_user_answer . '</span>';
         }
     }
     return $question_with_answer_text;
@@ -115,7 +115,7 @@ function qsm_bckcmp_tempvar_qa_text_qt_multi_choice_points( $answers_from_db, $a
         if ( strpos($user_selected_answer, $single_answer[0]) !== false ) {
             $question_with_answer_text .= '<span class="qsm-text-correct-option ' . $image_class . '">' . $show_user_answer . '</span>';
         } else {
-            $question_with_answer_text .= '<span class="qsm-text-simple-option ' . $image_class . '">' . $show_user_answer . '</span>';
+            $question_with_answer_text .= '<span class="qsm-text-simple-option t3 ' . $image_class . '">' . $show_user_answer . '</span>';
         }
     }
     return $question_with_answer_text;
@@ -142,7 +142,7 @@ function qsm_bckcmp_tempvar_qa_text_qt_single_choice_points( $answers_from_db, $
         if ( htmlspecialchars_decode($answers_from_response[1], ENT_QUOTES) == $single_answer[0] ) {
             $question_with_answer_text .= '<span class="qsm-text-correct-option ' . $image_class . '">' . $show_user_answer . '</span>';
         } else {
-            $question_with_answer_text .= '<span class="qsm-text-simple-option ' . $image_class . '">' . $show_user_answer . '</span>';
+            $question_with_answer_text .= '<span class="qsm-text-simple-option t4 ' . $image_class . '">' . $show_user_answer . '</span>';
         }
     }
     return $question_with_answer_text;

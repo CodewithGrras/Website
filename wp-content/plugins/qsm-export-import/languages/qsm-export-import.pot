@@ -1,0 +1,152 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: QSM - Export & Import\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-07-28 06:58+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.5.3; wp-5.8\n"
+"X-Domain: qsm-export-import"
+
+#: php/addon-settings-tab-content.php:441
+msgid "A quiz/survey has been imported successfully!"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:684
+msgid "Addon License Key"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:702
+msgid "All Quizzes & Surveys"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:696
+msgid "CSV Export"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:424
+msgid "Error importing a quiz/survey!"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:135
+msgid "Error in reading csv file. Please try again."
+msgstr ""
+
+#: php/addon-settings-tab-content.php:86 php/addon-settings-tab-content.php:610
+msgid "Error uploading file. Please try again."
+msgstr ""
+
+#: php/addon-settings-tab-content.php:80
+msgid "Error uploading file: Incorrect file format. Please try again."
+msgstr ""
+
+#: php/addon-settings-tab-content.php:58
+msgid "Error uploading file: Missing File. Please try again."
+msgstr ""
+
+#: php/addon-settings-tab-content.php:298
+msgid "Error uploading questions and answers. Please try again."
+msgstr ""
+
+#: php/addon-settings-tab-content.php:713
+msgid "Export all data"
+msgstr ""
+
+#. Description of the plugin
+msgid "Export and import your quizzes and surveys"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:714
+msgid "Export Questions & Answers"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:693
+#: php/addon-settings-tab-content.php:719
+msgid "Export Quizzes/Surveys"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:711
+msgid "Export Type"
+msgstr ""
+
+#. URI of the plugin
+#. Author URI of the plugin
+msgid "https://quizandsurveymaster.com"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:726
+msgid "Import New Quiz/Survey"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:722
+msgid "Import Quizes/Surveys"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:695
+msgid "JSON Export"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:748
+msgid "Note:"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:736
+#: php/addon-settings-tab-content.php:740
+msgid "Note: "
+msgstr ""
+
+#. Name of the plugin
+msgid "QSM - Export & Import"
+msgstr ""
+
+#. Author of the plugin
+msgid "QSM Team"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:294
+msgid "Questions and Answers has been imported successfully!"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:690
+msgid "Save Changes"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:744
+msgid "Select file to upload:: "
+msgstr ""
+
+#: php/addon-settings-tab-content.php:700
+msgid "Select Quiz/Survey"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:681
+msgid "Settings"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:737
+msgid "Upload all data CSV or JSON file."
+msgstr ""
+
+#: php/addon-settings-tab-content.php:748
+msgid "Upload CSV or JSON file only"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:741
+msgid "Upload questions and answers CSV."
+msgstr ""
+
+#: php/addon-settings-tab-content.php:751
+msgid "Upload Quizzes/Surveys"
+msgstr ""
+
+#: php/addon-settings-tab-content.php:664
+msgid "Your settings has been saved successfully!"
+msgstr ""

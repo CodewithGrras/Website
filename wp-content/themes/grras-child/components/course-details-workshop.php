@@ -63,7 +63,7 @@ if ($date) {
         // Format the date as "dS M, D"
         echo $date_time->format('jS M, D');
     } else {
-        echo 'Invalid date format'; // Handle parsing errors
+        echo 'N/A'; // Handle parsing errors
     }
 } else {
     echo 'No start time provided'; // Handle empty date
@@ -93,7 +93,7 @@ if ($start_time && $end_time) {
         // Output the formatted time range
         echo $start_formatted . ' - ' . $end_formatted;
     } else {
-        echo 'Invalid date format'; // Handle parsing errors
+        echo 'N/A'; // Handle parsing errors
     }
 } else {
     echo 'Start time or end time not provided'; // Handle empty date
@@ -118,6 +118,6 @@ if ($start_time && $end_time) {
             wp_reset_postdata();
             ?>
         </div>
-        <div class="mt-4 text-center"><a href="<?php get_link_custom('workshop'); ?>" class="btn btn-primary"><strong>Explore All Workshops</strong></a></div>
+        <div class="mt-4 text-center"><a href="<?php get_link_custom('workshop'); ?>" class="btn btn-primary">Explore All Workshops</a></div>
     </div>
 </div>

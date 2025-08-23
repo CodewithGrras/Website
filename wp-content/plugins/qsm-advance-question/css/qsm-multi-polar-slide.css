@@ -1,0 +1,93 @@
+/* --------------------------- Advance Polar CSS start --------------------------------- */
+.qsm-quiz-container .qsm-advance-polar {
+    flex-direction: column;
+}
+.quiz_theme_qsm-theme-sigma .qsm-advance-polar,
+.quiz_theme_qsm-theme-sapience .qsm-advance-polar,
+.quiz_theme_qsm-theme-pool .qsm-advance-polar {
+    flex-direction: row;
+}
+.qsm-advance-polar .qsm-advance-polar-options {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 0 5px 0;
+    font-weight: initial;
+}
+.result-tab-content .qsm-advance-polar .qsm-advance-polar-options {
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+.result-tab-content .qsm-advance-polar .slider-main-wrapper .ui-slider {
+    width: 92%;
+    left: 44px;
+}
+.result-tab-content .qsm-advance-polar .slider-main-wrapper,
+.qsm-advance-polar .slider-main-wrapper {
+    width: 100%;
+}
+.qsm-advance-polar .polar-title {
+    position: relative;
+}
+.qsm-advance-polar .polar-title:not(:first-child):not(:last-child)::before {
+    position: absolute;
+    content: "\2022";
+    color: #ffffff;
+    z-index: 1;
+    left: 50%;
+    top: 40px;
+}
+.quiz_theme_default .qsm-advance-polar .qsm-advance-polar-options .polar-title::before {
+    top: 30px;
+}
+.result-tab-content .qsm-advance-polar .qsm-advance-polar-options .polar-title::before {
+    top: 27px;
+}
+.quiz_theme_qsm-theme-fragrance .qsm-advance-polar .qsm-advance-polar-options .polar-title::before {
+    top: 48px;
+}
+.quiz_theme_qsm-theme-fragrance .qmn_results_page .qsm-advance-polar .qsm-advance-polar-options .polar-title::before {
+    top: 48px;
+}
+.quiz_theme_qsm-theme-breeze .qmn_results_page .qsm-advance-polar .qsm-advance-polar-options .polar-title::before {
+    top: 60px;
+}
+.qsm-advance-polar .polar-title:last-child:before {
+    left: calc(50% - 5px);
+}
+.ast-separate-container .qsm-advance-polar .slider-main-wrapper,
+.ast-desktop .qsm-advance-polar .slider-main-wrapper {
+    width: 100%;
+}
+.qsm-quiz-container .qsm-advance-polar .slider-main-wrapper,
+.qsm-advance-polar .slider-main-wrapper .ui-slider {
+    width: 100%;
+    left: 0;
+}
+.quiz_theme_qsm-theme-sigma .qsm-advance-polar .qsm-advance-polar-options .polar-title::before,
+.quiz_theme_qsm-theme-pixel .qsm-advance-polar .qsm-advance-polar-options .polar-title::before,
+.quiz_theme_qsm-theme-ivory .qsm-advance-polar .qsm-advance-polar-options .polar-title::before,
+.quiz_theme_qsm-theme-sapience .qsm-advance-polar .qsm-advance-polar-options .polar-title::before,
+.quiz_theme_qsm-theme-fortune .qsm-advance-polar .qsm-advance-polar-options .polar-title::before {
+    top: 40px;
+}
+.quiz_theme_qsm-theme-sigma .qmn_results_page .qsm-advance-polar .qsm-advance-polar-options {
+    padding: 0 18px 0 0;
+    box-sizing: border-box;
+}
+.quiz_theme_qsm-theme-fortune .qmn_results_page .qsm-advance-polar .qsm-advance-polar-options {
+    padding: 0 15px 0 5px;
+    box-sizing: border-box;
+}
+.quiz_theme_qsm-theme-pool .qsm-advance-polar .qsm-advance-polar-options {
+    margin: 0;
+}
+.quiz_theme_qsm-theme-breeze .qsm-advance-polar .qsm-advance-polar-options .polar-title::before,
+.quiz_theme_qsm-theme-pool .qsm-advance-polar .qsm-advance-polar-options .polar-title::before {
+    top: 40px;
+    color: black;
+}
+.transparent-before::before {
+    color: transparent !important;
+}
+/* --------------------------- Advance Polar CSS End --------------------------------- */

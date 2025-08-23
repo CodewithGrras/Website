@@ -1,0 +1,44 @@
+<h3>3.3.0 (May 28, 2025)</h3>
+<ul>
+	<li>Feature: Introduced the qsm_calc shortcode to display results of calculated variables</li>
+</ul>
+<h3>3.2.0 (February 28, 2025)</h3>
+<ul>
+ 	<li>Feature: Added an option to conditionally display quiz email page content</li>
+	<li>Enhancement: Improved UI for admin results and email page condition popup settings</li>
+</ul>
+<h3>3.1.0 (December 31, 2024)</h3>
+<ul>
+ 	<li>Feature: Introduced a new shortcode 'qsm_all_quizzes' to display a list of all quizzes</li>
+</ul>
+<h3>3.0.0 (September 17, 2024)</h3>
+<ul>
+ 	<li>Feature: Introduced a new user interface for generating shortcodes</li>
+	<li>Feature: Added buttons for copying or directly inserting shortcodes</li>
+	<li>Feature: Added an option to conditionally display quiz result page content</li>
+	<li>Feature: Shortcode support for quiz or category conditions based on points or scores</li>
+</ul>
+<h3>2.0.5 (August 08, 2024)</h3>
+<ul>
+ 	<li>Enhancement: Improved UI for the recent quiz list</li>
+</ul>
+<h3>2.0.4 (September 30, 2022)</h3>
+<ul>
+ 	<li>Feature : Added option to set decimal point in qsm_average shortcode</li>
+</ul>
+<h3>2.0.3 (August 9, 2022)</h3>
+<ul>
+ 	<li>Bug : Fixed issue with license key</li>
+</ul>
+<h3>2.0.2 (September 10, 2021)</h3>
+<ul>
+    <li>Added translation support.</li>
+</ul>
+<h3>2.0.1 (April 24, 2020)</h3>
+<ul>
+ 	<li>Enhancement: Changed the quiz slug to qsm_quiz</li>
+</ul>
+<h3>2.0.0 (September 28, 2016)</h3>
+<ul>
+ 	<li>Updates to newer licensing system</li>
+</ul>

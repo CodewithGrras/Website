@@ -1,7 +1,7 @@
 <?php
 function qsm_tempvar_qa_text_qt_choice( $total_answers, $answers_from_response, $grading_system, $question_settings, $form_type = 0 ) {
 	global $mlwQuizMasterNext;
-	$question_with_answer_text = '';
+	$question_with_answer_text = '<div class="qsm-answer-data">';
 	$class                     = '';
 	foreach ( $total_answers as $single_answer_key => $single_answer ) {
 		if ( 8 == $answers_from_response['question_type'] && 'not-opted' == $answers_from_response['user_compare_text'] ) {
@@ -50,7 +50,7 @@ function qsm_tempvar_qa_text_qt_choice( $total_answers, $answers_from_response, 
 			} elseif ( $is_user_answer && ! $is_answer_correct ) {
 				$question_with_answer_text .= '<span class="qsm-text-wrong-option ' .  $class . ' ' . $image_class . '">' . $show_user_answer .$caption.$close_span;
 			} else {
-				$question_with_answer_text .= '<span class="qsm-text-simple-option ' .  $class . ' ' . $image_class . '">' . $show_user_answer .$caption.$close_span;
+				$question_with_answer_text .= '<span class="pet1 qsm-text-simple-option ' .  $class . ' ' . $image_class . '">' . $show_user_answer .$caption.$close_span;
 			}
 		} else {
 			if ( $is_user_answer ) {
@@ -59,6 +59,8 @@ function qsm_tempvar_qa_text_qt_choice( $total_answers, $answers_from_response, 
 				$question_with_answer_text .= '<span class="qsm-text-simple-option ' .  $class . ' ' . $image_class . '">' . $show_user_answer .$caption.$close_span;
 			}
 		}
+		$question_with_answer_text = apply_filters( 'qsm_after_result_submit_answers', $question_with_answer_text, $form_type, $is_answer_correct, $total_answers, $answers_from_response, $grading_system, $question_settings );
 	}
+	$question_with_answer_text .= '</div>';
 	return $question_with_answer_text;
 }

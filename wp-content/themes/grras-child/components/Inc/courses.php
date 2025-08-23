@@ -220,12 +220,13 @@ add_action('wp_ajax_nopriv_load_courses', 'load_courses_handler');
 function load_courses_handler() {
     $category = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : '';
     $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
-
+    $src = isset($_POST['src']) ? $_POST['src'] : null;
     $posts_per_page = get_the_ID() == 17246 ? 9 : 9;
    
 
 $args = [
     'post_type'      => 'courses',
+    's'              => $src,
     'tax_query'      => array(
         array(
             'taxonomy' => 'city', // The taxonomy name

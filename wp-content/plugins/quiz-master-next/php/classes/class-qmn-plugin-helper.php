@@ -86,6 +86,33 @@ class QMNPluginHelper {
 
 		add_action( 'qsm_register_language_support', array( $this, 'qsm_register_language_support' ), 10, 3 );
 		add_filter( 'qsm_language_support', array( $this, 'qsm_language_support' ), 10, 3 );
+		add_action( 'wp_ajax_qsm_validate_result_submission', array( $this, 'qsm_validate_result_submission' ), 10, 3 );
+		add_action( 'wp_ajax_nopriv_qsm_validate_result_submission', array( $this, 'qsm_validate_result_submission' ), 10, 3 );
+	}
+
+	public function qsm_validate_result_submission() {
+		global $wpdb, $mlwQuizMasterNext;
+
+		$user_email = isset( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : '';
+		$quiz_id = isset( $_POST['quiz_id'] ) ? intval( $_POST['quiz_id'] ) : 0;
+		$total_user_tries = isset( $_POST['total_user_tries'] ) ? intval( $_POST['total_user_tries'] ) : 0;
+		$mlw_qmn_user_try_count = 0;
+
+		if ( ! empty( $user_email ) && is_email( $user_email ) ) {
+			$mlw_qmn_user_try_count = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT COUNT(*) FROM {$wpdb->prefix}mlw_results WHERE email = %s AND deleted = 0 AND quiz_id = %d",
+					$user_email,
+					$quiz_id
+				)
+			);
+		}
+		if ( $mlw_qmn_user_try_count < $total_user_tries ) {
+			wp_send_json_success();
+		} else {
+			wp_send_json_error();
+		}
+		wp_die();
 	}
 
 	/**
@@ -758,7 +785,7 @@ class QMNPluginHelper {
 		$hints       = isset( $question_data['hints'] ) ? $question_data['hints'] : '';
 		$answer_info = isset( $question_data['question_answer_info'] ) ? html_entity_decode( $question_data['question_answer_info'] ) : '';
 
-		$this->qsm_register_language_support( htmlspecialchars_decode( $settings['question_title'], ENT_QUOTES ), "Question-{$question_id}", "QSM Questions" );
+		$this->qsm_register_language_support( htmlspecialchars_decode( isset($settings['question_title']) ? $settings['question_title'] : '', ENT_QUOTES ), "Question-{$question_id}", "QSM Questions" );
 		$this->qsm_register_language_support( htmlspecialchars_decode( $question_data['question_name'], ENT_QUOTES ), "question-description-{$question_id}", "QSM Questions" );
 		$this->qsm_register_language_support( $hints, "hint-{$question_id}" );
 		$this->qsm_register_language_support( $answer_info, "correctanswerinfo-{$question_id}" );
@@ -1271,5 +1298,22 @@ class QMNPluginHelper {
 			// 'description'      => __( 'Use points based grading system for Polar questions.', 'quiz-master-next' ),
 			// ),
 		);
+	}
+
+	public function qsm_get_limited_options( $options, $limit ) {
+		$correct = array_filter( $options, fn( $o, $k ) => 1 == $o[2], ARRAY_FILTER_USE_BOTH );
+		$incorrect = array_filter( $options, fn( $o, $k ) => 0 == $o[2], ARRAY_FILTER_USE_BOTH );
+		shuffle( $incorrect );
+		$final = array_merge( $correct, array_slice( $incorrect, 0, $limit - count( $correct ) ) );
+		shuffle( $final );
+		$final_keys = array_map( fn( $k ) => array_search( $k, array_values( $options ), true ),  $final );
+		return array(
+			'final'             => $final,
+			'answer_limit_keys' => implode( ',', $final_keys ),
+		);
+	}
+
+	public function qsm_get_limited_options_by_keys( $options, $keys ) {
+		return array_map( fn( $k ) => $options[ $k ], explode( ',', $keys ) );
 	}
 }

@@ -17,7 +17,7 @@ $partner_with_us = get_field('partner_with_us');
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-7 wow fadeInLeft">
-                <div class="banner-content">
+                <div class="banner-content text-center text-md-start mb-4 mb-md-0">
                     <h1 class="fw-bold mb-3">
                         <?php the_field("left_section_heading"); ?>
                     </h1>
@@ -99,18 +99,33 @@ $partner_with_us = get_field('partner_with_us');
         </button>
     </div>
     </div>
-    <ul id="menu" class="menu list-unstyled mb-0 bg-white p-2 d-flex position-relative justify-content-center">
-    <li class="menu-item <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'overviewsection' : true) ? 'active' : ''; ?>" data-target="overviewsection" >Overview</li>
-    <li class="menu-item <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'solutionsection' : true) ? 'active' : ''; ?>" data-target="solutionsection">Our Solutions</li>
-    <li class="menu-item <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'partnerssection' : true) ? 'active' : ''; ?>" data-target="partnerssection">Our Partners</li>
-    <li class="menu-item <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'industrysection' : true) ? 'active' : ''; ?>" data-target="industrysection">Industry Certification</li>
-    <li class="menu-item <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'awardsection' : true) ? 'active' : ''; ?>"  data-target="awardsection">Awards & Recognitions</li>
-    <li class="menu-item <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'eventssection' : true) ? 'active' : ''; ?>" data-target="eventssection">Events</li>
-    </ul>
+    <div id="scrollingMenu" class="menu bg-white p-2">
+        <ul class="list-unstyled mb-0  d-flex position-relative justify-content-center">
+        <li class="menu-item <?php echo (!isset($_GET['tab']) || $_GET['tab'] === 'overviewsection') ? 'active' : ''; ?>" data-target="overviewsection">Overview</li>
+        <li class="menu-item <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'solutionsection') ? 'active' : ''; ?>" data-target="solutionsection">Our Solutions</li>
+        <li class="menu-item <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'partnerssection') ? 'active' : ''; ?>" data-target="partnerssection">Our Partners</li>
+        <li class="menu-item <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'industrysection') ? 'active' : ''; ?>" data-target="industrysection">Industry Certification</li>
+        <li class="menu-item <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'awardsection') ? 'active' : ''; ?>" data-target="awardsection">Awards & Recognitions</li>
+        <li class="menu-item <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'eventssection') ? 'active' : ''; ?>" data-target="eventssection">Events</li>
+        <?php if (have_rows('additional_tabs')): ?>
+            <?php $count = 1; ?>
+            <?php while (have_rows('additional_tabs')): the_row(); 
+                $tab_name = get_sub_field('tab_name');
+                $unique_key = get_sub_field('unique_tab_key');
+                $is_active = (isset($_GET['tab']) && $_GET['tab'] === $unique_key) ? 'active' : '';
+            ?>
+                <li class="menu-item <?php echo esc_attr($is_active); ?>" data-target="additional-tab-<?php echo $count; ?>">
+                    <?php echo esc_html($tab_name); ?>
+                </li>
+                <?php $count++; ?>
+            <?php endwhile; ?>
+        <?php endif; ?>
+        </ul>
+    </div>
 </div>
 
 <div class="menu-area">
-    <div id="overviewsection" class="contentarea <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'overviewsection' : true) ? 'active' : ''; ?>">
+    <div id="overviewsection" class="contentarea <?php echo (!isset($_GET['tab']) || $_GET['tab'] === 'overviewsection') ? 'active' : ''; ?>">
 
 <!-- what is grass -->
 <div class="whatgrass">
@@ -301,7 +316,7 @@ endif; ?>
 <div class="thegrras">
     <div class="container">
         <div class="col-lg-12">
-            <h2 class="text-center">The Grras’s way to Transform your Career</h2>
+            <h2 class="text-center mb-0 mb-lg-4">The Grras’s way to Transform your Career</h2>
         </div>
         <?php if (have_rows("the_grras’s_way")):
 
@@ -410,11 +425,11 @@ endif; ?>
 <div class="container wow fadeInUp">
     <div class="partnerwith m-0">
         <div class="row d-flex align-items-center">
-            <div class="col-lg-4">
+            <div class="col-lg-4 mb-3 mb-lg-0">
                 <h2><?php echo $partner_with_us["title"]; ?></h2>
                 <a href="<?php echo $partner_with_us[
                     "apply_url"
-                ]; ?>" class="btn btn-dark d-none d-md-block">apply now</a>
+                ]; ?>" class="btn btn-dark d-none d-md-block fs-12">Explore more courses</a>
             </div>
             <div class="col-lg-8">
                 <p><?php echo $partner_with_us["description"]; ?></p>
@@ -544,7 +559,7 @@ endif; ?>
         </div>
         </section>
     </div>
-    <div id="solutionsection" class="contentarea <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'solutionsection' : true) ? 'active' : ''; ?>">
+    <div id="solutionsection" class="contentarea <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'solutionsection') ? 'active' : ''; ?>">
         <div class="container">
             <div class="heading-area text-center py-4 py-md-5">
                 <h1 class="fw-bold">Your Career, Our <span class="theme-text-primary">Commitment</span></h1>
@@ -567,6 +582,8 @@ endif; ?>
                         $is_odd = $index % 2 !== 0;
                         $img_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
                         $features = get_field('features'); // ACF repeater
+                        $serviceTabKey = get_field('service_tab_key');
+                        $serviceUrl = site_url('services?tab='.$serviceTabKey);
                 ?>
                     <div class="timeline-item pb-4">
                         <div class="row">
@@ -574,22 +591,28 @@ endif; ?>
                                 <div class="col-12 col-md-6 order-2 order-md-1">
                                     <h2 class="mb-3"><?php the_title(); ?></h2>
                                     <p><?php echo get_the_content(); ?></p>
+                                    <h5 class="fw-semibold"><?php echo get_field('feature_title'); ?></h5>
                                     <?php if ($features): ?>
-                                        <h5>Key Features</h5>
                                         <ul class="list-unstyled">
                                             <?php foreach ($features as $feature): ?>
                                                 <li>
                                                     <span>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" fill="none"><path d="M5.15561 10.5982L0.686503 6.12911C0.41728..." fill="black"/></svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none">
+                                                            <path d="M5.15561 10.5982L0.686503 6.12911C0.41728 5.85989 0.41728 5.40221 0.686503 5.13298L1.65571 4.16378C1.92493 3.89455 2.35569 3.89455 2.62491 4.16378L5.66714 7.17908L12.1285 0.717715C12.3977 0.448491 12.8285 0.448491 13.0977 0.717715L14.0669 1.68692C14.3361 1.95614 14.3361 2.41382 14.0669 2.68305L6.15174 10.5982C5.88252 10.8674 5.42484 10.8674 5.15561 10.5982Z" fill="black"></path>
+                                                        </svg>
                                                     </span>
                                                     <span class="ms-2"><?php echo esc_html($feature['text']); ?></span>
                                                 </li>
                                             <?php endforeach; ?>
                                         </ul>
                                     <?php endif; ?>
-                                    <a href="javascript:void(0);" class="theme-text-primary text-decoration-none">
+                                    <a href="<?php echo $serviceUrl; ?>" class="theme-text-primary text-decoration-none">
                                         <span class="me-1">Explore More</span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none"><rect y="0.5" width="25" height="24" rx="12" fill="#EF7221"/><path d="M15.5 6.74023L20.5..." stroke="white"/></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+                                            <rect y="0.5" width="25" height="24" rx="12" fill="#EF7221"></rect>
+                                            <path d="M15.5 6.74023L20.5 12.7402L15.5 18.7402" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            <path d="M5.5 12.7402H20.5" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </svg>
                                     </a>
                                 </div>
                                 <div class="col-12 col-md-5 text-center ms-auto order-1 order-md-2">
@@ -610,13 +633,15 @@ endif; ?>
                                 <div class="col-12 col-md-5 ms-auto">
                                     <h2 class="mb-3"><?php the_title(); ?></h2>
                                     <p><?php echo get_the_content(); ?></p>
+                                    <h5 class="fw-semibold"><?php echo get_field('feature_title'); ?></h5>
                                     <?php if ($features): ?>
-                                        <h5>Key Features</h5>
                                         <ul class="list-unstyled">
                                             <?php foreach ($features as $feature): ?>
                                                 <li>
                                                     <span>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" fill="none"><path d="M5.15561 10.5982L0.686503 6.12911C0.41728..." fill="black"/></svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="11" viewBox="0 0 15 11" fill="none">
+                                                            <path d="M5.15561 10.5982L0.686503 6.12911C0.41728 5.85989 0.41728 5.40221 0.686503 5.13298L1.65571 4.16378C1.92493 3.89455 2.35569 3.89455 2.62491 4.16378L5.66714 7.17908L12.1285 0.717715C12.3977 0.448491 12.8285 0.448491 13.0977 0.717715L14.0669 1.68692C14.3361 1.95614 14.3361 2.41382 14.0669 2.68305L6.15174 10.5982C5.88252 10.8674 5.42484 10.8674 5.15561 10.5982Z" fill="black"></path>
+                                                        </svg>
                                                     </span>
                                                     <span class="ms-2"><?php echo esc_html($feature['text']); ?></span>
                                                 </li>
@@ -625,7 +650,11 @@ endif; ?>
                                     <?php endif; ?>
                                     <a href="javascript:void(0);" class="theme-text-primary text-decoration-none">
                                         <span class="me-1">Explore More</span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none"><rect y="0.5" width="25" height="24" rx="12" fill="#EF7221"/><path d="M15.5 6.74023L20.5..." stroke="white"/></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+                                            <rect y="0.5" width="25" height="24" rx="12" fill="#EF7221"></rect>
+                                            <path d="M15.5 6.74023L20.5 12.7402L15.5 18.7402" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            <path d="M5.5 12.7402H20.5" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </svg>
                                     </a>
                                 </div>
                             <?php endif; ?>
@@ -639,7 +668,7 @@ endif; ?>
             </div>
         </div>
     </div>
-    <div id="partnerssection" class="contentarea <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'partnerssection' : true) ? 'active' : ''; ?>">
+    <div id="partnerssection" class="contentarea <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'partnerssection') ? 'active' : ''; ?>">
 
         <!-- Academic Partners Section -->
         <?php
@@ -662,11 +691,11 @@ endif; ?>
                 <div class="row">
                     <div class="col-12 col-lg-12 mb-4">
                         <div class="heading-area text-center">
-                            <h1 class="fw-bold">Academic Partners</h1>
-                            <p class="theme-text-light">At Grras Solutions, we collaborate with 45+ academic institutions and industry leaders to ensure our programs align with real-world demands. By integrating professional training, certifications, and hands-on experiences, we empower students to excel in today’s competitive job market.</p>
+                            <h1 class="fw-bold"><?php echo get_field('academic_partner_title', 'option'); ?> </h1>
+                            <p class="theme-text-light"><?php echo get_field('academic_partner_description', 'option'); ?></p>
                         </div>
                     </div>
-
+                    <div id="academic-partners" class="row">
                     <?php if ($academic_query->have_posts()): ?>
                         <?php while ($academic_query->have_posts()): $academic_query->the_post(); ?>
                             <div class="col-6 col-md-4 col-lg-3 col-xl-3 mb-4">
@@ -675,16 +704,24 @@ endif; ?>
                                         <img src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'medium')); ?>" alt="<?php the_title_attribute(); ?>" class="img-fluid">
                                     <?php endif; ?>
                                     <p><?php the_title(); ?></p>
-                                    <button type="button">Verify Authorisation</button>
                                 </div>
                             </div>
                         <?php endwhile; wp_reset_postdata(); ?>
                     <?php endif; ?>
+                    </div>
 
                     <?php if ($academic_total > 8): ?>
-                        <div class="col-12 col-lg-12 text-center">
-                            <div class="text-secondary fw-medium mb-3"><?php echo esc_html($academic_total - 8); ?> more programs available</div>
-                            <a href="<?php echo esc_url(get_term_link($academic_slug, 'partner-type')); ?>" class="btn btn-outline-primary rounded-pill btn-sm">View More</a>
+                        <div class="col-12 text-center mt-3">
+                          <div id="remaining-count" class="text-secondary fw-medium mb-3">
+                              <?php echo esc_html($academic_total - 8); ?> more academic partners available
+                          </div>
+                          <button id="load-more-partners"
+                                  class="btn btn-secondary rounded-pill btn-sm"
+                                  data-offset="8"
+                                  data-total="<?php echo esc_attr($academic_total); ?>"
+                                  data-slug="<?php echo esc_attr($academic_slug); ?>">
+                            Load More
+                          </button>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -712,13 +749,13 @@ endif; ?>
                 <div class="row">
                     <div class="col-12 col-lg-12">
                         <div class="heading-area text-center">
-                            <h1 class="fw-bold">Corporate Partner</h1>
-                            <p>At Grras Solutions, we team up with leading universities and organizations to deliver industry-aligned training, real-world exposure, and future-ready skills — empowering learners to excel in today’s competitive job market.</p>
+                            <h1 class="fw-bold"><?php echo get_field('corporate_partner_title', 'option'); ?> </h1>
+                            <p><?php echo get_field('corporate_partner_description', 'option'); ?></p>
                         </div>
                     </div>
                 </div>
 
-                <div class="learner-grid mt-4">
+                <div class="learner-grid mt-4" id="corporate-partner-wrapper">
                     <?php if ($corporate_query->have_posts()): ?>
                         <?php while ($corporate_query->have_posts()): $corporate_query->the_post(); ?>
                             <div class="imgbox text-center bg-white">
@@ -734,8 +771,10 @@ endif; ?>
                 <?php if ($corporate_total > 8): ?>
                     <div class="row mt-4">
                         <div class="col-12 col-lg-12 text-center">
-                            <div class="text-secondary fw-medium mb-3"><?php echo esc_html($corporate_total - 8); ?> more programs available</div>
-                            <a href="<?php echo esc_url(get_term_link($corporate_slug, 'partner-type')); ?>" class="btn btn-outline-primary rounded-pill btn-sm">View More</a>
+                            <div id="remaining-count-corporate" class="text-secondary fw-medium mb-3">
+                                <?php echo esc_html($corporate_total - 10); ?> more corporate partners available
+                            </div>
+                            <button class="btn btn-secondary rounded-pill btn-sm" id="load-more-corporate" data-page="1">Load More</button>
                         </div>
                     </div>
                 <?php endif; ?>
@@ -743,16 +782,16 @@ endif; ?>
         </div>
     </div>
 
-    <div id="industrysection" class="contentarea <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'industrysection' : true) ? 'active' : ''; ?>">
+    <div id="industrysection" class="contentarea <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'industrysection') ? 'active' : ''; ?>">
     <!-- Partner Section -->
     <div class="trackrecord industry-section wow fadeInLeft section-padding">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-lg-12 mb-4">
                     <div class="heading-area text-center">
-                        <h2 class="fw-bold mb-2">Get Globally Recognized. Get Certified with Grras Solutions.</h2>
-                        <h4>Official Training Partner for Red Hat, AWS, Microsoft, EC-Council, Salesforce, Oracle, ITIL & More.</h4>
-                        <p class="theme-text-light">Unlock Global Opportunities with the Power of Industry Certifications In today’s fast-paced world, certifications are more than achievements — they are your ticket to career growth, credibility, and global recognition. At Grras Solutions, we bring you official, globally trusted certifications from the biggest names in tech — helping you stand out and succeed.</p>
+                        <h2 class="fw-bold mb-2"><?php echo get_field('industry_certification_title'); ?></h2>
+                        <h4><?php echo get_field('industry_certification_subheading'); ?>.</h4>
+                        <p class="theme-text-light"><?php echo get_field('industry_certification_description'); ?></p>
                     </div>
                 </div>
             </div>
@@ -782,8 +821,8 @@ endif; ?>
                             $list_items = array_filter(array_map('trim', $content_lines));
                             $list_items = array_slice($list_items, 0, 3);
                     ?>
-                            <div class="col-12 col-md-6 col-lg-4">
-                                <div class="cousebox p-3 bg-white mb-4">
+                            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                <div class="cousebox p-3 bg-white mb-3 mt-0">
                                     <div class="employ d-flex align-items-center border-bottom pb-3 mb-3">
                                         <div class="image-box p-2 d-flex align-items-center me-3">
                                             <?php if ($thumb_url): ?>
@@ -799,11 +838,6 @@ endif; ?>
                                         <a href="<?php the_permalink(); ?>" class="theme-text-primary fw-medium text-decoration-none">Learn more</a>
                                     </div>
                                 </div>
-                                <?php if ($auth_link): ?>
-                                    <a href="<?php echo esc_url($auth_link); ?>" class="w-100 d-block text-center btn btndefault">Verify Authorisation</a>
-                                <?php else: ?>
-                                    <a href="javascript:void(0);" class="w-100 d-block text-center btn btndefault">Verify Authorisation</a>
-                                <?php endif; ?>
                             </div>
                     <?php
                         endwhile;
@@ -816,13 +850,13 @@ endif; ?>
     </div>
     <!-- End Partner Section -->
     </div>
-    <div id="awardsection" class="contentarea <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'awardsection' : true) ? 'active' : ''; ?>">
+    <div id="awardsection" class="contentarea <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'awardsection') ? 'active' : ''; ?>">
     <!-- Award Section -->
     <div class="trackrecord award-section wow fadeInUps section-padding">
         <div class="container">
             <?php
             $current_year = date('Y');
-            $selected_year = isset($_GET['year']) ? (int) $_GET['year'] : $current_year;
+            $selected_year = isset($_GET['awardyear']) ? (int) $_GET['awardyear'] : $current_year;
 
             // Fetch awards for selected year
             $award_query = new WP_Query([
@@ -841,10 +875,13 @@ endif; ?>
             <div class="row">
                 <div class="col-12 col-lg-12 mb-4">
                     <div class="heading-area d-flex justify-content-between align-items-center border-bottom border-dark">
-                        <h4 class="fw-semibold color-black">All Awards (<?php echo esc_html($total_awards); ?>)</h4>
+                        <h4 class="fw-semibold color-black"><?php if(!isset($_GET['awardyear']) || empty($_GET['awardyear'])) { echo 'All'; } else { echo $_GET['awardyear'];  } ?> Awards (<?php echo esc_html($total_awards); ?>)</h4>
                         <form method="get">
+                            <input type="hidden" name="tab" value="awardsection" />
                             <label class="fw-bold me-2">Year:</label>
-                            <select name="year" class="border-0" onchange="this.form.submit()">
+                            <select name="awardyear" class="border-0" onchange="this.form.submit()">
+                                
+                                <option value="">All</option>
                                 <?php
                                 $years = range($current_year, $current_year - 5);
                                 foreach ($years as $year) {
@@ -859,32 +896,39 @@ endif; ?>
             </div>
 
             <div class="row">
-                <?php if ($award_query->have_posts()): ?>
-                    <?php while ($award_query->have_posts()): $award_query->the_post(); ?>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="awardbox p-3 text-center mb-4">
-                                <div class="image-box pb-md-3 mb-md-3 border-bottom">
-                                    <?php if (has_post_thumbnail()): ?>
-                                        <img src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'medium')); ?>" class="img-fluid" alt="<?php the_title_attribute(); ?>">
-                                    <?php endif; ?>
-                                </div>
-                                <div class="content">
-                                    <h5 class="color-black fw-bold"><?php the_title(); ?></h5>
-                                    <p><?php echo wp_kses_post(get_the_excerpt()); ?></p>
-                                    <a href="<?php the_permalink(); ?>" class="theme-text-primary fw-medium text-decoration-none">Learn more</a>
+                <div id="award-wrapper" class="row">
+                    <?php if ($award_query->have_posts()): ?>
+                        <?php while ($award_query->have_posts()): $award_query->the_post(); ?>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="awardbox p-3 text-center mb-4">
+                                    <div class="image-box pb-md-3 mb-md-3 border-bottom">
+                                        <?php if (has_post_thumbnail()): ?>
+                                            <img src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'medium')); ?>" class="img-fluid" alt="<?php the_title_attribute(); ?>">
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="content">
+                                        <h5 class="color-black fw-bold"><?php the_title(); ?></h5>
+                                        <p><?php echo wp_kses_post(get_the_excerpt()); ?></p>
+                                        <a href="<?php the_permalink(); ?>" class="theme-text-primary fw-medium text-decoration-none">Learn more</a>
+                                    </div>
                                 </div>
                             </div>
+                        <?php endwhile; wp_reset_postdata(); ?>
+                    <?php else: ?>
+                        <div class="col-12 text-center">
+                            <p>No awards found for <?php echo esc_html($selected_year); ?>.</p>
                         </div>
-                    <?php endwhile; wp_reset_postdata(); ?>
-                <?php else: ?>
-                    <div class="col-12 text-center">
-                        <p>No awards found for <?php echo esc_html($selected_year); ?>.</p>
-                    </div>
-                <?php endif; ?>
+                    <?php endif; ?>
+                </div>
 
                 <?php if ($total_awards > 9): ?>
                     <div class="col-12 col-lg-12 text-center">
-                        <a href="<?php echo get_post_type_archive_link('awards'); ?>" class="btn btn-outline-primary rounded-pill btn-sm">Load More</a>
+                        <button id="load-more-awards"
+                                class="btn btn-secondary rounded-pill btn-sm"
+                                data-page="1"
+                                data-year="<?php echo esc_attr($selected_year); ?>">
+                            Load More
+                        </button>
                     </div>
                 <?php endif; ?>
             </div>
@@ -913,10 +957,12 @@ endif; ?>
             <div class="row">
                 <div class="col-12 col-lg-12 mb-4">
                     <div class="heading-area d-flex justify-content-between align-items-center border-bottom border-dark">
-                        <h4 class="fw-semibold color-black">All Media Coverage (<?php echo esc_html($total_media); ?>)</h4>
+                        <h4 class="fw-semibold color-black"><?php if(!isset($_GET['media_coverage_year']) || empty($_GET['media_coverage_year'])) { echo 'All'; } else { echo $_GET['media_coverage_year'];  } ?> Media Coverage (<?php echo esc_html($total_media); ?>)</h4>
                         <form method="get">
+                            <input type="hidden" name="tab" value="awardsection" />
                             <label class="fw-bold me-2">Year:</label>
                             <select name="media_coverage_year" class="border-0" onchange="this.form.submit()">
+                                <option value="">All</option>
                                 <?php
                                 $years = range($current_year, $current_year - 5);
                                 foreach ($years as $year) {
@@ -1042,8 +1088,8 @@ endif; ?>
     <!-- End Innovation Section -->
 
     </div>
-    <div id="eventssection" class="contentarea <?php echo (isset($_GET['tab']) ? $_GET['tab'] === 'eventssection' : true) ? 'active' : ''; ?>">
-
+    <div id="eventssection" class="contentarea <?php echo (isset($_GET['tab']) && $_GET['tab'] === 'eventssection') ? 'active' : ''; ?>">
+    
     <!-- Exam Section -->
     
 
@@ -1052,8 +1098,8 @@ endif; ?>
     <div class="row">
       <div class="col-12 col-md-8">
         <div class="heading-area">
-          <h1 class="fw-bold">Events</h1>
-          <p class="theme-text-light">Get exam-ready with concepts and questions as per the latest pattern</p>
+          <h1 class="fw-bold"><?php echo get_field('events_title'); ?></h1>
+          <p class="theme-text-light"><?php echo get_field('events_tagline'); ?></p>
         </div>
       </div>
       <div class="col-12 col-md-4">
@@ -1220,6 +1266,20 @@ endif; ?>
     <!-- End Exam Section -->
         
     </div>
+    <?php if (have_rows('additional_tabs')): ?>
+        <?php $count = 1; ?>
+        <?php while (have_rows('additional_tabs')): the_row(); 
+            $tab_name = get_sub_field('tab_name');
+            $tab_html_content = get_sub_field('tab_html_content');
+            $unique_key = get_sub_field('unique_tab_key');
+            $is_active = (isset($_GET['tab']) && $_GET['tab'] === $unique_key) ? 'active' : '';
+        ?>
+            <div id="additional-tab-<?php echo $count; ?>" class="container contentarea <?php echo $is_active; ?>">
+                <?php echo $tab_html_content; ?>
+            </div>
+            <?php $count++; ?>
+        <?php endwhile; ?>
+    <?php endif; ?>
 </div>
 
 <?php get_footer(); ?>
@@ -1245,4 +1305,17 @@ endif; ?>
         scrollAmount = Math.max(0, scrollAmount - getScrollStep());
         wrapper.scrollTo({ left: scrollAmount, behavior: 'smooth' });
       });
+      
+</script>
+
+<script>
+    jQuery(document).ready(function($){
+        $(window).on('scroll', function () {
+            if ($(window).scrollTop() > 600) {
+                $('.menu, .mobildbtn').addClass('position-fixed');
+            } else {
+                $('.menu, .mobildbtn').removeClass('position-fixed');
+            }
+        });
+    });
 </script>

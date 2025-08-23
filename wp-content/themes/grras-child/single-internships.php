@@ -70,7 +70,7 @@
 
         <?php endif; ?>
 
-	            <h1 class="fw-bold"><?php echo $banner['title']; ?></h1>
+	            <h1 class="fw-bold"><?php echo $banner['banner_title']; ?></h1>
 
 	            <p><?php echo $banner['short_description']; ?></p>
 
@@ -170,7 +170,7 @@
 
             
 
-						<div class="d-none d-md-block avatar-area bg-white theme-box-shadow py-3 px-3 px-md-4 end-0 position-absolute text-start" style="bottom: -55px; border-radius: 40px;">
+						<div class="d-none d-md-block avatar-area bg-white theme-box-shadow py-3 px-3 px-md-4 end-0 position-absolute text-start" style="bottom: -75px; border-radius: 40px;">
 
 							<div class="d-flex gap-3">
 
@@ -308,9 +308,21 @@
 
 				<div class="col-12 col-lg-6">
 
-					<iframe width="100%" height="315" src="<?php echo get_field('youtube_url'); ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+					<?php
+					$internship_overview = [
+					 'youtube_url' => get_field('youtube_url'),
+					 'background_image_placeholder' => get_field('background_image_placeholder')
+					];
+					?>
+					<?php if(!empty($internship_overview["youtube_url"])) { ?>
+                        <iframe width="100%" height="315" src="<?php echo $internship_overview["youtube_url"] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <?php } elseif(!empty($internship_overview["background_image_placeholder"])) { ?>
+                        <img src="<?php echo $internship_overview["background_image_placeholder"]; ?>" class="img-responsive w-100" />
+                    <?php } ?>
 
 				</div>
+				
+				
 
 				</div>
 
@@ -357,12 +369,13 @@
 	            <div class="col-lg-6 order-md-first">
 
 	              <div class="certibox d-block">
-
-	                <img src="<?php echo get_stylesheet_directory_uri() ?>/images/cartificate-2.jpg" class="img-fluid w-100" alt="">
+                    <?php if(isset($certificate['image']) && !empty($certificate['image'])): ?>
+	                <img src="<?php echo $certificate['image']; ?>" class="img-fluid w-100" alt="">
+	                <?php endif; ?>
 
 	              </div>
 
-	              <div class="text-center d-block d-md-none mt-5"><a href="#" class="btn btn-primary mt-2">Apply for Intermship</a></div>
+	              <div class="text-center d-block d-md-none mt-5"><a href="#" class="btn btn-primary mt-2">Apply for Internship</a></div>
 
 	            </div>
 
@@ -598,7 +611,7 @@
 
             <div class="accordion-body">
 
-                <?php echo wpautop(get_sub_field('content')); ?>
+                <?php echo wpautop(get_sub_field('learning_content')); ?>
 
                 <?php if ($is_multiple): ?>
 
@@ -844,131 +857,42 @@
 
 	    <!-- Course -->
 
-    <div class="endcareer endcareer2 wow fadeInUp section-padding bg-image-hide bg-white mb-0">
-
-      <div class="container">
-
-        <div class="row">
-
-          <div class="col-lg-12 text-center">
-
-            <h2 class="mb-0"><?php echo get_field('essential_full_stack_development_tools_covered_in_this_course_heading'); ?></h2>
-
-          </div>
-
-          <div class="col-lg-4 col-sm-6 col-6 g-3">
-
-            <div class="endcareer2-area align-items-center d-flex gap-3 p-3 border rounded-2 brd-theme-light">
-
-              <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/python1.jpg" alt="">
-
-              <h6 class="mb-0">Python</h6>
-
+        <?php
+        $terms = get_the_terms(get_the_ID(), 'internship-tags');
+        
+        if ($terms && !is_wp_error($terms)) :
+        ?>
+        <div class="endcareer endcareer2 wow fadeInUp section-padding bg-image-hide bg-white mb-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <h2 class="mb-0">
+                            <?php echo esc_html(get_field('essential_full_stack_development_tools_covered_in_this_course_heading')); ?>
+                        </h2>
+                    </div>
+        
+                    <?php foreach ($terms as $term) :
+                        // Get term meta "image" (assuming it's stored as an attachment ID)
+                        $image_id = get_term_meta($term->term_id, 'image', true);
+                        if(empty($image_id)) {
+                            continue;
+                        }
+                        $image_url = $image_id ? wp_get_attachment_url($image_id) : get_stylesheet_directory_uri() . '/images/default.jpg';
+                    ?>
+                    <div class="col-lg-4 col-sm-6 col-6 g-3">
+                        <a href="<?php echo esc_url(get_term_link($term)); ?>" class="text-decoration-none">
+                            <div class="endcareer2-area align-items-center d-flex gap-3 p-3 border rounded-2 brd-theme-light">
+                                <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($term->name); ?>">
+                                <h6 class="mb-0 theme-text-dark"><?php echo esc_html($term->name); ?></h6>
+                            </div>
+                        </a>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
-
-          </div>
-
-          <div class="col-lg-4 col-sm-6 col-6 g-3">
-
-            <div class="endcareer2-area align-items-center d-flex gap-3 p-3 border rounded-2 brd-theme-light">
-
-              <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/area1.jpg" alt="">
-
-              <h6 class="mb-0">Power BI</h6>
-
-            </div>
-
-          </div>
-
-          <div class="col-lg-4 col-sm-6 col-6 g-3">
-
-            <div class="endcareer2-area align-items-center d-flex gap-3 p-3 border rounded-2 brd-theme-light">
-
-              <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/mysql1.jpg" alt="">
-
-              <h6 class="mb-0">MySQL</h6>
-
-            </div>
-
-          </div>
-
-          <div class="col-lg-4 col-sm-6 col-6 g-3">
-
-            <div class="endcareer2-area align-items-center d-flex gap-3 p-3 border rounded-2 brd-theme-light">
-
-              <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/chart1.jpg" alt="">
-
-              <h6 class="mb-0">Data Analysis</h6>
-
-            </div>
-
-          </div>
-
-          <div class="col-lg-4 col-sm-6 col-6 g-3">
-
-            <div class="endcareer2-area align-items-center d-flex gap-3 p-3 border rounded-2 brd-theme-light">
-
-              <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/machine1.jpg" alt="">
-
-              <h6 class="mb-0">Machine Learning</h6>
-
-            </div>
-
-          </div>
-
-          <div class="col-lg-4 col-sm-6 col-6 g-3">
-
-            <div class="endcareer2-area align-items-center d-flex gap-3 p-3 border rounded-2 brd-theme-light">
-
-              <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/excel1.jpg" alt="">
-
-              <h6 class="mb-0">Excel</h6>
-
-            </div>
-
-          </div>
-
-          <div class="col-lg-4 col-sm-6 col-6 g-3">
-
-            <div class="endcareer2-area align-items-center d-flex gap-3 p-3 border rounded-2 brd-theme-light">
-
-              <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/AI1.jpg" alt="">
-
-              <h6 class="mb-0">Latest gen AI tools</h6>
-
-            </div>
-
-          </div>
-
-          <div class="col-lg-4 col-sm-6 col-6 g-3">
-
-            <div class="endcareer2-area align-items-center d-flex gap-3 p-3 border rounded-2 brd-theme-light">
-
-              <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/loom1.jpg" alt="">
-
-              <h6 class="mb-0">ChatGPT</h6>
-
-            </div>
-
-          </div>
-
-          <div class="col-lg-4 col-sm-6 col-6 g-3">
-
-            <div class="endcareer2-area align-items-center d-flex gap-3 p-3 border rounded-2 brd-theme-light">
-
-              <img src="<?php echo get_stylesheet_directory_uri(); ?>/images/jira1.jpg" alt="">
-
-              <h6 class="mb-0">Git</h6>
-
-            </div>
-
-          </div>
-
         </div>
+        <?php endif; ?>
 
-      </div>
-
-    </div>
 
     <!-- End Course -->
 
@@ -1742,6 +1666,6 @@ endif;
 
 	<?php
 
-	  //include('components/faq.php');
+	  include('components/faq.php');
 
 	get_footer();

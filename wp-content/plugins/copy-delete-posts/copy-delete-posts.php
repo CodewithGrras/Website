@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Copy & Delete Posts
  * Description: The best solution to easily make duplicates of your posts & pages, and delete them in one go.
- * Version: 1.4.9
+ * Version: 1.5.0
  * Text Domain: copy-delete-posts
  * Author: Inisev
  * Author URI: https://inisev.com
@@ -31,7 +31,7 @@ analyst_init(array(
  * @since 1.0.0
  */
 // Plugin constants
-define('CDP_VERSION', '1.4.9');
+define('CDP_VERSION', '1.5.0');
 define('CDP_WP_VERSION', get_bloginfo('version'));
 define('CDP_SCRIPT_DEBUG', false);
 define('CDP_ROOT_DIR', __DIR__);
@@ -363,6 +363,15 @@ add_action('admin_menu', function () {
     remove_submenu_page($parentSlug, $parentSlug);
 });
 /** –– * */
+/** –– **\
+ * Add cdp scripts and styles to the whitelist of mailpoet. 
+ * @since 1.5.0
+ */
+add_filter('mailpoet_conflict_resolver_whitelist_style', function ($whitelist) {
+    // Add your plugin's unique identifier or path to the whitelist
+    $whitelist[] = 'cdp';
+    return $whitelist;
+});
 /** –– **\
  * Add copy option to Quick Actions of Posts.
  * @since 1.0.0
